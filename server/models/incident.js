@@ -9,4 +9,4 @@ const incidentSchema = new Schema({
     status: String
 });
 
-module.exports = mongoose.model('incident', incidentSchema);
+module.exports = mongoose.model('incident', incidentSchema, 'incidents');
