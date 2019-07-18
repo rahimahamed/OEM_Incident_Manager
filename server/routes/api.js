@@ -8,7 +8,7 @@ const Incident = require('../models/incident');
 
 const db = "mongodb://localhost:27017/IncidentManager";
 mongoose.Promise = global.Promise;
-mongoose.connect(db, { useNewUrlParser: true }, function(err){
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }, function(err){
     if(err){
       console.error("Error! " + err);
     }else{
