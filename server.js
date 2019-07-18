@@ -17,6 +17,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/IncidentManager/index.html'));
 });
 
-app.listen(port, function() {
+app.listen(process.env.PORT || port, function() {
   console.log('Server is live! Port: ' + port);
 });
