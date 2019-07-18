@@ -16,6 +16,15 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }, function(e
 });
 mongoose.set('useFindAndModify', false);
 
+// const MongoClient = require('mongodb').MongoClient;
+// const uri = "mongodb+srv://siqbal:oem123@cluster0-9ppa8.mongodb.net/test?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, { useNewUrlParser: true });
+// client.connect(err => {
+//   const collection = client.db("test").collection("devices");
+//   // perform actions on the collection object
+//   client.close();
+// });
+
 router.get('/active', function(req, res){
     console.log('GET request for all ACTIVE incidents!');
     Incident.find({})
