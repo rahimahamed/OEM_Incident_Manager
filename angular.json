@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "youtube": {
+    "IncidentManager": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/youtube",
+            "outputPath": "dist/IncidentManager",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -24,7 +24,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []
           },
@@ -58,18 +59,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "youtube:build"
+            "browserTarget": "IncidentManager:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "youtube:build:production"
+              "browserTarget": "IncidentManager:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "youtube:build"
+            "browserTarget": "IncidentManager:build"
           }
         },
         "test": {
@@ -84,7 +85,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []
           }
@@ -106,15 +108,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "youtube:serve"
+            "devServerTarget": "IncidentManager:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "youtube:serve:production"
+              "devServerTarget": "IncidentManager:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "youtube"
+  "defaultProject": "IncidentManager"
 }
