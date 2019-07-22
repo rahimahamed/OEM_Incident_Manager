@@ -6,12 +6,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule, routingComponents} from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IncidentListComponent } from './incident-list/incident-list.component';
+import { ArchivedIncidentsComponent } from './archived-incidents/archived-incidents.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
-    IncidentListComponent
+    IncidentListComponent,
+    ArchivedIncidentsComponent
   ],
   imports: [
     BrowserModule,

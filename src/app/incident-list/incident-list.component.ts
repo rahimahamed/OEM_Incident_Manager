@@ -9,7 +9,7 @@ import { Incident } from '../incident';
 export class IncidentListComponent implements OnInit {
   @Input() incidents: Incident[];
   @Output() selectIncident = new EventEmitter();
-  @Output() deleteIncident = new EventEmitter();
+  @Output() archiveIncident = new EventEmitter();
 
   constructor() { }
 
@@ -20,8 +20,12 @@ export class IncidentListComponent implements OnInit {
     this.selectIncident.emit(incident);
   }
 
-  onDelete(incident) {
-    this.deleteIncident.emit(incident);
+  onArchive(incident) {
+    this.archiveIncident.emit(incident);
+  }
+
+  onOpen(incident) {
+    return;
   }
 
 }
