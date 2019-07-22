@@ -12,23 +12,25 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class HomeComponent implements OnInit {
   title = 'NYC Emergency Incident Tracker';
   private hideForm = true;
-  str = 'Emergency: ';
   date: number = Date.now();
-  public displayStyle = {
-    visibility: 'hidden',
-    color : 'blue'
-  };
 
   model = new Incident();
 
+  // allIncidents: Array<Incident> = [];
   incidents: Array<Incident> = [];
 
   constructor(private _incidentServce: IncidentService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.date = Date.now();
+    this.incidents = [];
     this._incidentServce.getIncidents().subscribe((resIncidentData: Incident[]) => {
-      this.incidents = resIncidentData;
+      for (let entry of resIncidentData) {
+        console.log(status);
+        if (!(entry.status === 'Closed')) {
+          this.incidents.push(entry);
+        }
+      }
     });
   }
 
@@ -37,8 +39,6 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmitIncident() {
-    // this.displayStyle.visibility = 'visible';
-    // this.str += this.model.title + ' at ' + this.model.location;
     this._incidentServce.addIncidents(this.model).subscribe(
       newIncident => {
         this.ngOnInit();
@@ -52,9 +52,10 @@ export class HomeComponent implements OnInit {
     return;
   }
 
-  deleteIncident(incident: Incident) {
-    this._incidentServce.deleteIncident(incident).subscribe(
-      deletedIncident => {
+  archiveIncident(incident: Incident) {
+    incident.status = 'Closed';
+    this._incidentServce.updateIncident(incident).subscribe(
+      archivedIncident => {
         this.ngOnInit();
       }
     );

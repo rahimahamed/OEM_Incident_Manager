@@ -30,4 +30,9 @@ export class IncidentService {
   deleteIncident(incident: Incident) {
     return this._http.delete(this._deleteUrl + incident._id);
   }
+
+  updateIncident(incident: Incident) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this._http.put(this._putUrl + incident._id, JSON.stringify(incident), {headers});
+  }
 }
