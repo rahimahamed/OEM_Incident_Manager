@@ -11,6 +11,8 @@ export class IncidentListComponent implements OnInit {
   @Output() selectIncident = new EventEmitter();
   @Output() deleteIncident = new EventEmitter();
 
+  public _id = 45612445552114;
+
   constructor() { }
 
   ngOnInit() {
