@@ -1,9 +1,5 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}! <br> <br>
-    {{date | date:'full'}}
-  </h1>
   <button type="button" style="margin-top:20px; margin-bottom: 30px"
         (click)="onClick()" class="btn btn-primary btn-lg">SUBMIT AN EMERGENCY!</button>
 </div>
@@ -43,5 +39,5 @@
   <div><div [ngStyle]="displayStyle">{{str}}</div>
 
   <app-incident-list [incidents] ="incidents" (selectIncident)="incidentSelect($event)"
-                      (deleteIncident)="deleteIncident($event)">
+                      (archiveIncident)="archiveIncident($event)">
   </app-incident-list>

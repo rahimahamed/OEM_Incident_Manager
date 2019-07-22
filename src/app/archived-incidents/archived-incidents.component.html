@@ -19,16 +19,11 @@ src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"</script
             <th>Location</th>
             <th>Status</th>
             <th>Archive</th>
-            <!-- <th>Age</th>
-            <th>Start date</th>
-            <th>Salary</th> -->
         </tr>
     </thead>
     <!-- <tbody>
         <tr>
-            <button style="margin-left: 10px; margin-top: 5px" type="button" [routerLink]="['/incident-details', _id]"
-            class="btn btn-danger">Open</button>
-          <a [routerLink]="['/incident-details', _id]"><td>{{_id}}</td></a>
+          <td><input type="text" id="name" ></td>
           <td>Test</td>
           <td>Test</td>
           <button style="margin-left: 10px; margin-top: 5px" type="button" (click)="onDelete(incident)" class="btn btn-danger">Delete</button>
@@ -36,23 +31,11 @@ src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"</script
     </tbody> -->
     <tbody>
         <tr *ngFor="let incident of incidents">
-          <button style="margin-left: 10px; margin-top: 5px" type="button" [routerLink]="['/incident-details', incident._id]"
-          class="btn btn-danger">Open</button>
           <td>{{incident.title}}</td>
           <td>{{incident.location}}</td>
           <td>{{incident.status}}</td>
-          <button style="margin-left: 10px; margin-top: 5px" type="button" (click)="onArchive(incident)"
-          class="btn btn-danger">Archive</button>
+          <!-- <button style="margin-left: 10px; margin-top: 5px" type="button" (click)="onDelete(incident)"
+          class="btn btn-danger">Archive</button> -->
         </tr>
     </tbody>
-    <!-- <tfoot>
-        <tr>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Status</th>
-             <th>Age</th>
-            <th>Start date</th>
-            <th>Salary</th>
-        </tr>
-    </tfoot> -->
 </table>
