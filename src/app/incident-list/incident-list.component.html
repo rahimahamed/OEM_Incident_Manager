@@ -1,40 +1,34 @@
-<table id="example" class="table table-striped table-bordered" style="width:100%">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Status</th>
-            <th>Archive</th>
-            <!-- <th>Age</th>
-            <th>Start date</th>
-            <th>Salary</th> -->
-        </tr>
-    </thead>
-    <!-- <tbody>
-        <tr>
-          <td><input type="text" id="name" ></td>
-          <td>Test</td>
-          <td>Test</td>
-          <button style="margin-left: 10px; margin-top: 5px" type="button" (click)="onDelete(incident)" class="btn btn-danger">Delete</button>
-        </tr>
-    </tbody> -->
-    <tbody>
-        <tr *ngFor="let incident of incidents">
-          <td>{{incident.title}}</td>
-          <td>{{incident.location}}</td>
-          <td>{{incident.status}}</td>
-          <button style="margin-left: 10px; margin-top: 5px" type="button" (click)="onArchive(incident)"
-          class="btn btn-danger">Archive</button>
-        </tr>
-    </tbody>
-    <!-- <tfoot>
-        <tr>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Status</th>
-             <th>Age</th>
-            <th>Start date</th>
-            <th>Salary</th>
-        </tr>
-    </tfoot> -->
+<table mat-table
+       [dataSource]="incidents" multiTemplateDataRows
+       class="mat-elevation-z8">
+  <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+  </ng-container>
+
+  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+      <div class="example-element-detail"
+           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+        <div class="example-element-description">
+          {{element.location}}
+          <span class="example-element-description-attribution"> -- Wikipedia </span>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element">
+  </tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 </table>
+
+
+<!-- Copyright 2019 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->
