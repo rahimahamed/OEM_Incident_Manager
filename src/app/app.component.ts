@@ -6,6 +6,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  day(){
+    let v = new Date();
+    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    return days[v.getDay()];
+  }
+
+  monthDateYear(){
+    let t = new Date();
+    let months = ["January", "February", "March", "April", "May", "June", "July",
+  "August", "September", "October", "November", "December"];
+    return months[t.getMonth()] + " " + t.getDate() + ", " + t.getFullYear();
+  }
+
+
+
   showTime(){
     let date = new Date();
     let time = "";
