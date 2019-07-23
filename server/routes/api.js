@@ -52,10 +52,21 @@ router.get('/active/:id', function(req, res){
 router.post('/active', function(req, res){
     console.log('POST a new incident!');
     var newIncident = new Incident();
-    newIncident.title = req.body.title;
+    newIncident.INCIDENT_NAME = req.body.INCIDENT_NAME;
     // newIncident.description = req.body.description;
-    newIncident.location = req.body.location;
-    newIncident.status = req.body.status;
+    newIncident.INCIDENT_TYPE = req.body.INCIDENT_TYPE;
+    newIncident.STATUS = req.body.STATUS;
+    newIncident.CREATION_DATE = req.body.CREATION_DATE;
+    newIncident.LOCATION_NAME = req.body.LOCATION_NAME;
+    newIncident.ADDRESS = req.body.ADDRESS;
+    newIncident.LATITUDE = req.body.LATITUDE;
+    newIncident.LONGITUDE = req.body.LONGITUDE;
+    newIncident.LEAD_AGENCY = req.body.LEAD_AGENCY;
+    newIncident.SUPPORTING_AGENCY = req.body.SUPPORTING_AGENCY;
+    newIncident.CREATED_BY = req.body.CREATED_BY;
+    newIncident.MODIFICATION_DATE = req.body.MODIFICATION_DATE;
+    newIncident.MODIFIED_BY = req.body.MODIFIED_BY;
+    newIncident.COMMENTS = req.body.COMMENTS;
     newIncident.save(function(err, insertedIncident){
         if (err){
             console.log('Error saving new incident!');
@@ -70,7 +81,12 @@ router.put('/active/:id', function(req, res){
     console.log('Update an incident!');
     Incident.findByIdAndUpdate(req.params.id,
     {
-        $set: {title: req.body.title, location: req.body.location, status: req.body.status}
+        $set: {INCIDENT_NAME: req.body.INCIDENT_NAME, INCIDENT_TYPE: req.body.INCIDENT_TYPE,
+          STATUS: req.body.STATUS, CREATION_DATE: req.body.CREATION_DATE,
+          LOCATION_NAME: req.body.LOCATION_NAME, ADDRESS: req.body.ADDRESS, LATITUDE: req.body.LATITUDE,
+          LONGITUDE: req.body.LONGITUDE, LEAD_AGENCY: req.body.LEAD_AGENCY,
+          SUPPORTING_AGENCY: req.body.SUPPORTING_AGENCY, CREATED_BY: req.body.CREATED_BY,
+          MODIFICATION_DATE: req.body.MODIFICATION_DATE, MODIFIED_BY: req.body.MODIFIED_BY, COMMENTS: req.body.COMMENTS}
     },
     {
         new: true

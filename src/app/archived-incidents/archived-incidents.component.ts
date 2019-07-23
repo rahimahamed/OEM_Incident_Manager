@@ -20,7 +20,7 @@ export class ArchivedIncidentsComponent implements OnInit {
     this.incidents = [];
     this._incidentServce.getIncidents().subscribe((resIncidentData: Incident[]) => {
       for (let entry of resIncidentData) {
-        if (entry.status === 'Closed') {
+        if (entry.STATUS === 'Closed') {
           this.incidents.push(entry);
         }
       }

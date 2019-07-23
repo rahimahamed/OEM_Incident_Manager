@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
     this._incidentServce.getIncidents().subscribe((resIncidentData: Incident[]) => {
       for (let entry of resIncidentData) {
         console.log(status);
-        if (!(entry.status === 'Closed')) {
+        if (!(entry.STATUS === 'Closed')) {
           this.incidents.push(entry);
         }
       }
@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
   }
 
   archiveIncident(incident: Incident) {
-    incident.status = 'Closed';
+    incident.STATUS = 'Closed';
     this._incidentServce.updateIncident(incident).subscribe(
       archivedIncident => {
         this.ngOnInit();
