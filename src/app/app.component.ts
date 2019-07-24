@@ -29,8 +29,19 @@ export class AppComponent {
     let h = date.getHours();
     let m = date.getMinutes();
     let s = date.getSeconds();
-
     time = h + ":" + m + ":" + s;
+
+    if(h < 10){
+      time = "0" + h + ":" + m + ":" + s;
+    }
+    if(m < 10){
+      time = h + ":" + "0" + m + ":" + s;
+    }
+    if(s < 10){
+      time = h + ":" + m + ":" + "0" + s;
+    }
+
+    //time = h + ":" + m + ":" + s;
     setTimeout(this.showTime, 1000)
     return time;
   }
