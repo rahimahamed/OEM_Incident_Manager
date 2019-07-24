@@ -1,30 +1,34 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
-import { Router, ActivatedRoute } from '@angular/router';
-
+import { IncidentsDataSource } from '../incident.data.source';
 @Component({
   selector: 'app-archived-incidents',
   templateUrl: './archived-incidents.component.html',
-  styleUrls: ['./archived-incidents.component.css']
+  styleUrls: ['./archived-incidents.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class ArchivedIncidentsComponent implements OnInit {
 
-  incidents: Incident[];
   @Output() selectIncident = new EventEmitter();
   @Output() archiveIncident = new EventEmitter();
 
-  constructor(private _incidentServce: IncidentService, private router: Router, private route: ActivatedRoute) { }
+  dataSource: IncidentsDataSource;
+  columnsToDisplay = ['title', 'location', 'status'];
+  expandedElement: Incident | null;
+
+  constructor(private incidentService: IncidentService) { }
 
   ngOnInit() {
-    this.incidents = [];
-    this._incidentServce.getIncidents().subscribe((resIncidentData: Incident[]) => {
-      for (let entry of resIncidentData) {
-        if (entry.status === 'Closed') {
-          this.incidents.push(entry);
-        }
-      }
-    });
+    this.dataSource = new IncidentsDataSource(this.incidentService, false);
+    this.dataSource.loadLessons();
   }
 
   onSelect(incident) {
