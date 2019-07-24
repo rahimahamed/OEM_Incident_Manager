@@ -17,24 +17,8 @@ import { IncidentsDataSource } from '../incident.data.source';
   ],
 })
 export class IncidentListComponent implements OnInit {
-  @Input() incidents: Incident[];
   @Output() selectIncident = new EventEmitter();
   @Output() archiveIncident = new EventEmitter();
-
-  // ELEMENT_DATA: Incident[] = [
-  //   {
-  //       _id: '5d2f3f3aeae75939345b9dbb',
-  //       title: 'Power Outage',
-  //       location: 'Brooklyn',
-  //       status: 'Closed',
-  //   },
-  //   {
-  //       _id: '5d30ceaf38ed6945a8100564',
-  //       title: 'Test',
-  //       location: 'Test',
-  //       status: 'Closed',
-  //   },
-  // ];
 
   dataSource: IncidentsDataSource;
   columnsToDisplay = ['title', 'location', 'status'];
@@ -43,12 +27,13 @@ export class IncidentListComponent implements OnInit {
   constructor(private incidentService: IncidentService) { }
 
   ngOnInit() {
-    this.dataSource = new IncidentsDataSource(this.incidentService);
+    this.dataSource = new IncidentsDataSource(this.incidentService, true);
     this.dataSource.loadLessons();
+    this.onSelect();
   }
 
-  onSelect(incident) {
-    this.selectIncident.emit(incident);
+  onSelect() {
+    this.selectIncident.emit(this.dataSource);
   }
 
   onArchive(incident) {

@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {MatNativeDateModule} from '@angular/material/core';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppRoutingModule, routingComponents} from './app-routing.module';
@@ -11,13 +10,19 @@ import { AppComponent } from './app.component';
 import { IncidentListComponent } from './incident-list/incident-list.component';
 import { ArchivedIncidentsComponent } from './archived-incidents/archived-incidents.component';
 import { MaterialModule } from '../material-module';
+import { IncidentCommentsComponent } from './incident-comments/incident-comments.component';
+import { IncidentDetailsComponent } from './incident-details/incident-details.component';
+import { IncidentMapComponent } from './incident-map/incident-map.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
     IncidentListComponent,
-    ArchivedIncidentsComponent
+    ArchivedIncidentsComponent,
+    IncidentCommentsComponent,
+    IncidentDetailsComponent,
+    IncidentMapComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +31,7 @@ import { MaterialModule } from '../material-module';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
