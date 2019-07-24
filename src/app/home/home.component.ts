@@ -19,12 +19,12 @@ export class HomeComponent implements OnInit {
   // allIncidents: Array<Incident> = [];
   incidents: Array<Incident> = [];
 
-  constructor(private _incidentServce: IncidentService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private _incidentService: IncidentService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.date = Date.now();
     this.incidents = [];
-    this._incidentServce.getIncidents().subscribe((resIncidentData: Incident[]) => {
+    this._incidentService.getIncidents().subscribe((resIncidentData: Incident[]) => {
       for (let entry of resIncidentData) {
         console.log(status);
         if (!(entry.status === 'Closed')) {
@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmitIncident() {
-    this._incidentServce.addIncidents(this.model).subscribe(
+    this._incidentService.addIncidents(this.model).subscribe(
       newIncident => {
         this.ngOnInit();
         this.hideForm = true;
@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit {
 
   archiveIncident(incident: Incident) {
     incident.status = 'Closed';
-    this._incidentServce.updateIncident(incident).subscribe(
+    this._incidentService.updateIncident(incident).subscribe(
       archivedIncident => {
         this.ngOnInit();
       }

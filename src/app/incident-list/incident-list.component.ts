@@ -1,6 +1,8 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Incident } from '../incident';
+import { IncidentService } from '../incident.service';
+import { IncidentsDataSource } from '../incident.data.source';
 
 @Component({
   selector: 'app-incident-list',
@@ -19,7 +21,6 @@ export class IncidentListComponent implements OnInit {
   @Output() selectIncident = new EventEmitter();
   @Output() archiveIncident = new EventEmitter();
 
-
   // ELEMENT_DATA: Incident[] = [
   //   {
   //       _id: '5d2f3f3aeae75939345b9dbb',
@@ -35,14 +36,15 @@ export class IncidentListComponent implements OnInit {
   //   },
   // ];
 
-  // dataSource = this.incidents;
-  columnsToDisplay = ['_id', 'title', 'location', 'status'];
-  // columnsToDisplay = ['name', 'weight', 'symbol', 'position'];
-  expandedElement: PeriodicElement | null;
+  dataSource: IncidentsDataSource;
+  columnsToDisplay = ['title', 'location', 'status'];
+  expandedElement: Incident | null;
 
-  constructor() { }
+  constructor(private incidentService: IncidentService) { }
 
   ngOnInit() {
+    this.dataSource = new IncidentsDataSource(this.incidentService);
+    this.dataSource.loadLessons();
   }
 
   onSelect(incident) {
@@ -56,38 +58,4 @@ export class IncidentListComponent implements OnInit {
   onOpen(incident) {
     return;
   }
-
 }
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-  description: string;
-}
-
-
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   {
-//     position: 1,
-//     name: 'Hydrogen',
-//     weight: 1.0079,
-//     symbol: 'H',
-//     description: `Hydrogen is a chemical element with symbol H and atomic number 1. With a standard
-//         atomic weight of 1.008, hydrogen is the lightest element on the periodic table.`
-//   }, {
-//     position: 2,
-//     name: 'Helium',
-//     weight: 4.0026,
-//     symbol: 'He',
-//     description: `Helium is a chemical element with symbol He and atomic number 2. It is a
-//         colorless, odorless, tasteless, non-toxic, inert, monatomic gas, the first in the noble gas
-//         group in the periodic table. Its boiling point is the lowest among all the elements.`
-//   },
-// ];
-
-
-/**  Copyright 2019 Google Inc. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at http://angular.io/license */
