@@ -18,7 +18,6 @@ import { IncidentsDataSource } from '../incident.data.source';
 })
 export class IncidentListComponent implements OnInit {
   @Output() selectIncident = new EventEmitter();
-  @Output() archiveIncident = new EventEmitter();
 
   dataSource: IncidentsDataSource;
   incidentList: Incident[] = [
@@ -28,7 +27,7 @@ export class IncidentListComponent implements OnInit {
       STATUS: 'Responding',
       LOCATION_NAME: 'Brooklyn',
       SUMMARY:  ' ',
-      INCIDENT_TYPE:  'CRAZY',
+      INCIDENT_TYPE:  '',
       CREATION_DATE:  ' ',
       ADDRESS:  ' ',
       LATITUDE:  ' ',
@@ -57,11 +56,13 @@ export class IncidentListComponent implements OnInit {
     this.selectIncident.emit(this.dataSource);
   }
 
-  onArchive(incident) {
-    this.archiveIncident.emit(incident);
+  onArchive(incident: Incident) {
+    incident.STATUS = 'Closed';
+    this.incidentService.updateIncident(incident).subscribe(
+      archivedIncident => {
+        this.ngOnInit();
+      }
+    );
   }
 
-  onOpen(incident) {
-    return;
-  }
 }

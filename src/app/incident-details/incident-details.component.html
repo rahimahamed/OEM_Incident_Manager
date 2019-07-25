@@ -19,8 +19,8 @@
       <div class="form-group">
           <label for="comment">Summary:</label>
           <textarea class="form-control" rows="20" cols="80" id="Summary"></textarea>
-      <button type="button" class="btn btn-warning exp-btn">Edit</button>
+      <button type="button" (click)="onEdit()" class="btn btn-warning exp-btn">Edit</button>
       <button type="button" class="btn btn-success exp-btn">Submit</button>
-      <button type="button" class="btn btn-danger exp-btn">Archive</button>
+      <button type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Archive</button>
   </div>
 </div>
