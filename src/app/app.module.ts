@@ -3,7 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatSelectModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ReactiveFormsModule} from '@angular/forms';
 
 import { AppRoutingModule, routingComponents} from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +34,8 @@ import { IncidentMapComponent } from './incident-map/incident-map.component';
     BrowserAnimationsModule,
     MaterialModule,
     MatNativeDateModule,
+    MatSelectModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
