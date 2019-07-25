@@ -7,32 +7,40 @@
     <h2>New Emergency</h2>
     <form #form="ngForm" (ngSubmit)="onSubmitIncident()">
       <div class="form-group">
-        <label>Title</label>
+        <label>Incident Name</label>
         <input type="text" class="form-control" id="name"
-               required
-               [(ngModel)]="model.INCIDENT_NAME" name="name"
-               #name="ngModel">
-               <div [hidden]="name.valid || name.pristine">
+              required
+              [(ngModel)]="model.INCIDENT_NAME" name="name"
+              #name="ngModel">
+              <div [hidden]="name.valid || name.pristine">
               </div>
       </div>
       <div class="form-group">
         <label>Location</label>
         <input type="text" class="form-control" id="name"
-               required
-               [(ngModel)]="model.LOCATION_NAME" name="name"
-               #name="ngModel">
-               <div [hidden]="name.valid || name.pristine">
+              required
+              [(ngModel)]="model.LOCATION_NAME" name="name"
+              #name="ngModel">
+              <div [hidden]="name.valid || name.pristine">
               </div>
       </div>
-      <div class="form-group">
+      <mat-form-field>
+        <mat-select placeholder="Status" name="name" [(ngModel)]="model.STATUS" #name="ngModel">
+          <mat-option *ngFor="let status of statuses" [value]="status.value" (select) = onSelect()>
+            {{ status.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!--<div class="form-group">
         <label>Status</label>
         <input type="text" class="form-control" id="name"
-               required
-               [(ngModel)]="model.STATUS" name="name"
-               #name="ngModel">
-               <div [hidden]="name.valid || name.pristine">
+              required
+              [(ngModel)]="model.STATUS" name="name"
+              #name="ngModel">
+              <div [hidden]="name.valid || name.pristine">
               </div>
-      </div>
+      </div>-->
+      <br>
       <button style="margin-bottom: 10px" type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
