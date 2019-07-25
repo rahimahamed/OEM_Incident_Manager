@@ -10,15 +10,22 @@ export class IncidentDetailsComponent implements OnInit {
 
   @Input() incident: Incident;
   @Output() archiveIncident = new EventEmitter();
+  textArea;
+  summaryExists = false;
+  editPressed = false;
 
   columnsToDisplay = ['title', 'location', 'status'];
 
   constructor() { }
 
   ngOnInit() {
+    this.textArea = document.getElementById('summary');
+    if (this.incident.SUMMARY) {
+      this.summaryExists = true;
+    }
   }
 
-  generateArray(obj){
+  generateArray(obj) {
     return Object.keys(obj).map((key)=>{ return {key:key, value:obj[key]}});
   }
 
@@ -27,6 +34,6 @@ export class IncidentDetailsComponent implements OnInit {
   }
 
   onEdit() {
-    return;
+    this.editPressed = !this.editPressed;
   }
 }
