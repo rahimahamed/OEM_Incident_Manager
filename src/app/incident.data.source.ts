@@ -3,16 +3,19 @@ import { DataSource, CollectionViewer } from '@angular/cdk/collections';
 import { IncidentService } from './incident.service';
 import { Incident } from './incident';
 import { catchError, finalize } from 'rxjs/operators';
-import { MatTableDataSource } from '@Angular/material';
 
 export class IncidentsDataSource implements DataSource<Incident> {
+
+  incidentList: Incident[] = [];
+  sortBoolean: boolean = true;
+
 
   private lessonsSubject = new BehaviorSubject<Incident[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
 
   public loading$ = this.loadingSubject.asObservable();
 
-  constructor(private incidentService: IncidentService) {}
+  constructor(private incidentService: IncidentService, private loadOpen: boolean) {}
 
   connect(collectionViewer: CollectionViewer): Observable<Incident[]> {
       return this.lessonsSubject.asObservable();
@@ -25,12 +28,60 @@ export class IncidentsDataSource implements DataSource<Incident> {
 
   loadLessons() {
       this.loadingSubject.next(true);
+      if (this.loadOpen) {
+        this.incidentService.getIncidents().pipe(
+          catchError(() => of([])),
+          finalize(() => this.loadingSubject.next(false))
+        ) .subscribe((resIncidentData: Incident[]) => {
+          for (const incident of resIncidentData) {
+            if (!(incident.STATUS === 'Closed')) {
+              this.incidentList.push(incident);
+            }
+          }
+          this.lessonsSubject.next(this.incidentList);
+          });
+      } else {
+        this.incidentService.getIncidents().pipe(
+          catchError(() => of([])),
+          finalize(() => this.loadingSubject.next(false))
+        ) .subscribe((resIncidentData: Incident[]) => {
+          for (const incident of resIncidentData) {
+            if (incident.STATUS === 'Closed') {
+              this.incidentList.push(incident);
+            }
+          }
+          this.lessonsSubject.next(this.incidentList);
+        });
+      }
+  }
 
-      this.incidentService.getIncidents().pipe(
-        catchError(() => of([])),
-        finalize(() => this.loadingSubject.next(false))
-      ) .subscribe((resIncidentData: Incident[]) => {
-        this.lessonsSubject.next(resIncidentData);
+  sortAlphabetically() {
+
+    if(this.sortBoolean){
+      this.incidentList.sort((a, b) => {
+        if(a.INCIDENT_NAME > b.INCIDENT_NAME) {
+          return 1;
+        } else if(a.INCIDENT_NAME < b.INCIDENT_NAME) {
+          return -1;
+        } else {
+          return 0;
+        }
       });
+      this.lessonsSubject.next(this.incidentList);
+      this.sortBoolean = false;
+    }
+    else{
+      this.incidentList.sort((a, b) => {
+        if(a.INCIDENT_NAME < b.INCIDENT_NAME) {
+          return 1;
+        } else if(a.INCIDENT_NAME > b.INCIDENT_NAME) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+      this.lessonsSubject.next(this.incidentList);
+      this.sortBoolean = true;
+    }
   }
 }

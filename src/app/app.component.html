@@ -13,7 +13,8 @@
       </li>
     </ul>
     <span class="navbar-text ml-auto">
-      {{date | date:'full'}}
+<!--       {{date | date:'full'}} -->
+      {{ day() + ', ' + monthDateYear() + ' at ' + showTime()}}
     </span>
   </div>
 </nav>
