@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Incident } from '../incident';
 
 @Component({
   selector: 'app-incident-details',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IncidentDetailsComponent implements OnInit {
 
+  @Input() incident: Incident;
+
+  columnsToDisplay = ['title', 'location', 'status'];
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  generateArray(obj){
+    return Object.keys(obj).map((key)=>{ return {key:key, value:obj[key]}});
+  }
 }

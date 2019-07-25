@@ -1,0 +1,19 @@
+.wrap{
+  text-align:center
+}
+.left{
+  float: left;
+}
+.right{
+  float: right;
+  padding-left: 50px;
+  padding-bottom: 20px;
+}
+.center{
+ margin:0 auto;
+ display:inline-block
+}
+.exp-btn{
+  margin-top: 20px;
+  margin-right: 20px;
+}

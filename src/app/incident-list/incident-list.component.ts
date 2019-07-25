@@ -21,6 +21,27 @@ export class IncidentListComponent implements OnInit {
   @Output() archiveIncident = new EventEmitter();
 
   dataSource: IncidentsDataSource;
+  incidentList: Incident[] = [
+    {
+      _id: '5d3919a26ed54400177e1f1f',
+      INCIDENT_NAME: 'Power Outage',
+      STATUS: 'Responding',
+      LOCATION_NAME: 'Brooklyn',
+      SUMMARY:  ' ',
+      INCIDENT_TYPE:  'CRAZY',
+      CREATION_DATE:  ' ',
+      ADDRESS:  ' ',
+      LATITUDE:  ' ',
+      LONGITUDE:  ' ',
+      LEAD_AGENCY:  ' ',
+      SUPPORTING_AGENCY:  ' ',
+      CREATED_BY:  ' ',
+      MODIFICATION_DATE:  ' ',
+      MODIFIED_BY:  ' ',
+      COMMENTS:  ' ',
+    },
+  ];
+
   columnsToDisplay = ['title', 'location', 'status'];
   expandedElement: Incident | null;
 
