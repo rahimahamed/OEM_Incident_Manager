@@ -1,21 +1,54 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Incident } from '../incident';
+import { IncidentService } from '../incident.service';
+import { IncidentsDataSource } from '../incident.data.source';
+import { MatSort } from '@Angular/material';
 
 @Component({
   selector: 'app-incident-list',
   templateUrl: './incident-list.component.html',
   styleUrls: ['./incident-list.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class IncidentListComponent implements OnInit {
   @Input() incidents: Incident[];
   @Output() selectIncident = new EventEmitter();
   @Output() archiveIncident = new EventEmitter();
 
-  public _id = 45612445552114;
+  // ELEMENT_DATA: Incident[] = [
+  //   {
+  //       _id: '5d2f3f3aeae75939345b9dbb',
+  //       title: 'Power Outage',
+  //       location: 'Brooklyn',
+  //       status: 'Closed',
+  //   },
+  //   {
+  //       _id: '5d30ceaf38ed6945a8100564',
+  //       title: 'Test',
+  //       location: 'Test',
+  //       status: 'Closed',
+  //   },
+  // ];
 
-  constructor() { }
+  dataSource: IncidentsDataSource;
+  columnsToDisplay = ['title', 'location', 'status'];
+  expandedElement: Incident | null;
+
+  constructor(private incidentService: IncidentService) { }
+
+  @ViewChild(MatSort, null) sort: MatSort;
 
   ngOnInit() {
+    this.dataSource = new IncidentsDataSource(this.incidentService);
+    this.dataSource.loadLessons();
+    //this.dataSource.sort = this.sort;
   }
 
   onSelect(incident) {
@@ -29,5 +62,4 @@ export class IncidentListComponent implements OnInit {
   onOpen(incident) {
     return;
   }
-
 }
