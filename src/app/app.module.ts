@@ -13,6 +13,7 @@ import { MaterialModule } from '../material-module';
 import { IncidentCommentsComponent } from './incident-comments/incident-comments.component';
 import { IncidentDetailsComponent } from './incident-details/incident-details.component';
 import { IncidentMapComponent } from './incident-map/incident-map.component';
+import { UserCreateComponent } from './user-create/user-create.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { IncidentMapComponent } from './incident-map/incident-map.component';
     ArchivedIncidentsComponent,
     IncidentCommentsComponent,
     IncidentDetailsComponent,
-    IncidentMapComponent
+    IncidentMapComponent,
+    UserCreateComponent
   ],
   imports: [
     BrowserModule,

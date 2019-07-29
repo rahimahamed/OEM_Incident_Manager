@@ -1,10 +1,13 @@
 if(process.env.NODE_ENV !== 'production'){
   require('dotenv').config(); //not load
 }
+
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Incident = require('../models/incident');
+const User = require('../models/user');
+
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }, function(err){
@@ -102,5 +105,30 @@ router.delete('/active/:id', function(req, res){
         }
     });
 });
+
+// http://localhost:3000/api/users
+router.post('/users', function(req,res) {
+    console.log('POST a new user!');
+    var user = new User();
+    user.username = req.body.username;
+    user.password = req.body.password;
+    user.email = req.body.email;
+    if (req.body.username == null || req.body.username == '' || 
+    req.body.password == null || req.body.password == '' ||
+    req.body.email == null || req.body.email == '') {
+        res.send('Ensure user, email, pw were provided');
+    } else {
+        user.save(function(err){
+            if (err){
+                console.log('User/Email already exists!');
+            }else{
+                res.json(user);
+                res.send('User created!');
+            }
+        });
+    }
+
+  });
+  
 
 module.exports = router;
