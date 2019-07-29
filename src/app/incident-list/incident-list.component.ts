@@ -21,7 +21,7 @@ export class IncidentListComponent implements OnInit {
   @Output() archiveIncident = new EventEmitter();
 
   dataSource: IncidentsDataSource;
-  columnsToDisplay = ['title', 'location', 'status'];
+  columnsToDisplay = ['title', 'location', 'status', 'prognosis'];
   expandedElement: Incident | null;
 
   constructor(private incidentService: IncidentService) { }
