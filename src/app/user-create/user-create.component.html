@@ -1,29 +1,121 @@
-<div class = "page header"> 
-    <h1>User Registration</h1> 
+<div class="page header" style="margin-top:20px; margin-bottom: 30px">
+  <h1>User Registration</h1>
 </div>
 
-<form #form="ngForm" (ngSubmit) = "onSubmitUser()">
-    <div class = "form-group">
+<form #form="ngForm" (ngSubmit)="form.valid && onSubmit(form)">
+  <div class="form-group">
     <label>Email</label>
-    <input class = "form-control" type = "text" name = "email" placeholder = "Please enter email"
-    ng-model = "register.regData.email">
-</div>
-    <br>
-    
-    <label>
-        Username
-    </label>
-    <input class = "form-control" type = "text" name = "username" placeholder = "Please enter username"
-    ng-model = "register.regData.username">
-    <br>
+    <br />
+    <input
+      required
+      type="text"
+      #email="ngModel"
+      [(ngModel)]="_userService.selectedUser.email"
+      name="email"
+      placeholder="Please input your Email."
+      [pattern]="emailRegex"
+      [ngClass]="{ 'invalid-textbox': form.submitted && !email.valid }"
+    />
+    <div *ngIf="form.submitted && email.errors">
+      <label *ngIf="email.errors.required" class="validation-message"
+        >This field is required.</label
+      >
+      <label *ngIf="email.errors.pattern" class="validation-message"
+        >Invalid email address.</label
+      >
+    </div>
+  </div>
 
-    <label>
-        Password
-    </label>
-    <input class = "form-control" type = "password" name = "password" placeholder = "Please enter email"
-    ng-model = "register.regData.password">
-    <br>
+  <div class="form-group">
+    <label>Username</label>
+    <br />
+    <input
+      required
+      type="text"
+      #username="ngModel"
+      [(ngModel)]="_userService.selectedUser.username"
+      name="username"
+      placeholder="Please input your Username."
+      [ngClass]="{ 'invalid-textbox': form.submitted && !username.valid }"
+    />
+    <div *ngIf="form.submitted && !username.valid">
+      <label class="validation-message">This field is required.</label>
+    </div>
+  </div>
 
-    <button type = "submit">Register</button>
+  <div class="form-group">
+    <label>Password</label>
+    <br />
+    <input
+      required
+      type="password"
+      #password="ngModel"
+      [(ngModel)]="_userService.selectedUser.password"
+      name="password"
+      placeholder="Please input your Password."
+      minlength="4"
+      [ngClass]="{ 'invalid-textbox': form.submitted && !password.valid }"
+    />
+    <div *ngIf="form.submitted && password.errors">
+      <label *ngIf="password.errors.required" class="validation-message"
+        >This field is required.</label
+      >
+      <label *ngIf="password.errors.minlength" class="validation-message"
+        >Enter at least 4 characters.</label
+      >
+    </div>
+  </div>
 
+  <!-- Confirm Password Input -->
+  <!-- <div class="form-group">
+    <label for="confirm">Confirm Password</label>
+    <div
+      [ngClass]="{
+        'has-error':
+          (form.controls.confirm.errors && form.controls.confirm.dirty) ||
+          (form.errors?.matchingPasswords && form.controls.confirm.dirty),
+        'has-success':
+          !form.controls.confirm.errors && !form.errors?.matchingPasswords
+      }"
+    >
+      <input
+        type="password"
+        name="confirm"
+        class="form-control"
+        autocomplete="off"
+        placeholder="*Confirm Password"
+        formControlName="confirm"
+      />
+
+      <ul class="help-block">
+        <li
+          *ngIf="
+            form.controls.confirm.errors?.required &&
+            form.controls.confirm.dirty
+          "
+        >
+          This field is required
+        </li>
+        <li
+          *ngIf="form.errors?.matchingPasswords && form.controls.confirm.dirty"
+        >
+          Passwords do not match
+        </li>
+      </ul>
+    </div>
+  </div> -->
+
+  <button type="submit" class="btn btn-primary">Register</button>
 </form>
+
+<br />
+
+<div class="success" *ngIf="showSuccessMessage">
+  Saved successfully
+</div>
+
+<br />
+
+<div class="alert" *ngIf="serverErrorMessages">
+  {{ serverErrorMessages }}
+</div>

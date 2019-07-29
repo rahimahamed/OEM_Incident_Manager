@@ -8,7 +8,6 @@ import { variable } from '@angular/compiler/src/output/output_ast';
   providedIn: 'root'
 })
 export class IncidentService {
-
   private _getUrl = '/api/active';
   private _postUrl = '/api/active';
   private _putUrl = '/api/active/';
@@ -16,7 +15,7 @@ export class IncidentService {
 
   incidents: Array<Incident>;
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {}
 
   getIncidents() {
     return this._http.get(this._getUrl);
@@ -24,7 +23,9 @@ export class IncidentService {
 
   addIncidents(incident: Incident) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this._http.post(this._postUrl, JSON.stringify(incident), { headers });
+    return this._http.post(this._postUrl, JSON.stringify(incident), {
+      headers
+    });
   }
 
   deleteIncident(incident: Incident) {
@@ -33,6 +34,10 @@ export class IncidentService {
 
   updateIncident(incident: Incident) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this._http.put(this._putUrl + incident._id, JSON.stringify(incident), {headers});
+    return this._http.put(
+      this._putUrl + incident._id,
+      JSON.stringify(incident),
+      { headers }
+    );
   }
 }

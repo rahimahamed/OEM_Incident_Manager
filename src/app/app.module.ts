@@ -14,6 +14,7 @@ import { IncidentCommentsComponent } from './incident-comments/incident-comments
 import { IncidentDetailsComponent } from './incident-details/incident-details.component';
 import { IncidentMapComponent } from './incident-map/incident-map.component';
 import { UserCreateComponent } from './user-create/user-create.component';
+import { UserLoginComponent } from './user-login/user-login.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { UserCreateComponent } from './user-create/user-create.component';
     IncidentCommentsComponent,
     IncidentDetailsComponent,
     IncidentMapComponent,
-    UserCreateComponent
+    UserCreateComponent,
+    UserLoginComponent
   ],
   imports: [
     BrowserModule,

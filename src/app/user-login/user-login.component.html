@@ -1,0 +1,114 @@
+<div class="page header" style="margin-top:20px; margin-bottom: 30px">
+  <h1>Login</h1>
+</div>
+
+<form #form="ngForm" (ngSubmit)="form.valid && onSubmit(form)">
+  <input
+    type="text"
+    name="username"
+    #username="ngModel"
+    [(ngModel)]="model.username"
+    placeholder="Username"
+    required
+    [ngClass]="{ 'invalid-textbox': form.submitted && !username.valid }"
+  />
+
+  <div *ngIf="form.submitted && username.errors?.pattern">
+    <label class="validation-message">Invalid username.</label>
+  </div>
+
+  <input
+    type="password"
+    name="password"
+    #password="ngModel"
+    [(ngModel)]="model.password"
+    placeholder="Password"
+    required
+    minlength="4"
+    [ngClass]="{ 'invalid-textbox': form.submitted && !password.valid }"
+  />
+  <div *ngIf="form.submitted && password.errors?.minlength">
+    <label class="validation-message">Minimum 4 characters.</label>
+  </div>
+  <input type="submit" value="Sign In" />
+</form>
+
+Error message
+<div class="alert" *ngIf="serverErrorMessages">
+  {{ serverErrorMessages }}
+</div>
+
+<!-- 
+<h2 class="page-header">Login</h2>
+
+<div class="row show-hide-message">
+  <div [ngClass]="messageClass">
+    {{ message }}
+  </div>
+</div>
+
+<form [formGroup]="form" (submit)="onLoginSubmit()">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <div
+      [ngClass]="{
+        'has-error':
+          form.controls.username.errors && form.controls.username.dirty,
+        'has-success':
+          form.controls.username.valid && form.controls.username.dirty
+      }"
+    >
+      <input
+        class="form-control"
+        type="text"
+        name="username"
+        formControlName="username"
+      />
+      <ul class="help-block">
+        <li
+          *ngIf="
+            form.controls.username.errors?.required &&
+            form.controls.username.dirty
+          "
+        >
+          This field is required.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <div
+      [ngClass]="{
+        'has-error':
+          form.controls.password.errors && form.controls.password.dirty,
+        'has-success':
+          form.controls.password.valid && form.controls.password.dirty
+      }"
+    >
+      <input
+        class="form-control"
+        type="password"
+        name="password"
+        formControlName="password"
+      />
+      <ul class="help-block">
+        <li
+          *ngIf="
+            form.controls.password.errors?.required &&
+            form.controls.password.dirty
+          "
+        >
+          This field is required.
+        </li>
+      </ul>
+    </div>
+  </div>
+  <input
+    [disabled]="!form.valid || processing"
+    class="btn btn-primary"
+    type="submit"
+    value="Login"
+  />
+</form> -->
