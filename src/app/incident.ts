@@ -15,4 +15,8 @@ export class Incident {
   MODIFICATION_DATE: string;
   MODIFIED_BY: string;
   COMMENTS: string;
+
+  constructor(id?: string) {
+    this.INCIDENT_NAME = id;
+  }
 }

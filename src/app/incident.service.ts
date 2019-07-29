@@ -22,6 +22,11 @@ export class IncidentService {
     return this._http.get(this._getUrl);
   }
 
+  getID(id: string) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this._http.get(this._getUrl + '/' + id, {headers});
+  }
+
   addIncidents(incident: Incident) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.post(this._postUrl, JSON.stringify(incident), { headers });

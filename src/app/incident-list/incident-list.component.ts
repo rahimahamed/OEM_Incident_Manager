@@ -18,13 +18,14 @@ import { IncidentsDataSource } from '../incident.data.source';
 })
 export class IncidentListComponent implements OnInit {
   @Output() selectIncident = new EventEmitter();
+  @Output() editIncident = new EventEmitter();
 
   dataSource: IncidentsDataSource;
   incidentList: Incident[] = [
     {
       _id: '5d3919a26ed54400177e1f1f',
       INCIDENT_NAME: 'Power Outage',
-      STATUS: 'Responding',
+      STATUS: 'NOT ACTIVE',
       LOCATION_NAME: 'Brooklyn',
       SUMMARY: null,
       INCIDENT_TYPE:  'CRAZY',
@@ -81,6 +82,11 @@ export class IncidentListComponent implements OnInit {
         this.ngOnInit();
       }
     );
+  }
+
+  onEdit(incidentID: Incident) {
+    this.expandedElement = null;
+    this.editIncident.emit(incidentID);
   }
 
 }

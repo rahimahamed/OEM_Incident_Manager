@@ -10,6 +10,7 @@ export class IncidentDetailsComponent implements OnInit {
 
   @Input() incident: Incident;
   @Output() archiveIncident = new EventEmitter();
+  @Output() editIncident = new EventEmitter();
   textArea;
   summaryExists = false;
   editPressed = false;
@@ -34,6 +35,6 @@ export class IncidentDetailsComponent implements OnInit {
   }
 
   onEdit() {
-    this.editPressed = !this.editPressed;
+    this.editIncident.emit(this.incident);
   }
 }
