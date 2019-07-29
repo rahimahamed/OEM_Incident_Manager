@@ -11,13 +11,15 @@
           </tr>
       </table>
   </div>
-  <div class="right">
-      <div class="form-group">
+  <div class="center">
+      <div *ngIf="!summaryExists" class="form-group">
           <label>Summary:</label>
-          <p *ngIf="summaryExists">{{incident.SUMMARY}}</p>
-          <textarea *ngIf="!summaryExists"class="form-control" rows="20" cols="80" id="summary"></textarea>
+          <!-- <p *ngIf="summaryExists">{{incident.SUMMARY}}</p> -->
+          <textarea class="form-control" rows="20" cols="80"
+          [(ngModel)] = "summary"></textarea>
+      </div>
       <button type="button" (click)="onEdit()" class="btn btn-warning exp-btn">Edit</button>
-      <button type="button" class="btn btn-success exp-btn">Submit</button>
+      <button type="button" (click)="onSubmitSummary()" class="btn btn-success exp-btn">Submit</button>
       <button type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Archive</button>
   </div>
 </div>

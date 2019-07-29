@@ -16,7 +16,6 @@ export class Incident {
   MODIFIED_BY: string;
   COMMENTS: string;
 
-  constructor(id?: string) {
-    this.INCIDENT_NAME = id;
+  constructor() {
   }
 }

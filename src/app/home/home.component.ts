@@ -49,25 +49,29 @@ export class HomeComponent implements OnInit {
         this.ngOnInit();
         this.onClick();
         this.updateForm = false;
+        this.model = new Incident();
         this.dataSource.loadLessons();
       }
     );
+  }
+
+  closeForm() {
+    alert('TEST');
+    this.hideForm = true;
   }
 
   incidentSelect(dataSource: IncidentsDataSource) {
     this.dataSource = dataSource;
   }
 
-  editIncident(id: Incident) {
+  editIncident(incident: Incident) {
     this.updateForm = true;
     this.hideForm = false;
-    this.model = Object.assign({}, id);
-    // this._incidentService.getID(id).subscribe(
-    //   incident => {
-    //     this.model = Object.assign({}, incident as Incident);
-    //     this.onClick();
-    //     this.updateForm = true;
-    //   }
-    // );
+    this.model = Object.assign({}, incident);
+  }
+
+  updateSummary(incident: Incident) {
+    this.model = Object.assign({}, incident);
+    this.onUpdateIncident();
   }
 }

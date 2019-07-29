@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Incident } from '../incident';
-
+import { skip } from 'rxjs/operators';
 @Component({
   selector: 'app-incident-details',
   templateUrl: './incident-details.component.html',
@@ -9,25 +9,33 @@ import { Incident } from '../incident';
 export class IncidentDetailsComponent implements OnInit {
 
   @Input() incident: Incident;
+  @Output() closeForm = new EventEmitter();
   @Output() archiveIncident = new EventEmitter();
   @Output() editIncident = new EventEmitter();
-  textArea;
+  @Output() updateSummary = new EventEmitter();
+
   summaryExists = false;
   editPressed = false;
+  summary: string;
 
   columnsToDisplay = ['title', 'location', 'status'];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
-    this.textArea = document.getElementById('summary');
     if (this.incident.SUMMARY) {
       this.summaryExists = true;
     }
+    this.closeForm.emit();
   }
 
   generateArray(obj) {
-    return Object.keys(obj).map((key)=>{ return {key:key, value:obj[key]}});
+    return Object.keys(obj).map((key)=> {
+      return {
+        key:key, value:obj[key]
+      }
+    });
   }
 
   onArchive() {
@@ -36,5 +44,13 @@ export class IncidentDetailsComponent implements OnInit {
 
   onEdit() {
     this.editIncident.emit(this.incident);
+  }
+
+  onSubmitSummary() {
+    this.incident.SUMMARY = this.summary;
+    this.updateSummary.emit(this.incident);
+    if (this.incident.SUMMARY) {
+      this.summaryExists = true;
+    }
   }
 }

@@ -55,6 +55,8 @@
   </div>
   <div><div [ngStyle]="displayStyle">{{str}}</div>
 
-  <app-incident-list (selectIncident)="incidentSelect($event)"
-                      (editIncident)="editIncident($event)">
+  <app-incident-list  (closeF)="closeForm()"
+                      (selectIncident)="incidentSelect($event)"
+                      (editIncident)="editIncident($event)"
+                      (updateSum)="updateSummary($event)">
   </app-incident-list>
