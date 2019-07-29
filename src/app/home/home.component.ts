@@ -56,7 +56,6 @@ export class HomeComponent implements OnInit {
   }
 
   closeForm() {
-    alert('TEST');
     this.hideForm = true;
   }
 
