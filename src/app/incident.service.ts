@@ -1,8 +1,6 @@
 import { Incident } from './incident';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { variable } from '@angular/compiler/src/output/output_ast';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
