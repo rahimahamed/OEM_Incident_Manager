@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IncidentMapComponent implements OnInit {
 
+  lat = 40.730610;
+  lng = -73.935242;
+
   constructor() { }
 
   ngOnInit() {

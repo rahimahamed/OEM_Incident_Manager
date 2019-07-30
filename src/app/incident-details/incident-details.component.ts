@@ -1,8 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Incident } from '../incident';
-import { pairs } from 'rxjs';
-import { keyframes } from '@angular/animations';
-import { Key } from 'protractor';
 @Component({
   selector: 'app-incident-details',
   templateUrl: './incident-details.component.html',
@@ -19,11 +16,6 @@ export class IncidentDetailsComponent implements OnInit {
   summaryExists = false;
   editPressed = false;
   summary: string;
-  map: {
-    key: string;
-    value: string;
-  };
-
   columnsToDisplay = ['title', 'location', 'status'];
 
   constructor() {
@@ -33,7 +25,6 @@ export class IncidentDetailsComponent implements OnInit {
     if (this.incident.SUMMARY) {
       this.summaryExists = true;
     }
-    // this.closeForm.emit();
   }
 
   generateArray(obj) {

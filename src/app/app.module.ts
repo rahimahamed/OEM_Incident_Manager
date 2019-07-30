@@ -15,6 +15,8 @@ import { IncidentDetailsComponent } from './incident-details/incident-details.co
 import { IncidentMapComponent } from './incident-map/incident-map.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 
+import { AgmCoreModule } from '@agm/core';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +35,10 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     BrowserAnimationsModule,
     MaterialModule,
     MatNativeDateModule,
-    EditorModule
+    EditorModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDr8Sz6cBrbbQ3-rlzpO25xAHLMW71Pwck'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
