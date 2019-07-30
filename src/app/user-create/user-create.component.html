@@ -1,73 +1,76 @@
 <div class="page header" style="margin-top:20px; margin-bottom: 30px">
-  <h1>User Registration</h1>
+  <h1>Sign Up</h1>
 </div>
 
-<form #form="ngForm" (ngSubmit)="form.valid && onSubmit(form)">
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
-    <label>Email</label>
+    <label for="email">Email</label>
     <br />
     <input
       required
       type="text"
-      #email="ngModel"
-      [(ngModel)]="_userService.selectedUser.email"
-      name="email"
-      placeholder="Please input your Email."
+      formControlName="email"
+      class="form-control"
       [pattern]="emailRegex"
-      [ngClass]="{ 'invalid-textbox': form.submitted && !email.valid }"
+      [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+      placeholder="Email"
     />
-    <div *ngIf="form.submitted && email.errors">
-      <label *ngIf="email.errors.required" class="validation-message"
-        >This field is required.</label
-      >
-      <label *ngIf="email.errors.pattern" class="validation-message"
-        >Invalid email address.</label
-      >
+    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+      <div *ngIf="f.email.errors.required">This field is required.</div>
+      <div *ngIf="f.email.errors.pattern">Invalid email address.</div>
     </div>
   </div>
 
   <div class="form-group">
-    <label>Username</label>
+    <label for="username">Username</label>
     <br />
     <input
       required
       type="text"
-      #username="ngModel"
-      [(ngModel)]="_userService.selectedUser.username"
-      name="username"
-      placeholder="Please input your Username."
-      [ngClass]="{ 'invalid-textbox': form.submitted && !username.valid }"
+      formControlName="username"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+      placeholder="Username"
     />
-    <div *ngIf="form.submitted && !username.valid">
-      <label class="validation-message">This field is required.</label>
+    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+      <div *ngIf="f.username.errors.required">Username is required</div>
     </div>
   </div>
 
   <div class="form-group">
-    <label>Password</label>
+    <label for="password">Password</label>
     <br />
     <input
       required
       type="password"
-      #password="ngModel"
-      [(ngModel)]="_userService.selectedUser.password"
-      name="password"
-      placeholder="Please input your Password."
-      minlength="4"
-      [ngClass]="{ 'invalid-textbox': form.submitted && !password.valid }"
+      formControlName="password"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+      minlength="6"
+      placeholder="Password"
     />
-    <div *ngIf="form.submitted && password.errors">
-      <label *ngIf="password.errors.required" class="validation-message"
-        >This field is required.</label
-      >
-      <label *ngIf="password.errors.minlength" class="validation-message"
-        >Enter at least 4 characters.</label
-      >
+    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+      <div *ngIf="f.password.errors.required">Password is required</div>
+      <div *ngIf="f.password.errors.minlength">
+        Password must be at least 6 characters
+      </div>
     </div>
   </div>
 
-  <!-- Confirm Password Input -->
-  <!-- <div class="form-group">
+  <div class="form-group">
+    <button [disabled]="loading" class="btn btn-primary">
+      <span
+        *ngIf="loading"
+        class="spinner-border spinner-border-sm mr-1"
+      ></span>
+      Register
+    </button>
+    <a routerLink="/home" class="btn btn-link">Cancel</a>
+  </div>
+</form>
+
+<!-- Confirm Password Input -->
+<!-- <div class="form-group">
     <label for="confirm">Confirm Password</label>
     <div
       [ngClass]="{
@@ -105,12 +108,7 @@
     </div>
   </div> -->
 
-  <button type="submit" class="btn btn-primary">Register</button>
-</form>
-
-<br />
-
-<div class="success" *ngIf="showSuccessMessage">
+<!-- <div class="success" *ngIf="showSuccessMessage">
   Saved successfully
 </div>
 
@@ -118,4 +116,4 @@
 
 <div class="alert" *ngIf="serverErrorMessages">
   {{ serverErrorMessages }}
-</div>
+</div> -->

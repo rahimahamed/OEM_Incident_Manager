@@ -152,55 +152,54 @@ router.post('/users', function(req, res) {
         res.json({ success: false, message: 'User/Email already exists!' });
       } else {
         res.json(user);
-        res.send('User created!');
       }
     });
   }
 });
 
-router.post('/comment', (req, res) => {
-  if (!req.body.comment) {
-    res.json({ success: false, message: 'No comment provided' });
-  } else {
-    if (!req.body.id) {
-      res.json({ success: false, message: 'No id was provided' });
-    } else {
-      Incident.findOne({ _id: req.body.id }, (err, blog) => {
-        if (err) {
-          res.json({ success: false, message: 'Invalid incident id' });
-        } else {
-          if (!incident) {
-            res.json({ success: false, message: 'Incident not found' });
-          } else {
-            User.findOne({ _id: req.decoded.userId }, (err, user) => {
-              if (err) {
-                res.json({ success: false, message: 'Something went wrong' });
-              } else {
-                if (!user) {
-                  res.json({ success: false, message: 'User not found.' });
-                } else {
-                  incident.comments.push({
-                    comment: req.body.comment,
-                    commentator: user.username
-                  });
-                  blog.save(err => {
-                    if (err) {
-                      res.json({
-                        success: false,
-                        message: 'Something went wrong.'
-                      });
-                    } else {
-                      res.json({ success: true, message: 'Comment saved' });
-                    }
-                  });
-                }
-              }
-            });
-          }
-        }
-      });
-    }
-  }
-});
+// router.post('/comment', (req, res) => {
+//   if (!req.body.comment) {
+//     res.json({ success: false, message: 'No comment provided' });
+//   } else {
+//     if (!req.body.id) {
+//       res.json({ success: false, message: 'No id was provided' });
+//     } else {
+//       Incident.findOne({ _id: req.body.id }, (err, blog) => {
+//         if (err) {
+//           res.json({ success: false, message: 'Invalid incident id' });
+//         } else {
+//           if (!incident) {
+//             res.json({ success: false, message: 'Incident not found' });
+//           } else {
+//             User.findOne({ _id: req.decoded.userId }, (err, user) => {
+//               if (err) {
+//                 res.json({ success: false, message: 'Something went wrong' });
+//               } else {
+//                 if (!user) {
+//                   res.json({ success: false, message: 'User not found.' });
+//                 } else {
+//                   incident.comments.push({
+//                     comment: req.body.comment,
+//                     commentator: user.username
+//                   });
+//                   blog.save(err => {
+//                     if (err) {
+//                       res.json({
+//                         success: false,
+//                         message: 'Something went wrong.'
+//                       });
+//                     } else {
+//                       res.json({ success: true, message: 'Comment saved' });
+//                     }
+//                   });
+//                 }
+//               }
+//             });
+//           }
+//         }
+//       });
+//     }
+//   }
+// });
 
 module.exports = router;

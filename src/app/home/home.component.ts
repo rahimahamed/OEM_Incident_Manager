@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IncidentService } from './../incident.service';
+import { IncidentService } from '../services/incident.service';
 import { Incident } from './../incident';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IncidentsDataSource } from '../incident.data.source';
@@ -18,7 +18,11 @@ export class HomeComponent implements OnInit {
 
   model = new Incident();
 
-  constructor(private _incidentService: IncidentService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private _incidentService: IncidentService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.date = Date.now();
@@ -29,14 +33,12 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmitIncident() {
-    this._incidentService.addIncidents(this.model).subscribe(
-      newIncident => {
-        this.ngOnInit();
-        this.hideForm = true;
-        this.model = new Incident();
-        this.dataSource.loadLessons();
-      }
-    );
+    this._incidentService.addIncidents(this.model).subscribe(newIncident => {
+      this.ngOnInit();
+      this.hideForm = true;
+      this.model = new Incident();
+      this.dataSource.loadLessons();
+    });
   }
 
   incidentSelect(dataSource: IncidentsDataSource) {
@@ -45,10 +47,10 @@ export class HomeComponent implements OnInit {
 
   archiveIncident(incident: Incident) {
     incident.STATUS = 'Closed';
-    this._incidentService.updateIncident(incident).subscribe(
-      archivedIncident => {
+    this._incidentService
+      .updateIncident(incident)
+      .subscribe(archivedIncident => {
         this.ngOnInit();
-      }
-    );
+      });
   }
 }

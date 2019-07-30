@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import {MatNativeDateModule} from '@angular/material/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { MatNativeDateModule } from '@angular/material/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppRoutingModule, routingComponents} from './app-routing.module';
+import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IncidentListComponent } from './incident-list/incident-list.component';
 import { ArchivedIncidentsComponent } from './archived-incidents/archived-incidents.component';
@@ -15,6 +15,8 @@ import { IncidentDetailsComponent } from './incident-details/incident-details.co
 import { IncidentMapComponent } from './incident-map/incident-map.component';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { UserLoginComponent } from './user-login/user-login.component';
+import { AlertComponent } from './alert/alert.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -26,18 +28,21 @@ import { UserLoginComponent } from './user-login/user-login.component';
     IncidentDetailsComponent,
     IncidentMapComponent,
     UserCreateComponent,
-    UserLoginComponent
+    UserLoginComponent,
+    AlertComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    MatNativeDateModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

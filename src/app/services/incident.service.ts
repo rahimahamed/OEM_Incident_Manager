@@ -1,6 +1,8 @@
-import { Incident } from './incident';
+import { Incident } from '../incident';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { AuthenticationService } from './auth.service';
 import { map } from 'rxjs/operators';
 import { variable } from '@angular/compiler/src/output/output_ast';
 
@@ -13,9 +15,27 @@ export class IncidentService {
   private _putUrl = '/api/active/';
   private _deleteUrl = '/api/active/';
 
+  options;
+  domain = this.authService.domain;
+
   incidents: Array<Incident>;
 
-  constructor(private _http: HttpClient) {}
+  constructor(
+    private _http: HttpClient,
+    private authService: AuthenticationService
+  ) {}
+
+  // Function to create headers, add token, to be used in HTTP requests
+  createAuthenticationHeaders() {
+    this.authService.loadToken(); // Get token so it can be attached to headers
+    // Headers configuration options
+    this.options = new RequestOptions({
+      headers: new Headers({
+        'Content-Type': 'application/json', // Format set to JSON
+        authorization: this.authService.authToken // Attach token
+      })
+    });
+  }
 
   getIncidents() {
     return this._http.get(this._getUrl);
@@ -42,11 +62,13 @@ export class IncidentService {
   }
 
   postComment(id, comment) {
-    // this.createAuthenticationHeaders()
+    this.createAuthenticationHeaders();
     const blogData = {
       id: id,
       comment: comment
     };
-    // return this.http.post(this.domain + 'blogs/comment', blogData, this.options).map(res => res.json());
+    return this._http
+      .post(this.domain + 'api/comment', blogData, this.options)
+      .pipe(map(response => console.log(response)));
   }
 }

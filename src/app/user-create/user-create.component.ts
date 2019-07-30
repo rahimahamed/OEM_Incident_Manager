@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
+import { UserService } from '../services/user.service';
+import { AuthenticationService } from '../services/auth.service';
+import { AlertService } from '../services/alert.service';
 import { User } from './../user';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-create',
@@ -12,58 +15,82 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   providers: [UserService]
 })
 export class UserCreateComponent implements OnInit {
-  // model = new User();
-  form: FormGroup;
+  registerForm: FormGroup;
 
   emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   showSuccessMessage: boolean;
   serverErrorMessages: string;
 
+  loading = false;
+  submitted = false;
+
   constructor(
-    private _userService: UserService,
+    private formBuilder: FormBuilder,
     private router: Router,
+    private authenticationService: AuthenticationService,
+    private userService: UserService,
+    private alertService: AlertService,
     private route: ActivatedRoute
-  ) {}
-
-  ngOnInit() {}
-
-  onSubmit(form: NgForm) {
-    this._userService.addUsers(form.value).subscribe(
-      res => {
-        this.showSuccessMessage = true;
-        // this.model = new User();
-        setTimeout(() => (this.showSuccessMessage = false), 4000);
-        this.resetForm(form);
-      },
-      err => {
-        if (err.status === 422) {
-          this.serverErrorMessages = err.error.join('<br/>');
-        } else
-          this.serverErrorMessages =
-            'Something went wrong. Please contact admin.';
-      }
-    );
+  ) {
+    // redirect to home if already logged in
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
   }
 
-  resetForm(form: NgForm) {
-    this._userService.selectedUser = {
-      username: '',
-      password: '',
-      email: ''
-    };
-    form.resetForm();
-    this.serverErrorMessages = '';
+  ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      email: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
   }
 
-  // Funciton to ensure passwords match
-  matchingPasswords(password, confirm) {
-    return (group: FormGroup) => {
-      // Check if both fields are the same
-      if (group.controls[password].value === group.controls[confirm].value) {
-        return null; // Return as a match
-      } else {
-        return { matchingPasswords: true }; // Return as error: do not match
-      }
-    };
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.registerForm.controls;
+  }
+
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+      return;
+    }
+
+    // const user = {
+    //   email: this.registerForm.get('email').value, // E-mail input field
+    //   username: this.registerForm.get('username').value, // Username input field
+    //   password: this.registerForm.get('password').value // Password input field
+    // }
+
+    this.loading = true;
+    this.userService
+      .register(this.registerForm.value)
+      // .addUsers(user)
+      // .pipe(first())
+      .subscribe(
+        data => {
+          this.alertService.success('Registration successful', true);
+          this.router.navigate(['/login']);
+        },
+        error => {
+          this.alertService.error(error);
+          this.loading = false;
+        }
+      );
   }
 }
+
+// Funciton to ensure passwords match
+// matchingPasswords(password, confirm) {
+//   return (group: FormGroup) => {
+//     // Check if both fields are the same
+//     if (group.controls[password].value === group.controls[confirm].value) {
+//       return null; // Return as a match
+//     } else {
+//       return { matchingPasswords: true }; // Return as error: do not match
+//     }
+//   };
+// }

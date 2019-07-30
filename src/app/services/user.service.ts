@@ -1,4 +1,4 @@
-import { User } from './user';
+import { User } from '../user';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 
@@ -14,18 +14,27 @@ export class UserService {
 
   noAuthHeader = { headers: new HttpHeaders({ NoAuth: 'True' }) };
 
-  private _getUrl = '/api/users';
   private _postUrl = '/api/users';
-  private _putUrl = '/api/users/';
-  private _deleteUrl = '/api/users/';
 
   constructor(private _http: HttpClient) {}
 
   addUsers(user: User) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this._http.post(this._postUrl + '/register', JSON.stringify(user), {
+    return this._http.post(this._postUrl + JSON.stringify(user), {
       headers
     });
+  }
+
+  getAll() {
+    return this._http.get<User[]>(this._postUrl);
+  }
+
+  register(user: User) {
+    return this._http.post(this._postUrl, user);
+  }
+
+  delete(id: number) {
+    return this._http.delete(`/users/${id}`);
   }
 
   login(authCredentials) {
