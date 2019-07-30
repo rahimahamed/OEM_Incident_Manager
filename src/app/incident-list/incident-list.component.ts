@@ -17,10 +17,51 @@ import { IncidentsDataSource } from '../incident.data.source';
   ],
 })
 export class IncidentListComponent implements OnInit {
+  @Output() closeF = new EventEmitter();
   @Output() selectIncident = new EventEmitter();
-  @Output() archiveIncident = new EventEmitter();
+  @Output() editIncident = new EventEmitter();
+  @Output() updateSum = new EventEmitter();
 
   dataSource: IncidentsDataSource;
+  incidentList: Incident[] = [
+    {
+      _id: '5d3919a26ed54400177e1f1f',
+      INCIDENT_NAME: 'Power Outage',
+      STATUS: 'NOT ACTIVE',
+      LOCATION_NAME: 'Brooklyn',
+      SUMMARY: 'Mon Jul 29 11:47:15 2019 STATUS: Active PROGNOSIS: Response Structural-Partial Collapse Bronx 2708 Schurz Avenue (NYCEM NYC.Gov List) An interagency meeting was held with the following agencies in attendance: DOB and NYCEM. DOB reports that no work has been conducted. The building owner has not hired a demo contractor to demolish the structure. DOB reports HPD will start demolition of the structure tomorrow morning. An interagency meeting has been scheduled for tomorrow July 30th at 1200 hrs. NYCEM operations continue. RESPONDING UNITS: NYCEM 610 REVIEWED AND APPROVED BY: NYCEM 532 RB INCIDENT NO: Inc-145421-103-072119 ',
+      INCIDENT_TYPE:  'CRAZY',
+      CREATION_DATE:  null,
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+    },
+    {
+      _id: '5d3919a26ed54400177e1f1f',
+      INCIDENT_NAME: 'Power Outage',
+      STATUS: 'Responding',
+      LOCATION_NAME: 'Queens',
+      SUMMARY: 'Failure',
+      INCIDENT_TYPE:  'LITT',
+      CREATION_DATE:  null,
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+    },
+  ];
+
   columnsToDisplay = ['title', 'location', 'status'];
   expandedElement: Incident | null;
 
@@ -32,20 +73,39 @@ export class IncidentListComponent implements OnInit {
     this.onSelect();
   }
 
+  closeForm() {
+    this.closeF.emit();
+  }
+
   onSelect() {
     this.selectIncident.emit(this.dataSource);
   }
 
-  onArchive(incident) {
-    this.archiveIncident.emit(incident);
+  onArchive(incident: Incident) {
+    incident.STATUS = 'Closed';
+    this.incidentService.updateIncident(incident).subscribe(
+      archivedIncident => {
+        this.ngOnInit();
+      }
+    );
   }
 
-  onOpen(incident) {
-    return;
+  onEdit(incident: Incident) {
+    this.expandedElement = null;
+    this.editIncident.emit(incident);
   }
 
   sortAlphabetically(numba){
     this.dataSource.sortAlphabetically(numba);
+  }
+
+  updateSummary(incident: Incident) {
+    this.updateSum.emit(incident);
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource = new IncidentsDataSource(this.incidentService, true);
+    this.dataSource.filter(filterValue.trim().toLowerCase());
   }
 
 }

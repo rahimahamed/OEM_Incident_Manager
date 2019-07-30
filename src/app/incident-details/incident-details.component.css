@@ -1,0 +1,31 @@
+.wrap{
+  text-align: center;
+}
+.left{
+  float: left;
+}
+.right{
+  float: right;
+  margin-left: 50px;
+  margin-bottom: 20px;
+}
+.center{
+ margin: 0 auto;
+ display: inline-block
+}
+.exp-btn{
+  margin-top: 20px;
+  margin-right: 20px;
+}
+.table {
+  width: 100%;
+}
+.editBox{
+  margin-top: 50px;
+  margin-bottom: 50px;
+  resize: none;
+  font-size: 14pt;
+  width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+}

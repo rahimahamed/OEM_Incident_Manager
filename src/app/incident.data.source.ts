@@ -30,6 +30,7 @@ export class IncidentsDataSource implements DataSource<Incident> {
   }
 
   loadLessons() {
+      this.incidentList = [];
       this.loadingSubject.next(true);
       if (this.loadOpen) {
         this.incidentService.getIncidents().pipe(
@@ -59,7 +60,6 @@ export class IncidentsDataSource implements DataSource<Incident> {
   }
 
   sortAlphabetically(numba) {
-
     switch(numba) {
       case numba=1: {
         this.sortBoolean = this.titleBoolean;
@@ -83,9 +83,9 @@ export class IncidentsDataSource implements DataSource<Incident> {
 
     if(this.sortBoolean){
       this.incidentList.sort((a, b) => {
-        if(a.INCIDENT_NAME > b.INCIDENT_NAME) {
+        if(a.INCIDENT_NAME.toLowerCase() > b.INCIDENT_NAME.toLowerCase()) {
           return 1;
-        } else if(a.INCIDENT_NAME < b.INCIDENT_NAME) {
+        } else if(a.INCIDENT_NAME.toLowerCase() < b.INCIDENT_NAME.toLowerCase()) {
           return -1;
         } else {
           return 0;
@@ -96,9 +96,9 @@ export class IncidentsDataSource implements DataSource<Incident> {
     }
     else{
       this.incidentList.sort((a, b) => {
-        if(a.INCIDENT_NAME < b.INCIDENT_NAME) {
+        if(a.INCIDENT_NAME.toLowerCase() < b.INCIDENT_NAME.toLowerCase()) {
           return 1;
-        } else if(a.INCIDENT_NAME > b.INCIDENT_NAME) {
+        } else if(a.INCIDENT_NAME.toLowerCase() > b.INCIDENT_NAME.toLowerCase()) {
           return -1;
         } else {
           return 0;
@@ -107,5 +107,50 @@ export class IncidentsDataSource implements DataSource<Incident> {
       this.lessonsSubject.next(this.incidentList);
       this.sortBoolean = true;
     }
+  }
+  filter(str: string){
+    this.incidentList = [];
+    this.loadingSubject.next(true);
+      if (this.loadOpen) {
+        this.incidentService.getIncidents().pipe(
+          catchError(() => of([])),
+          finalize(() => this.loadingSubject.next(false))
+        ) .subscribe((resIncidentData: Incident[]) => {
+          for (const incident of resIncidentData) {
+            if (!(incident.STATUS === 'Closed')) {
+              if ((incident.STATUS.toLowerCase()).includes(str)) {
+                this.incidentList.push(incident);
+              }
+              else if ((incident.INCIDENT_NAME.toLowerCase()).includes(str)) {
+                this.incidentList.push(incident);
+              }
+              else if ((incident.LOCATION_NAME.toLowerCase()).includes(str)) {
+                this.incidentList.push(incident);
+              }
+            }
+          }
+          this.lessonsSubject.next(this.incidentList);
+          });
+      } else {
+        this.incidentService.getIncidents().pipe(
+          catchError(() => of([])),
+          finalize(() => this.loadingSubject.next(false))
+        ) .subscribe((resIncidentData: Incident[]) => {
+          for (const incident of resIncidentData) {
+            if (incident.STATUS === 'Closed') {
+              if ((incident.STATUS.toLowerCase()).includes(str)) {
+                this.incidentList.push(incident);
+              }
+              else if ((incident.INCIDENT_NAME.toLowerCase()).includes(str)) {
+                this.incidentList.push(incident);
+              }
+              else if ((incident.LOCATION_NAME.toLowerCase()).includes(str)) {
+                this.incidentList.push(incident);
+              }
+            }
+          }
+          this.lessonsSubject.next(this.incidentList);
+        });
+      }
   }
 }
