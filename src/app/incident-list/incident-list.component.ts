@@ -1,9 +1,8 @@
-import { Component, OnInit, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
 import { IncidentsDataSource } from '../incident.data.source';
-import { MatSort } from '@Angular/material';
 
 @Component({
   selector: 'app-incident-list',
@@ -27,8 +26,6 @@ export class IncidentListComponent implements OnInit {
 
   constructor(private incidentService: IncidentService) { }
 
-  @ViewChild(MatSort, null) sort: MatSort;
-
   ngOnInit() {
     this.dataSource = new IncidentsDataSource(this.incidentService, true);
     this.dataSource.loadLessons();
@@ -46,7 +43,9 @@ export class IncidentListComponent implements OnInit {
   onOpen(incident) {
     return;
   }
-  sortName(){
-    this.dataSource.sortAlphabetically();
+
+  sortAlphabetically(numba){
+    this.dataSource.sortAlphabetically(numba);
   }
+
 }

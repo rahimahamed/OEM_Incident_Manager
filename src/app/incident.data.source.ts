@@ -8,6 +8,9 @@ export class IncidentsDataSource implements DataSource<Incident> {
 
   incidentList: Incident[] = [];
   sortBoolean: boolean = true;
+  titleBoolean: boolean = true;
+  locationBoolean: boolean = true;
+  statusBoolean: boolean = true;
 
 
   private lessonsSubject = new BehaviorSubject<Incident[]>([]);
@@ -55,7 +58,28 @@ export class IncidentsDataSource implements DataSource<Incident> {
       }
   }
 
-  sortAlphabetically() {
+  sortAlphabetically(numba) {
+
+    switch(numba) {
+      case numba=1: {
+        this.sortBoolean = this.titleBoolean;
+        this.titleBoolean = !this.titleBoolean;
+        break;
+      }
+      case numba=2: {
+        this.sortBoolean = this.locationBoolean;
+        this.locationBoolean = !this.locationBoolean;
+        break;
+      }
+      case numba=3: {
+        this.sortBoolean = this.statusBoolean;
+        this.statusBoolean = !this.statusBoolean;
+        break;
+      }
+      default: {
+        break;
+      }
+    }
 
     if(this.sortBoolean){
       this.incidentList.sort((a, b) => {
