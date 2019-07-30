@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   date: number = Date.now();
   dataSource: IncidentsDataSource;
 
-  public isDisabledPrognosis: boolean = true;
+  /*public isDisabledPrognosis: boolean = true;
 
   public defaultStatus: { statusName: string, statusId: number} = { statusName: "Select A Status", statusId: null};
   public defaultPrognosis: { prognosisName: string, prognosisId: number} = { prognosisName: "Select a Prognosis", prognosisId: null};
@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit {
   handleStatusChange(value){
     this.selectedStatus = value;
     this.selectedPrognosis = undefined;
+    console.log(this.selectedStatus.statusName);
 
     if(value.statusId == this.defaultStatus.statusId){
       this.isDisabledPrognosis = true;
@@ -57,12 +58,10 @@ export class HomeComponent implements OnInit {
       this.isDisabledPrognosis = false;
       this.dataResultPrognosis = this.statusPrognosis.filter((s) => s.statusId === value.statusId)
     }
-  }
+  }*/
 
 
-  /*private formGroup = new FormGroup({
-    incident_name: new FormControl(),
-    location: new FormControl(),
+  private formGroup = new FormGroup({
     status: new FormControl([]),
     prognosis: new FormControl([])
   })
@@ -80,32 +79,8 @@ export class HomeComponent implements OnInit {
     {type: "Closed", options: [{prognosis: "Monitoring"}, {prognosis: "Response"}]},
     {type: "Open", options: [{prognosis: "Monitoring"}, {prognosis: "Response"}, {prognosis: "Extended Operation"}]},
     {type: "Special Attention", options: [{prognosis: "Monitoring"}]},
-  ]);*/
+  ]);
 
-
-
-
-  //selectedValue: string = "";
-/* statuses = [
-    {value: 'Open', viewValue: 'Open'},
-    {value: 'Report Closed', viewValue: 'Report Closed'},
-    {value: 'Special Attention', viewValue: 'Special Attention'}
-  ];
-
-  prognoses1 = [
-    {value: 'Monitoring', viewValue: 'Monitoring'},
-    {value: 'Response', viewValue: 'Response'},
-    {value: 'Extended Operation', viewValue: 'Extended Operation'}
-  ]
-
-  prognoses2 = [
-    {value: 'Monitoring', viewValue: 'Monitoring'},
-    {value: 'Response', viewValue: 'Response'},
-  ]
-
-  prognoses3 = [
-    {value: 'Monitoring', viewValue: 'Monitoring'},
-  ]*/
 
 
 
@@ -118,11 +93,12 @@ export class HomeComponent implements OnInit {
   }
 
   onClick() {
+    console.log('Submit Emergency');
     this.hideForm = !this.hideForm;
   }
 
   onSubmitIncident() {
-    this.model.STATUS = this.selectedStatus.statusName + ' ' + this.selectedPrognosis.prognosisName;
+    console.log('Hello this is a test');
     this._incidentService.addIncidents(this.model).subscribe(
       newIncident => {
         this.ngOnInit();
@@ -133,23 +109,6 @@ export class HomeComponent implements OnInit {
     );
   }
 
-    /*onSelect(){
-    if(this.model.STATUS == "Open"){
-      this.check1 = "true";
-      this.check2 = "false";
-      this.check3 = "false";
-    }
-    if(this.model.STATUS == "Report Closed"){
-      this.check1 = "false";
-      this.check2 = "true";
-      this.check3 = "false";
-    }
-    if(this.model.STATUS == "Special Attention"){
-      this.check1 = "false";
-      this.check2 = "false";
-      this.check3 = "true";
-    }
-  }*/
   incidentSelect(dataSource: IncidentsDataSource) {
     this.dataSource = dataSource;
   }

@@ -29,7 +29,7 @@ export class AppComponent {
     let s = date.getSeconds();
 
     time = h + ":" + m + ":" + s;
-    setTimeout(this.showTime, 1000)
+    //setTimeout(this.showTime, 1000)
     return time;
   }
 }

@@ -18,6 +18,7 @@ import { IncidentCommentsComponent } from './incident-comments/incident-comments
 import { IncidentDetailsComponent } from './incident-details/incident-details.component';
 import { IncidentMapComponent } from './incident-map/incident-map.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

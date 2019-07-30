@@ -5,124 +5,56 @@
 </div>
   <div style="margin-left: 20px" *ngIf="!hideForm">
     <h2>New Emergency</h2>
-    <form #form="ngForm" (ngSubmit)="onSubmitIncident">
-        <div class="form-group">
-            <label>Incident Name</label>
-            <input type="text" class="form-control" id="name"
-                  required
-                  [(ngModel)]="model.INCIDENT_NAME" name="name"
-                  #name="ngModel">
-                  <div [hidden]="name.valid || name.pristine">
-                  </div>
-        </div>
-        <div class="form-group">
-            <label>Location</label>
-            <input type="text" class="form-control" id="name"
-                  required
-                  [(ngModel)]="model.LOCATION_NAME" name="name"
-                  #name="ngModel">
-                  <div [hidden]="name.valid || name.pristine">
-                  </div>
-        </div>
-        <div class="container-fluid example-wrapper">
-            <div class="row">
-                <div class="col-xs-12 col-sm-4 example-col">
-                    <p>Status:</p>
-                    <kendo-dropdownlist
-                        [data]="statusCategory"
-                        [value]="selectedStatus"
-                        [defaultItem]="defaultStatus"
-                        [textField]="'statusName'"
-                        [valueField]="'statusId'"
-                        (valueChange)="handleStatusChange($event)"
-                    >
-                    </kendo-dropdownlist>
-                </div>
-                <div class="col-xs-12 col-sm-4 example-col">
-                    <p>Prognosis:</p>
-                    <kendo-dropdownlist
-                        [disabled]="isDisabledPrognosis"
-                        [defaultItem]="defaultPrognosis"
-                        [data]="dataResultPrognosis"
-                        [value]="selectedPrognosis"
-                        [textField]="'prognosisName'"
-                        [valueField]="'prognosisId'"
-                    >
-                    </kendo-dropdownlist>
-                </div>
-            </div>
-        </div>
-    </form>
-
-
-
-    <!--<form [formGroup]="formGroup" #form="ngForm" (ngSubmit)="onSubmitIncident()">
-      <mat-form-field>
-        <mat-label>Incident Name</mat-label>
-        <input matInput placeholder="Placeholder" formControlName="incident_name" this.formGroup.get(incident_name).setValue(model.INCIDENT_NAME)>
-      </mat-form-field>
-  <br/>
-      <mat-form-field>
-        <mat-label>Location</mat-label>
-        <input matInput placeholder="Placeholder" id="name" required [(ngModel)]="model.LOCATION" name="name" #name="ngModel">
-      </mat-form-field>
-  <br/>
-      <mat-form-field>
-          <mat-select placeholder="Select a status" formControlName="status" name="name" required [(ngModel)]="model.STATUS" #name="ngModel">
-              <mat-option *ngFor="let status of source$ | async" [value] = "status">{{species.type}}></mat-option>
-          </mat-select>
-      </mat-form-field>
-  <br/>
-      <mat-form-field>
-          <mat-select placeholder="Select a prognosis" formControlName="prognosis" name="name" required [(ngModel)]="model.PROGNOSIS" #name="ngModel">
-              <mat-option *ngFor="let prognosis of subSource$ | async" [value]="prognosis">{{subspecies.species}}</mat-option>
-          </mat-select>
-      </mat-form-field>
-    </form>-->
-
-
-
-    <!--<form #form="ngForm" (ngSubmit)="onSubmitIncident()">
+    <form #form="ngForm" (ngSubmit)="onSubmitIncident()">
       <div class="form-group">
         <label>Incident Name</label>
-        <input type="text" class="form-control" id="name"
-              required
-              [(ngModel)]="model.INCIDENT_NAME" name="name"
-              #name="ngModel">
-              <div [hidden]="name.valid || name.pristine">
-              </div>
+        <mat-form-field appearance="standard">
+          <mat-label>Incident Name</mat-label>
+          <input matInput placeholder="Placeholder" name="INCIDENT_NAME"
+          [(ngModel)]="model.INCIDENT_NAME" #INCIDENT_NAME="ngModel">
+        </mat-form-field>
       </div>
       <div class="form-group">
         <label>Location</label>
-        <input type="text" class="form-control" id="name"
-              required
-              [(ngModel)]="model.LOCATION_NAME" name="name"
-              #name="ngModel">
-              <div [hidden]="name.valid || name.pristine">
-              </div>
+        <mat-form-field appearance="standard">
+          <mat-label>Location</mat-label>
+          <input matInput placeholder="Placeholder" name="LOCATION_NAME"
+          [(ngModel)]="model.LOCATION_NAME" #LOCATION_NAME="ngModel">
+        </mat-form-field>
       </div>
-      <mat-form-field>
-        <mat-select placeholder="Status" name="name" [(ngModel)]="model.STATUS" #name="ngModel">
-          <mat-option *ngFor="let status of statuses" [value]="status.value" (select) = onSelect()>
-            {{ status.viewValue }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
       <div class="form-group">
         <label>Status</label>
-        <input type="text" class="form-control" id="name"
-              required
-              [(ngModel)]="model.STATUS" name="name"
-              #name="ngModel">
-              <div [hidden]="name.valid || name.pristine">
-              </div>
-      </div>-->
-      <br>
+        <mat-form-field>
+            <mat-select placeholder="Select a status" fromControlName="status" name="STATUS"
+            [(ngModel)]="model.STATUS" #name="ngModel">
+                <mat-option *ngFor="let status of source$ | async" [value] = "status">{{species.type}}></mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <label>Prognosis</label>
+        <mat-form-field>
+            <mat-select placeholder="Select a prognosis" formControlName="prognosis" name="PROGNOSIS"
+            [(ngModel)]="model.PROGNOSIS" #PROGNOSIS="ngModel">
+                <mat-option *ngFor="let prognosis of subSource$ | async" [value]="prognosis">{{subspecies.species}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
       <button style="margin-bottom: 10px" type="submit" class="btn btn-primary">Submit</button>
-    <!--</form>-->
+    </form>
   </div>
   <div><div [ngStyle]="displayStyle">{{str}}</div>
 
   <app-incident-list (selectIncident)="incidentSelect($event)"
                       (archiveIncident)="archiveIncident($event)">
   </app-incident-list>
+
+
+  <!--<form #form="ngForm" (ngSubmit)="onSubmitIncident()">
+    <div class = "form-group">
+      <mat-form-field appearance="standard">
+        <mat-label>Incident Name</mat-label>
+        <input matInput placeholder="Placeholder" name="INCIDENT_NAME" [(ngModel)]="model.INCIDENT_NAME">
+      </mat-form-field>
+    </div>
+  </form>-->
