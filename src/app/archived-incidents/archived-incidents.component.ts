@@ -43,8 +43,16 @@ export class ArchivedIncidentsComponent implements OnInit {
     return;
   }
 
-  sortAlphabetically(numba){
-    this.dataSource.sortAlphabetically(numba);
+  sortName(){
+    this.dataSource.sortName();
+  }
+
+  sortLocation(){
+    this.dataSource.sortLocation();
+  }
+
+  sortStatus(){
+    this.dataSource.sortStatus();
   }
 
   applyFilter(filterValue: string) {

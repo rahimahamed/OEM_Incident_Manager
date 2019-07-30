@@ -95,8 +95,16 @@ export class IncidentListComponent implements OnInit {
     this.editIncident.emit(incident);
   }
 
-  sortAlphabetically(numba){
-    this.dataSource.sortAlphabetically(numba);
+  sortName(){
+    this.dataSource.sortName();
+  }
+
+  sortLocation(){
+    this.dataSource.sortLocation();
+  }
+
+  sortStatus(){
+    this.dataSource.sortStatus();
   }
 
   updateSummary(incident: Incident) {

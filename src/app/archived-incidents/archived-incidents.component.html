@@ -8,17 +8,17 @@
        class="mat-elevation-z8">
 
        <ng-container matColumnDef="title">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header (click)=sortAlphabetically(1)> Title </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header (click)=sortName()> Title </th>
           <td mat-cell *matCellDef="let element"> {{element.INCIDENT_NAME}} </td>
         </ng-container>
 
         <ng-container matColumnDef="location">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header (click)=sortAlphabetically(2)> Location </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header (click)=sortLocation()> Location </th>
           <td mat-cell *matCellDef="let element"> {{element.LOCATION_NAME}} </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header (click)=sortAlphabetically(3)> Status </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header (click)=sortStatus()> Status </th>
           <td mat-cell *matCellDef="let element"> {{element.STATUS}} </td>
         </ng-container>
 
