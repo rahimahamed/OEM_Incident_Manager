@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Incident } from '../incident';
-import { skip } from 'rxjs/operators';
+import { pairs } from 'rxjs';
+import { keyframes } from '@angular/animations';
+import { Key } from 'protractor';
 @Component({
   selector: 'app-incident-details',
   templateUrl: './incident-details.component.html',
@@ -17,6 +19,10 @@ export class IncidentDetailsComponent implements OnInit {
   summaryExists = false;
   editPressed = false;
   summary: string;
+  map: {
+    key: string;
+    value: string;
+  };
 
   columnsToDisplay = ['title', 'location', 'status'];
 
@@ -27,14 +33,17 @@ export class IncidentDetailsComponent implements OnInit {
     if (this.incident.SUMMARY) {
       this.summaryExists = true;
     }
-    this.closeForm.emit();
+    // this.closeForm.emit();
   }
 
   generateArray(obj) {
-    return Object.keys(obj).map((key)=> {
-      return {
-        key:key, value:obj[key]
-      }
+    return Object.keys(obj).map((key) => {
+      // if (!(key === 'SUMMARY' || key === '__v' || key === '_id')) {
+        return {
+          key, value: obj[key]
+        };
+      // }
+      // return true;
     });
   }
 
@@ -53,4 +62,13 @@ export class IncidentDetailsComponent implements OnInit {
       this.summaryExists = true;
     }
   }
+
+  displayItem(key) {
+    if (!(key === 'SUMMARY' || key === '__v' || key === '_id')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

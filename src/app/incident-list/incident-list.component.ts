@@ -29,7 +29,7 @@ export class IncidentListComponent implements OnInit {
       INCIDENT_NAME: 'Power Outage',
       STATUS: 'NOT ACTIVE',
       LOCATION_NAME: 'Brooklyn',
-      SUMMARY: 'Mon Jul 29 11:47:15 2019 STATUS: Active PROGNOSIS: Response Structural-Partial Collapse Bronx 2708 Schurz Avenue (NYCEM NYC.Gov List) An interagency meeting was held with the following agencies in attendance: DOB and NYCEM. DOB reports that no work has been conducted. The building owner has not hired a demo contractor to demolish the structure. DOB reports HPD will start demolition of the structure tomorrow morning. An interagency meeting has been scheduled for tomorrow July 30th at 1200 hrs. NYCEM operations continue. RESPONDING UNITS: NYCEM 610 REVIEWED AND APPROVED BY: NYCEM 532 RB INCIDENT NO: Inc-145421-103-072119 ',
+      SUMMARY: null,
       INCIDENT_TYPE:  'CRAZY',
       CREATION_DATE:  null,
       ADDRESS:  null,
