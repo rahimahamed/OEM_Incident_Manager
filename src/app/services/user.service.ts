@@ -33,8 +33,10 @@ export class UserService {
   }
 
   register(user: User) {
-    return this._http.post(`auth/register`, user);
+    return this._http.post(`api/register`, user);
   }
+
+  //`/auth/register/`, user
 
   delete(id: number) {
     return this._http.delete(`/register/${id}`);

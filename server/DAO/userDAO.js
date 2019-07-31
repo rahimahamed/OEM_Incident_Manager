@@ -1,6 +1,6 @@
 'use strict';
 
-var Models = require('../models/user');
+const Models = require('../models/user');
 
 const getUsers = criteria =>
   new Promise((resolve, reject) => {
