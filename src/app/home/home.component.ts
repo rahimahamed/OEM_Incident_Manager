@@ -31,15 +31,6 @@ export class HomeComponent implements OnInit {
     address: new FormControl(this.model.ADDRESS),
   })
 
-
-    private source$ = of([
-    {type: "Closed", options: [{prognosis: "Monitoring"}, {prognosis: "Response"}]},
-    {type: "Open", options: [{prognosis: "Monitoring"}, {prognosis: "Response"}, {prognosis: "Extended Operation"}]},
-    {type: "Special Attention", options: [{prognosis: "Monitoring"}]},
-  ]);
-
-
-
   constructor(private _incidentService: IncidentService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
