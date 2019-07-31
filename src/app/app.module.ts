@@ -16,6 +16,7 @@ import { IncidentMapComponent } from './incident-map/incident-map.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 
 import { AgmCoreModule } from '@agm/core';
+import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 
 @NgModule({
   declarations: [
@@ -37,8 +38,11 @@ import { AgmCoreModule } from '@agm/core';
     MatNativeDateModule,
     EditorModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDr8Sz6cBrbbQ3-rlzpO25xAHLMW71Pwck'
-    })
+      apiKey: 'AIzaSyC-m5L1P9HTlapjjQeVapN1Oy4DxMXQogA',
+      language: 'en',
+      libraries: ['places']
+    }),
+    AgmSnazzyInfoWindowModule
   ],
   providers: [],
   bootstrap: [AppComponent]

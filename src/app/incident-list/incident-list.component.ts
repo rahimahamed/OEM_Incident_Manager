@@ -64,6 +64,13 @@ export class IncidentListComponent implements OnInit {
 
   columnsToDisplay = ['title', 'location', 'status'];
   expandedElement: Incident | null;
+  mapCenter = [40.730610, -73.935242];
+  basemapType = 'streets';
+  mapZoomLevel = 12;
+
+  mapLoadedEvent(status: boolean) {
+    console.log('The map has loaded: ' + status);
+  }
 
   constructor(private incidentService: IncidentService) { }
 
