@@ -23,44 +23,21 @@ export class HomeComponent implements OnInit {
 
   model = new Incident();
 
-  //status;
-  prognosis;
-  prognosisList = [];
-  progTest;
+  submitForm = new FormGroup({
+    incidentName: new FormControl(this.model.INCIDENT_NAME),
+    location: new FormControl(this.model.LOCATION_NAME),
+    status: new FormControl(this.model.STATUS),
+    prognosis: new FormControl(''),
+    address: new FormControl(this.model.ADDRESS),
+  })
 
-  statusList: any = [
-    {
-      'statusName': 'Report Closed',
-      prognosisList: [
-        'Monitoring', 'Response',
-      ]
-    },
-    {
-      'statusName': 'Open',
-      prognosisList: [
-        'Monitoring', 'Response', 'Extended Operation',
-      ]
-    },
-    {
-      'statusName': 'Special Attention',
-      prognosisList: [
-        'Monitoring',
-      ]
-    }
-  ];
 
-  statusChangeAction(statusTitle){
-    this.prognosis = "";
-    let dropDownData = this.prognosisList.find((data: any) => data.statusName === status)
-    if(dropDownData){
-      this.prognosisList = dropDownData.prognosisList;
-      if(this.prognosisList){
-        this.prognosis=this.prognosisList[0];
-      }
-    } else {
-      this.prognosisList = [];
-    }
-  }
+    private source$ = of([
+    {type: "Closed", options: [{prognosis: "Monitoring"}, {prognosis: "Response"}]},
+    {type: "Open", options: [{prognosis: "Monitoring"}, {prognosis: "Response"}, {prognosis: "Extended Operation"}]},
+    {type: "Special Attention", options: [{prognosis: "Monitoring"}]},
+  ]);
+
 
 
   constructor(private _incidentService: IncidentService, private router: Router, private route: ActivatedRoute) { }
@@ -76,7 +53,11 @@ export class HomeComponent implements OnInit {
 
   onSubmitIncident() {
     console.log('Hello this is a test');
-    console.log(this.progTest);
+    console.log(this.model.INCIDENT_NAME);
+    this.model.INCIDENT_NAME = this.submitForm.controls['incidentName'].value;
+    console.log(this.model.INCIDENT_NAME);
+    this.model.LOCATION_NAME = this.submitForm.controls['location'].value;
+    this.model.ADDRESS = this.submitForm.controls['address'].value;
     this._incidentService.addIncidents(this.model).subscribe(
       newIncident => {
         this.ngOnInit();
