@@ -31,7 +31,7 @@ export class IncidentListComponent implements OnInit {
       LOCATION_NAME: 'Brooklyn',
       SUMMARY: 'Mon Jul 29 11:47:15 2019 STATUS: Active PROGNOSIS: Response Structural-Partial Collapse Bronx 2708 Schurz Avenue (NYCEM NYC.Gov List) An interagency meeting was held with the following agencies in attendance: DOB and NYCEM. DOB reports that no work has been conducted. The building owner has not hired a demo contractor to demolish the structure. DOB reports HPD will start demolition of the structure tomorrow morning. An interagency meeting has been scheduled for tomorrow July 30th at 1200 hrs. NYCEM operations continue. RESPONDING UNITS: NYCEM 610 REVIEWED AND APPROVED BY: NYCEM 532 RB INCIDENT NO: Inc-145421-103-072119 ',
       INCIDENT_TYPE:  'CRAZY',
-      CREATION_DATE:  null,
+      CREATION_DATE:  '2019-07-31, 3:52:57 PM ',
       ADDRESS:  null,
       LATITUDE:  null,
       LONGITUDE:  null,
@@ -49,7 +49,7 @@ export class IncidentListComponent implements OnInit {
       LOCATION_NAME: 'Queens',
       SUMMARY: 'Failure',
       INCIDENT_TYPE:  'LITT',
-      CREATION_DATE:  null,
+      CREATION_DATE:  '2019-07-31, 4:00:34 PM',
       ADDRESS:  null,
       LATITUDE:  null,
       LONGITUDE:  null,
@@ -62,7 +62,7 @@ export class IncidentListComponent implements OnInit {
     },
   ];
 
-  columnsToDisplay = ['title', 'location', 'status'];
+  columnsToDisplay = ['title', 'location', 'status', 'date_created'];
   expandedElement: Incident | null;
 
   constructor(private incidentService: IncidentService) { }
@@ -71,6 +71,7 @@ export class IncidentListComponent implements OnInit {
     this.dataSource = new IncidentsDataSource(this.incidentService, true);
     this.dataSource.loadLessons();
     this.onSelect();
+    // this.sortDate();
   }
 
   closeForm() {
@@ -105,6 +106,10 @@ export class IncidentListComponent implements OnInit {
 
   sortStatus(){
     this.dataSource.sortStatus();
+  }
+
+  sortDate(){
+    this.dataSource.sortDate();
   }
 
   updateSummary(incident: Incident) {

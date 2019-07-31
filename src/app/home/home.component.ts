@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   private updateForm = false;
   date: number = Date.now();
   dataSource: IncidentsDataSource;
+  date2: Date = new Date();
 
   model = new Incident();
 
@@ -33,6 +34,8 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmitIncident() {
+    this.date2 = new Date();
+    this.model.CREATION_DATE = "" + this.date2.toISOString().substr(0,10) + ", " + this.date2.toLocaleTimeString();
     this._incidentService.addIncidents(this.model).subscribe(
       newIncident => {
         this.ngOnInit();

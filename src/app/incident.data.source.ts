@@ -9,6 +9,7 @@ export class IncidentsDataSource implements DataSource<Incident> {
   titleBoolean: boolean = true;
   locationBoolean: boolean = true;
   statusBoolean: boolean = true;
+  dateBoolean: boolean = true;
 
   private lessonsSubject = new BehaviorSubject<Incident[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
@@ -158,6 +159,38 @@ export class IncidentsDataSource implements DataSource<Incident> {
       });
       this.lessonsSubject.next(this.incidentList);
       this.statusBoolean = true;
+    }
+  }
+
+  sortDate() {
+    if (this.dateBoolean) {
+      this.incidentList.sort((a, b) => {
+          if (a.CREATION_DATE > b.CREATION_DATE) {
+            return 1;
+          } else if (
+            a.CREATION_DATE < b.CREATION_DATE
+          ) {
+            return -1;
+          } else {
+            return 0;
+          }
+      });
+      this.lessonsSubject.next(this.incidentList);
+      this.dateBoolean = false;
+    } else {
+      this.incidentList.sort((a, b) => {
+          if (a.CREATION_DATE < b.CREATION_DATE) {
+            return 1;
+          } else if (
+            a.CREATION_DATE > b.CREATION_DATE
+          ) {
+            return -1;
+          } else {
+            return 0;
+          }
+      });
+      this.lessonsSubject.next(this.incidentList);
+      this.dateBoolean = true;
     }
   }
 
