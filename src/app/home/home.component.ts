@@ -27,9 +27,43 @@ export class HomeComponent implements OnInit {
     incidentName: new FormControl(this.model.INCIDENT_NAME),
     location: new FormControl(this.model.LOCATION_NAME),
     status: new FormControl(this.model.STATUS),
-    prognosis: new FormControl(''),
+    prognosis: new FormControl(),
     address: new FormControl(this.model.ADDRESS),
   })
+
+  statusList: any = [
+    {
+      'statusName': 'Report Closed',
+      prognosisList: [
+        'Monitoring', 'Response',
+      ]
+    },
+    {
+      'statusName': 'Open',
+      prognosisList: [
+        'Monitoring', 'Response', 'Extended Operation',
+      ]
+    },
+    {
+      'statusName': 'Special Attention',
+      prognosisList: [
+        'Monitoring',
+      ]
+    }
+  ];
+
+  statusChangeAction(stat){
+    this.model.STATUS="";
+    let dropDownData = this.statusList.find((data: any) => data.statusName === stat);
+    if(dropDownData){
+      this.statusList.prognosisList = dropDownData.statusList;
+      if(this.statusList.prognosisList){
+        this.submitForm.controls['prognosis'] = this.statusList.prognosisList[0];
+      }
+    } else {
+      this.statusList.prognosisList = [];
+    }
+  }
 
   constructor(private _incidentService: IncidentService, private router: Router, private route: ActivatedRoute) { }
 
@@ -48,6 +82,8 @@ export class HomeComponent implements OnInit {
     this.model.INCIDENT_NAME = this.submitForm.controls['incidentName'].value;
     console.log(this.model.INCIDENT_NAME);
     this.model.LOCATION_NAME = this.submitForm.controls['location'].value;
+    console.log(this.submitForm.controls['prognosis'].value);
+    this.model.STATUS = this.submitForm.controls['status'].value;
     this.model.ADDRESS = this.submitForm.controls['address'].value;
     this._incidentService.addIncidents(this.model).subscribe(
       newIncident => {

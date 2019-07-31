@@ -18,6 +18,25 @@
             <input matInput placeholder="Input Location" formControlName="location">
           </mat-form-field>
       </div>
+      <div class="input 3-1">
+        <mat-form-field>
+          <mat-select placeholder="Placeholder" (selectionChange)="statusChangeAction"
+          formControlName="status">
+            <mat-option *ngFor="let status of statusList" [value]="status.statusName">
+              {{status.statusName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="input 3-2">
+        <mat-form-field>
+          <mat-select matInput placeholder="Placeholder" formControlName="prognosis">
+            <mat-option *ngFor="let prognosis of prognosisList" [value]="prognosis">
+              {{prognosis}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
       <div class="input4">
           <mat-form-field appearance="standard">
             <mat-label>Address</mat-label>
@@ -45,3 +64,5 @@
   </form>-->
 
   <!--https://angular.io/api/common/AsyncPipe-->
+
+  <!--https://stackblitz.com/edit/angular-material-mat-select-dynamic-data-binding-in-angular?file=app%2Fselect-value-binding-example.ts-->
