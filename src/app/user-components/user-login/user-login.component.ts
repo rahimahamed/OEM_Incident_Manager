@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import { UserService } from '../services/user.service';
-import { AuthenticationService } from '../services/auth.service';
-import { AlertService } from '../services/alert.service';
+import { UserService } from '../../services/user.service';
+import { AlertService } from '../../services/alert.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-user-login',
@@ -56,10 +56,9 @@ export class UserLoginComponent implements OnInit {
     this.loading = true;
     this.authenticationService
       .login(this.f.username.value, this.f.password.value)
-      .pipe(first())
       .subscribe(
         data => {
-          this.router.navigate([this.returnUrl]);
+          this.router.navigate(['/']);
         },
         error => {
           this.alertService.error(error);

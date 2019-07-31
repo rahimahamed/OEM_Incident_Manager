@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { User } from '../user';
-import { UserService } from '../services/user.service';
-import { AuthenticationService } from '../services/auth.service';
-import { AlertService } from '../services/alert.service';
+import { User } from '../../user';
+import { UserService } from '../../services/user.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-user-profile',

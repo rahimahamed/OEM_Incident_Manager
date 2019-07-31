@@ -6,14 +6,13 @@ import {
   transition,
   trigger
 } from '@angular/animations';
-import { Incident } from '../incident';
-import { IncidentService } from '../services/incident.service';
-import { IncidentsDataSource } from '../incident.data.source';
-
+import { Incident } from '../../incident';
+import { IncidentService } from '../../services/incident.service';
+import { IncidentsDataSource } from '../../incident.data.source';
 @Component({
-  selector: 'app-incident-list',
-  templateUrl: './incident-list.component.html',
-  styleUrls: ['./incident-list.component.css'],
+  selector: 'app-archived-incidents',
+  templateUrl: './archived-incidents.component.html',
+  styleUrls: ['./archived-incidents.component.css'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
@@ -25,7 +24,7 @@ import { IncidentsDataSource } from '../incident.data.source';
     ])
   ]
 })
-export class IncidentListComponent implements OnInit {
+export class ArchivedIncidentsComponent implements OnInit {
   @Output() selectIncident = new EventEmitter();
   @Output() archiveIncident = new EventEmitter();
 
@@ -36,13 +35,12 @@ export class IncidentListComponent implements OnInit {
   constructor(private incidentService: IncidentService) {}
 
   ngOnInit() {
-    this.dataSource = new IncidentsDataSource(this.incidentService, true);
+    this.dataSource = new IncidentsDataSource(this.incidentService, false);
     this.dataSource.loadLessons();
-    this.onSelect();
   }
 
-  onSelect() {
-    this.selectIncident.emit(this.dataSource);
+  onSelect(incident) {
+    this.selectIncident.emit(incident);
   }
 
   onArchive(incident) {

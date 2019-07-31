@@ -7,6 +7,9 @@ import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 })
 export class UserService {
   selectedUser: User = {
+    firstName: '',
+    lastName: '',
+    department: '',
     username: '',
     password: '',
     email: ''
@@ -14,7 +17,7 @@ export class UserService {
 
   noAuthHeader = { headers: new HttpHeaders({ NoAuth: 'True' }) };
 
-  private _postUrl = '/api/users';
+  private _postUrl = '/api/register';
 
   constructor(private _http: HttpClient) {}
 
@@ -30,11 +33,11 @@ export class UserService {
   }
 
   register(user: User) {
-    return this._http.post(this._postUrl, user);
+    return this._http.post(`auth/register`, user);
   }
 
   delete(id: number) {
-    return this._http.delete(`/users/${id}`);
+    return this._http.delete(`/register/${id}`);
   }
 
   login(authCredentials) {

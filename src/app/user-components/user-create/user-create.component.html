@@ -4,6 +4,54 @@
 
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
+    <label for="firstName"> First Name </label>
+    <br />
+    <input
+      required
+      type="text"
+      formControlName="firstName"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
+      placeholder="Enter first name here"
+    />
+    <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+      <div *ngIf="f.firstName.errors.required">First name is required</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="lastName"> Last Name </label>
+    <br />
+    <input
+      required
+      type="text"
+      formControlName="lastName"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+      placeholder="Enter last name here"
+    />
+    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+      <div *ngIf="f.lastName.errors.required">Last name is required</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="department"> Department </label>
+    <br />
+    <input
+      required
+      type="text"
+      formControlName="department"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.department.errors }"
+      placeholder="Enter department here"
+    />
+    <div *ngIf="submitted && f.department.errors" class="invalid-feedback">
+      <div *ngIf="f.department.errors.required">Department is required</div>
+    </div>
+  </div>
+
+  <div class="form-group">
     <label for="email">Email</label>
     <br />
     <input
@@ -13,7 +61,7 @@
       class="form-control"
       [pattern]="emailRegex"
       [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
-      placeholder="Email"
+      placeholder="Enter email here"
     />
     <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
       <div *ngIf="f.email.errors.required">This field is required.</div>
@@ -30,7 +78,7 @@
       formControlName="username"
       class="form-control"
       [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
-      placeholder="Username"
+      placeholder="Enter username here"
     />
     <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
       <div *ngIf="f.username.errors.required">Username is required</div>
@@ -47,7 +95,7 @@
       class="form-control"
       [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
       minlength="6"
-      placeholder="Password"
+      placeholder="Enter password here"
     />
     <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
       <div *ngIf="f.password.errors.required">Password is required</div>
@@ -65,6 +113,7 @@
       ></span>
       Register
     </button>
+    <a routerLink="/login" class="btn btn-link">Login to continue</a>
     <a routerLink="/home" class="btn btn-link">Cancel</a>
   </div>
 </form>

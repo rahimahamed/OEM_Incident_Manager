@@ -5,11 +5,11 @@ import {
   FormBuilder,
   Validators
 } from '@angular/forms';
-import { IncidentService } from '../services/incident.service';
-import { Incident } from './../incident';
-import { IncidentsDataSource } from '../incident.data.source';
-import { AuthenticationService } from '../services/auth.service';
-import { UserService } from '../services/user.service';
+import { IncidentService } from '../../services/incident.service';
+import { Incident } from '../../incident';
+import { IncidentsDataSource } from '../../incident.data.source';
+import { AuthenticationService } from '../../services/authentication.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-incident-comments',
@@ -65,21 +65,21 @@ export class IncidentCommentsComponent implements OnInit {
   }
 
   // Function to post a new comment
-  postComment(id) {
-    this.disableCommentForm(); // Disable form while saving comment to database
-    this.processing = true; // Lock buttons while saving comment to database
-    const comment = this.commentForm.get('comment').value; // Get the comment value to pass to service function
-    // Function to save the comment to the database
-    this.incidentService.postComment(id, comment).subscribe(data => {
-      // this.getAllBlogs(); // Refresh all blogs to reflect the new comment
-      const index = this.newComment.indexOf(id); // Get the index of the blog id to remove from array
-      this.newComment.splice(index, 1); // Remove id from the array
-      this.enableCommentForm(); // Re-enable the form
-      this.commentForm.reset(); // Reset the comment form
-      this.processing = false; // Unlock buttons on comment form
-      if (this.enabledComments.indexOf(id) < 0) this.expand(id); // Expand comments for user on comment submission
-    });
-  }
+  // postComment(id) {
+  //   this.disableCommentForm(); // Disable form while saving comment to database
+  //   this.processing = true; // Lock buttons while saving comment to database
+  //   const comment = this.commentForm.get('comment').value; // Get the comment value to pass to service function
+  //   // Function to save the comment to the database
+  //   this.incidentService.postComment(id, comment).subscribe(data => {
+  //     // this.getAllBlogs(); // Refresh all blogs to reflect the new comment
+  //     const index = this.newComment.indexOf(id); // Get the index of the blog id to remove from array
+  //     this.newComment.splice(index, 1); // Remove id from the array
+  //     this.enableCommentForm(); // Re-enable the form
+  //     this.commentForm.reset(); // Reset the comment form
+  //     this.processing = false; // Unlock buttons on comment form
+  //     if (this.enabledComments.indexOf(id) < 0) this.expand(id); // Expand comments for user on comment submission
+  //   });
+  // }
 
   // Expand the list of comments
   expand(id) {

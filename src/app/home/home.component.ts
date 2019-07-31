@@ -3,6 +3,9 @@ import { IncidentService } from '../services/incident.service';
 import { Incident } from './../incident';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IncidentsDataSource } from '../incident.data.source';
+import { User } from '../user';
+import { UserService } from '../services/user.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +14,7 @@ import { IncidentsDataSource } from '../incident.data.source';
   providers: [IncidentService]
 })
 export class HomeComponent implements OnInit {
+  currentUser: User;
   title = 'NYC Emergency Incident Tracker';
   private hideForm = true;
   date: number = Date.now();
@@ -22,7 +26,11 @@ export class HomeComponent implements OnInit {
     private _incidentService: IncidentService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.currentUser = localStorage.getItem('currentUser')
+      ? JSON.parse(localStorage.getItem('currentUser'))
+      : '';
+  }
 
   ngOnInit() {
     this.date = Date.now();

@@ -7,6 +7,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Incident = require('../models/incident');
 const User = require('../models/user');
+const authService = require('../services/auth');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }, function(
@@ -116,7 +117,7 @@ router.delete('/active/:id', function(req, res) {
   });
 });
 
-router.get('/users', function(req, res) {
+router.get('auth/register', function(req, res) {
   console.log('GET request for all ACTIVE users!');
   User.find({}).exec(function(err, users) {
     if (err) {
@@ -127,14 +128,23 @@ router.get('/users', function(req, res) {
   });
 });
 
-// http://localhost:3000/api/users
-router.post('/users', function(req, res) {
+// http://localhost:3000/api/register
+router.post('auth/register', function(req, res) {
   console.log('POST a new user!');
   var user = new User();
+  user.firstName = req.body.firstName;
+  user.lastName = req.body.lastName;
+  user.department = req.body.department;
   user.username = req.body.username;
   user.password = req.body.password;
   user.email = req.body.email;
   if (
+    req.body.firstName == null ||
+    req.body.firstName == '' ||
+    req.body.lastName == null ||
+    req.body.lastName == '' ||
+    req.body.department == null ||
+    req.body.department == '' ||
     req.body.username == null ||
     req.body.username == '' ||
     req.body.password == null ||
@@ -156,6 +166,12 @@ router.post('/users', function(req, res) {
     });
   }
 });
+
+/* User Registration. */
+router.post('/register', authService.register);
+
+/* User Login. */
+router.post('/login', authService.login);
 
 // router.post('/comment', (req, res) => {
 //   if (!req.body.comment) {

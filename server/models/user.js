@@ -3,9 +3,12 @@ var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
 
 var UserSchema = new Schema({
-  username: { type: String, lowercase: true, required: true, unique: true },
-  password: { type: String, required: true },
-  email: { type: String, required: true, lowercase: true, unique: true }
+  firstName: String,
+  lastName: String,
+  department: String,
+  username: String,
+  password: String,
+  email: String
 });
 
 // Custom validation for email
