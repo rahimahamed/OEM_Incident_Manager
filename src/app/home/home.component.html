@@ -8,6 +8,7 @@
     <form #form="ngForm" (ngSubmit)="onSubmitIncident()">
       <div class="form-group">
         <label>Incident Name</label>
+        <br/>
         <mat-form-field appearance="standard">
           <mat-label>Incident Name</mat-label>
           <input matInput placeholder="Placeholder" name="INCIDENT_NAME"
@@ -16,6 +17,7 @@
       </div>
       <div class="form-group">
         <label>Location</label>
+        <br/>
         <mat-form-field appearance="standard">
           <mat-label>Location</mat-label>
           <input matInput placeholder="Placeholder" name="LOCATION_NAME"
@@ -24,20 +26,14 @@
       </div>
       <div class="form-group">
         <label>Status</label>
+        <br/>
         <mat-form-field>
-            <mat-select placeholder="Select a status" fromControlName="status" name="STATUS"
-            [(ngModel)]="model.STATUS" #name="ngModel">
-                <mat-option *ngFor="let status of source$ | async" [value] = "status">{{species.type}}></mat-option>
-            </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="form-group">
-        <label>Prognosis</label>
-        <mat-form-field>
-            <mat-select placeholder="Select a prognosis" formControlName="prognosis" name="PROGNOSIS"
-            [(ngModel)]="model.PROGNOSIS" #PROGNOSIS="ngModel">
-                <mat-option *ngFor="let prognosis of subSource$ | async" [value]="prognosis">{{subspecies.species}}</mat-option>
-            </mat-select>
+          <mat-select placeholder="Select A Status" (selectionChange)="statusChangeAction(STATUS)">
+            <mat-option *ngFor="let status of statusList" name="STATUS" [(ngModel)]="model.STATUS" [ngModelOptions]="{standalone: true}"
+            #STATUS="ngModel" [value] = status.statusName>
+              {{ status.statusName }}
+            </mat-option>
+        </mat-select>
         </mat-form-field>
       </div>
       <button style="margin-bottom: 10px" type="submit" class="btn btn-primary">Submit</button>
