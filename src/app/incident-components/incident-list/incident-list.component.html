@@ -4,6 +4,8 @@
   multiTemplateDataRows
   class="mat-elevation-z8"
 >
+  <!-- [dataSource] = "incidentList" -->
+
   <ng-container matColumnDef="title">
     <th mat-header-cell *matHeaderCellDef>Title</th>
     <td mat-cell *matCellDef="let element">{{ element.INCIDENT_NAME }}</td>
