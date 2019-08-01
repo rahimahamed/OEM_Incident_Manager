@@ -29,7 +29,9 @@ export class HomeComponent implements OnInit {
     location: new FormControl(this.model.LOCATION_NAME),
     status: new FormControl(this.model.STATUS),
     prognosis: new FormControl(),
-    address: new FormControl(this.model.ADDRESS),
+    incidentType: new FormControl(this.model.INCIDENT_TYPE),
+    incidentDescription: new FormControl(),
+
   });
 
   statusList: any = [
@@ -55,6 +57,86 @@ export class HomeComponent implements OnInit {
 
   prognosisList: any = [];
 
+  incidentTypeList: any = [
+    {
+      incidentTypeName: 'Administration',
+      incidentDescriptionList: [
+        'Meeting', 'ChemPack', 'Planned Event', 'Planned Notify NYC Message', 'Other'
+      ]
+    },
+    {
+      incidentTypeName: 'Aviation',
+      incidentDescriptionList: [
+        'Passenger Aircraft', 'Other'
+      ]
+    },
+    {
+      incidentTypeName: 'Fire',
+      incidentDescriptionList: [
+        '1st Alarm', '2nd Alarm', '6th Alarm','Residential High Rise', 'Other'
+      ]
+    },
+    {
+      incidentTypeName: 'HazMat',
+      incidentDescriptionList: [
+        'High Carbon Monoxide', 'Other'
+      ]
+    },
+    {
+      incidentTypeName: 'Law Enforcement',
+      incidentDescriptionList: [
+        'Civil Unrest', 'Device', 'Explosion', 'Missing Person', 'Suspicious Package', 'Other'
+      ]
+    },
+    {
+      incidentTypeName: 'Marine',
+      incidentDescriptionList: [
+        'CSO Advisory', 'Other'
+      ]
+    },
+    {
+      incidentTypeName: 'Medical',
+      incidentDescriptionList: [
+        'Injured City Worker', 'Other'
+      ]
+    },
+    {
+      incidentTypeName: 'Rescue',
+      incidentDescriptionList: [
+        'Technical', 'Other'
+      ]
+    },
+    {
+      incidentTypeName: 'Transportation',
+      incidentDescriptionList: [
+        'Car', 'Train Subway', 'Other'
+      ]
+    },
+    {
+      incidentTypeName: 'Utility',
+      incidentDescriptionList: [
+        'Electric Feeder Cable', 'Electric Overhead', 'Gas Service Line', 'Manhole',
+        'Network Condition', 'Phone Outage', 'Power Outage', 'Sewer Service', 'Water Main',
+        'Water Service Line', 'Other'
+      ]
+    },
+    {
+      incidentTypeName: 'Structural',
+      incidentDescriptionList: [
+        'Falling Debris', 'Collapse', 'Crane', 'Scaffold', 'Sidewalk Collapse',  'Other'
+      ]
+    },
+    {
+      incidentTypeName: 'Weather',
+      incidentDescriptionList: [
+        'Hurricane', 'Rain', 'Tropical Depression', 'Wind', 'Other'
+      ]
+    }
+
+  ];
+
+  incidentDescriptionList: any = [];
+
   constructor(private incidentService: IncidentService,
               private router: Router,
               private route: ActivatedRoute,
@@ -74,6 +156,16 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  incidentTypeChangeAction(){
+    const dropDownIncidentData = this.incidentTypeList.find((data2: any) =>
+            data2.incidentTypeName === this.submitForm.controls.incidentType.value);
+    if(dropDownIncidentData){
+      this.incidentDescriptionList = dropDownIncidentData.incidentDescriptionList;
+    } else {
+      this.incidentDescriptionList = [];
+    }
+  }
+
   onClick() {
     console.log('Submit Emergency');
     this.updateForm = false;
@@ -88,8 +180,8 @@ export class HomeComponent implements OnInit {
     console.log(this.model.INCIDENT_NAME);
     this.model.LOCATION_NAME = this.submitForm.controls.location.value;
     console.log(this.submitForm.controls.prognosis.value);
-    this.model.STATUS = this.submitForm.controls.status.value + ',' + this.submitForm.controls.prognosis.value;
-    this.model.ADDRESS = this.submitForm.controls.address.value;
+    this.model.STATUS = this.submitForm.controls.status.value + '-' + this.submitForm.controls.prognosis.value;
+    this.model.INCIDENT_TYPE =  this.submitForm.controls.incidentType.value + '-' + this.submitForm.controls.incidentDescription.value;
     this.incidentService.addIncidents(this.model).subscribe(
       newIncident => {
         this.ngOnInit();
