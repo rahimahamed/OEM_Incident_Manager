@@ -1,5 +1,6 @@
 <table mat-table
-      [dataSource]="dataSource" multiTemplateDataRows
+      [dataSource]="incidentList
+      " multiTemplateDataRows
       class="mat-elevation-z8">
   <ng-container matColumnDef="title">
     <th mat-header-cell *matHeaderCellDef> Title </th>
@@ -31,7 +32,8 @@
                     (editIncident)="onEdit($event)"
                     (updateSummary)="updateSummary($event)">
                   </app-incident-details>
-                  <app-incident-map style="float: right; margin-left: 10px; margin-top: 20px;">
+                  <app-incident-map
+                    style="float: right; margin-left: 10px; margin-top: 20px;">
                   </app-incident-map>
         </div>
       </div>

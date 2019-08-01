@@ -47,7 +47,7 @@ import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
     DropDownsModule,
     EditorModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyC-m5L1P9HTlapjjQeVapN1Oy4DxMXQogA',
+      apiKey: 'AIzaSyCEigp32HEupcc9Jh209-DqzAqGPGlCfqU',
       language: 'en',
       libraries: ['places']
     }),

@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit, Output, Input, EventEmitter } from '@angular/core';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
 import { FormControl } from '@angular/forms';
 import {} from '@agm/core/services/google-maps-types';
+import { Incident } from '../incident';
 @Component({
   selector: 'app-incident-map',
   templateUrl: './incident-map.component.html',
@@ -15,6 +16,8 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
   public zoom: number;
   address: string;
   private geoCoder;
+  @Input() incident: Incident;
+  @Output() emitLocation = new EventEmitter();
 
   @ViewChild('search', {static: false}) public searchElementRef: ElementRef;
 
@@ -54,7 +57,7 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
           // set latitude, longitude and zoom
           this.latitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
-          this.getAddress(this.latitude, this.longitude);
+          this.getAddress(this.latitude, this.longitude, this.incident);
           this.zoom = 15;
         });
       });
@@ -68,7 +71,7 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
   // Get Current Location Coordinates
   private setCurrentLocation() {
     this.zoom = 10;
-    this.getAddress(this.latitude, this.longitude);
+    this.getAddress(this.latitude, this.longitude, this.incident);
   }
 
 
@@ -76,10 +79,10 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
     console.log($event);
     this.latitude = $event.coords.lat;
     this.longitude = $event.coords.lng;
-    this.getAddress(this.latitude, this.longitude);
+    this.getAddress(this.latitude, this.longitude, this.incident);
   }
 
-  getAddress(latitude, longitude) {
+  getAddress(latitude, longitude, incident) {
     this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
       console.log(results);
       console.log(status);
@@ -93,8 +96,10 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
       } else {
         window.alert('Geocoder failed due to: ' + status);
       }
-
+      this.incident.LATITUDE = this.latitude.toString();
+      this.incident.LONGITUDE = this.longitude.toString();
+      this.incident.ADDRESS = this.address;
+      this.emitLocation.emit(incident);
     });
   }
-
 }
