@@ -1,12 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Incident } from '../incident';
+import { Incident } from '../../incident';
 @Component({
   selector: 'app-incident-details',
   templateUrl: './incident-details.component.html',
   styleUrls: ['./incident-details.component.css']
 })
 export class IncidentDetailsComponent implements OnInit {
-
   @Input() incident: Incident;
   @Output() closeForm = new EventEmitter();
   @Output() archiveIncident = new EventEmitter();
@@ -18,8 +17,7 @@ export class IncidentDetailsComponent implements OnInit {
   summary: string;
   columnsToDisplay = ['title', 'location', 'status'];
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit() {
     if (this.incident.SUMMARY) {
@@ -28,11 +26,12 @@ export class IncidentDetailsComponent implements OnInit {
   }
 
   generateArray(obj) {
-    return Object.keys(obj).map((key) => {
+    return Object.keys(obj).map(key => {
       // if (!(key === 'SUMMARY' || key === '__v' || key === '_id')) {
-        return {
-          key, value: obj[key]
-        };
+      return {
+        key,
+        value: obj[key]
+      };
       // }
       // return true;
     });
@@ -61,5 +60,4 @@ export class IncidentDetailsComponent implements OnInit {
       return false;
     }
   }
-
 }

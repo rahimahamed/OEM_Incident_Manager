@@ -1,15 +1,25 @@
-import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit, Output, Input, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  NgZone,
+  AfterViewInit,
+  Output,
+  Input,
+  EventEmitter
+} from '@angular/core';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
 import { FormControl } from '@angular/forms';
 import {} from '@agm/core/services/google-maps-types';
-import { Incident } from '../incident';
+import { Incident } from '../../incident';
+
 @Component({
   selector: 'app-incident-map',
   templateUrl: './incident-map.component.html',
   styleUrls: ['./incident-map.component.css']
 })
 export class IncidentMapComponent implements OnInit, AfterViewInit {
-
   public latitude: number;
   public longitude: number;
   public searchControl: FormControl;
@@ -19,16 +29,13 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
   @Input() incident: Incident;
   @Output() emitLocation = new EventEmitter();
 
-  @ViewChild('search', {static: false}) public searchElementRef: ElementRef;
+  @ViewChild('search', { static: false }) public searchElementRef: ElementRef;
 
-  constructor(
-    private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
-  ) { }
+  constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {}
 
   ngAfterViewInit() {
     this.zoom = 10;
-    this.latitude = 40.730610;
+    this.latitude = 40.73061;
     this.longitude = -73.935242;
 
     // create search FormControl
@@ -41,9 +48,12 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
     // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
       // tslint:disable: prefer-const
-      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ['address']
-      });
+      let autocomplete = new google.maps.places.Autocomplete(
+        this.searchElementRef.nativeElement,
+        {
+          types: ['address']
+        }
+      );
       autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {
           // get the place result
@@ -64,16 +74,13 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   // Get Current Location Coordinates
   private setCurrentLocation() {
     this.zoom = 10;
     this.getAddress(this.latitude, this.longitude, this.incident);
   }
-
 
   markerDragEnd($event: MouseEvent) {
     console.log($event);
@@ -83,23 +90,26 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
   }
 
   getAddress(latitude, longitude, incident) {
-    this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
-      console.log(results);
-      console.log(status);
-      if (status === 'OK') {
-        if (results[0]) {
-          this.zoom = 15;
-          this.address = results[0].formatted_address;
+    this.geoCoder.geocode(
+      { location: { lat: latitude, lng: longitude } },
+      (results, status) => {
+        console.log(results);
+        console.log(status);
+        if (status === 'OK') {
+          if (results[0]) {
+            this.zoom = 15;
+            this.address = results[0].formatted_address;
+          } else {
+            window.alert('No results found');
+          }
         } else {
-          window.alert('No results found');
+          window.alert('Geocoder failed due to: ' + status);
         }
-      } else {
-        window.alert('Geocoder failed due to: ' + status);
+        this.incident.LATITUDE = this.latitude.toString();
+        this.incident.LONGITUDE = this.longitude.toString();
+        this.incident.ADDRESS = this.address;
+        this.emitLocation.emit(incident);
       }
-      this.incident.LATITUDE = this.latitude.toString();
-      this.incident.LONGITUDE = this.longitude.toString();
-      this.incident.ADDRESS = this.address;
-      this.emitLocation.emit(incident);
-    });
+    );
   }
 }
