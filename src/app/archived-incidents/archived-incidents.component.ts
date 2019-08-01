@@ -21,7 +21,7 @@ export class ArchivedIncidentsComponent implements OnInit {
   @Output() archiveIncident = new EventEmitter();
 
   dataSource: IncidentsDataSource;
-  columnsToDisplay = ['title', 'location', 'status'];
+  columnsToDisplay = ['title', 'location', 'status', 'date_created', 'date_modified'];
   expandedElement: Incident | null;
 
   constructor(private incidentService: IncidentService) { }
@@ -41,6 +41,31 @@ export class ArchivedIncidentsComponent implements OnInit {
 
   onOpen(incident) {
     return;
+  }
+
+  sortName(){
+    this.dataSource.sortName();
+  }
+
+  sortLocation(){
+    this.dataSource.sortLocation();
+  }
+
+  sortStatus(){
+    this.dataSource.sortStatus();
+  }
+
+  sortDate(){
+    this.dataSource.sortDate();
+  }
+
+  sortDateModified(){
+    this.dataSource.sortDateModified();
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource = new IncidentsDataSource(this.incidentService, false);
+    this.dataSource.filter(filterValue.trim().toLowerCase());
   }
 
 }

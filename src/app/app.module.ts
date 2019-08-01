@@ -9,13 +9,13 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 
-import { AppRoutingModule, routingComponents} from './app-routing.module';
+import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IncidentListComponent } from './incident-list/incident-list.component';
+import { IncidentDetailsComponent } from './incident-details/incident-details.component';
 import { ArchivedIncidentsComponent } from './archived-incidents/archived-incidents.component';
 import { MaterialModule } from '../material-module';
 import { IncidentCommentsComponent } from './incident-comments/incident-comments.component';
-import { IncidentDetailsComponent } from './incident-details/incident-details.component';
 import { IncidentMapComponent } from './incident-map/incident-map.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 

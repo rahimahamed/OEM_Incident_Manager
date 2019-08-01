@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   private updateForm = false;
   date: number = Date.now();
   dataSource: IncidentsDataSource;
+  date2: Date = new Date();
 
   @ViewChild('search', {static: false}) public searchElementRef: ElementRef;
 
@@ -85,6 +86,10 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmitIncident() {
+    this.date2 = new Date();
+    this.model.CREATION_DATE = "" + this.date2.toISOString().substr(0,10) + ", " + this.date2.toLocaleTimeString();
+    this.model.MODIFICATION_DATE = "" + this.date2.toISOString().substr(0,10) + ", " + this.date2.toLocaleTimeString();
+    this._incidentService.addIncidents(this.model).subscribe(
     this.model.INCIDENT_NAME = this.submitForm.controls.incidentName.value;
     console.log(this.model.INCIDENT_NAME);
     this.model.LOCATION_NAME = this.submitForm.controls.location.value;
@@ -101,6 +106,8 @@ export class HomeComponent implements OnInit {
         this.onClick();
         this.model = new Incident();
         this.dataSource.loadLessons();
+        this.dataSource.sortDate();
+        this.dataSource.sortDate();
       }
     );
   }
