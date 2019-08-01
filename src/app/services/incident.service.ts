@@ -16,7 +16,7 @@ export class IncidentService {
   private _deleteUrl = '/api/active/';
 
   options;
-  // domain = this.authService.domain;
+  domain = this.authService.domain;
 
   incidents: Array<Incident>;
 
@@ -26,18 +26,19 @@ export class IncidentService {
   ) {}
 
   // // Function to create headers, add token, to be used in HTTP requests
-  // createAuthenticationHeaders() {
-  //   this.authService.loadToken(); // Get token so it can be attached to headers
-  //   // Headers configuration options
-  //   this.options = new RequestOptions({
-  //     headers: new Headers({
-  //       'Content-Type': 'application/json', // Format set to JSON
-  //       authorization: this.authService.authToken // Attach token
-  //     })
-  //   });
-  // }
+  createAuthenticationHeaders() {
+    this.authService.loadToken(); // Get token so it can be attached to headers
+    // Headers configuration options
+    this.options = new RequestOptions({
+      headers: new Headers({
+        'Content-Type': 'application/json', // Format set to JSON
+        authorization: this.authService.authToken // Attach token
+      })
+    });
+  }
 
   getIncidents() {
+    this.createAuthenticationHeaders(); // Create headers
     return this._http.get(this._getUrl);
   }
 
@@ -61,14 +62,14 @@ export class IncidentService {
     );
   }
 
-  //   postComment(id, comment) {
-  //     this.createAuthenticationHeaders();
-  //     const blogData = {
-  //       id: id,
-  //       comment: comment
-  //     };
-  //     return this._http
-  //       .post(this.domain + 'api/comment', blogData, this.options)
-  //       .pipe(map(response => console.log(response)));
-  //   }
+  postComment(id, comment) {
+    this.createAuthenticationHeaders();
+    const blogData = {
+      id: id,
+      comment: comment
+    };
+    return this._http
+      .post(this.domain + 'api/comment', blogData, this.options)
+      .pipe(map(response => console.log(response)));
+  }
 }

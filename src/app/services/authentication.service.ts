@@ -5,9 +5,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { User } from '../user';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
+  domain = environment.apiBaseUrl;
+  authToken;
+
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
@@ -20,6 +24,10 @@ export class AuthenticationService {
 
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
+  }
+
+  loadToken() {
+    this.authToken = localStorage.getItem('token'); // Get token and assign to variable to be used elsewhere
   }
 
   login(username: string, password: string) {
