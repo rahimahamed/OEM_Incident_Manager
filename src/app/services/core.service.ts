@@ -6,16 +6,17 @@ import { Incident } from '../incident';
   providedIn: 'root'
 })
 export class CoreService {
-
   list: any[] = [];
-  list$: BehaviorSubject<any []> = new BehaviorSubject(this.list);
+  list$: BehaviorSubject<any[]> = new BehaviorSubject(this.list);
 
   constructor(incident: Incident) {
     this.list = this.generateArray(incident);
   }
 
   generateArray(obj) {
-    return Object.keys(obj).map((key)=>{ return {key:key, value:obj[key]}});
+    return Object.keys(obj).map(key => {
+      return { key: key, value: obj[key] };
+    });
   }
 
   update(index, field, value) {
@@ -24,16 +25,12 @@ export class CoreService {
         return {
           ...e,
           [field]: value
-        }
+        };
       }
       return e;
     });
     this.list$.next(this.list);
   }
 
-  getControl(index, fieldName) {
-  }
-
-
-
+  getControl(index, fieldName) {}
 }

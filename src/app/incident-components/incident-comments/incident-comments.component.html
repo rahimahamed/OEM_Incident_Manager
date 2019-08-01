@@ -1,3 +1,11 @@
+<!-- <button (click)="openCommentText(comment)">Answer</button>
+<div *ngIf="comment.isOpen">
+  <textarea [(ngModel)]="text" cols="80" rows="7"></textarea>
+  <br />
+  <button (click)="addComment(comment)">OK</button>
+</div>
+<p [comments]="comment.answers"></p> -->
+
 <!-- Post Comment Box: Start -->
 <ul class="list-group">
   <li class="list-group-item">
@@ -6,7 +14,7 @@
       type="button"
       name="button"
       class="btn btn-sm btn-danger"
-      (click)="draftComment(incident._id)"
+      (click)="openCommentText(comment)"
       [disabled]="newComment.indexOf(incident._id) > -1"
     >
       Post Comment

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -6,10 +6,11 @@ import {
   Validators
 } from '@angular/forms';
 import { IncidentService } from '../../services/incident.service';
-import { Incident } from '../../incident';
 import { IncidentsDataSource } from '../../incident.data.source';
 import { AuthenticationService } from '../../services/authentication.service';
 import { UserService } from '../../services/user.service';
+import { Incident } from 'src/app/incident';
+import { TestBed } from '@angular/core/testing';
 
 @Component({
   selector: 'app-incident-comments',
@@ -17,6 +18,8 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./incident-comments.component.css']
 })
 export class IncidentCommentsComponent implements OnInit {
+  @Input() incident: Incident;
+
   form;
   commentForm;
   newComment = [];
@@ -64,11 +67,17 @@ export class IncidentCommentsComponent implements OnInit {
   // }
 
   // Function to post a new comment on incident post
+
   draftComment(id) {
     this.commentForm.reset(); // Reset the comment form each time users starts a new comment
     this.newComment = []; // Clear array so only one post can be commented on at a time
     this.newComment.push(id); // Add the post that is being commented on to the array
   }
+
+  // draftComment(comment) {
+  //   console.log(comment);
+  //   comment.isOpen = !comment.isOpen;
+  // }
 
   // Function to cancel new post transaction
   cancelSubmission(id) {

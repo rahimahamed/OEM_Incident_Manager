@@ -2,11 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { AlertService } from '../../services/alert.service';
-import { User } from '../../user';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NgForm } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-create',

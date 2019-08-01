@@ -1,6 +1,6 @@
 import { User } from '../user';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +35,6 @@ export class UserService {
   register(user: User) {
     return this._http.post(`api/register`, user);
   }
-
-  //`/auth/register/`, user
 
   delete(id: number) {
     return this._http.delete(`/register/${id}`);

@@ -53,7 +53,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     DropDownsModule,
     EditorModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCEigp32HEupcc9Jh209-DqzAqGPGlCfqU',
+      apiKey: 'AIzaSyAArhePtiJGhta5z2dcWhcI88stTnP3emE',
       language: 'en',
       libraries: ['places']
     }),
