@@ -10,6 +10,7 @@ export class IncidentsDataSource implements DataSource<Incident> {
   locationBoolean: boolean = true;
   statusBoolean: boolean = true;
   dateBoolean: boolean = true;
+  dateModifiedBoolean: boolean = true;
 
   private lessonsSubject = new BehaviorSubject<Incident[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
@@ -163,6 +164,7 @@ export class IncidentsDataSource implements DataSource<Incident> {
   }
 
   sortDate() {
+    console.log(this.dateBoolean);
     if (this.dateBoolean) {
       this.incidentList.sort((a, b) => {
           if (a.CREATION_DATE > b.CREATION_DATE) {
@@ -191,6 +193,38 @@ export class IncidentsDataSource implements DataSource<Incident> {
       });
       this.lessonsSubject.next(this.incidentList);
       this.dateBoolean = true;
+    }
+  }
+
+  sortDateModified() {
+    if (this.dateModifiedBoolean) {
+      this.incidentList.sort((a, b) => {
+          if (a.CREATION_DATE > b.CREATION_DATE) {
+            return 1;
+          } else if (
+            a.CREATION_DATE < b.CREATION_DATE
+          ) {
+            return -1;
+          } else {
+            return 0;
+          }
+      });
+      this.lessonsSubject.next(this.incidentList);
+      this.dateModifiedBoolean = false;
+    } else {
+      this.incidentList.sort((a, b) => {
+          if (a.CREATION_DATE < b.CREATION_DATE) {
+            return 1;
+          } else if (
+            a.CREATION_DATE > b.CREATION_DATE
+          ) {
+            return -1;
+          } else {
+            return 0;
+          }
+      });
+      this.lessonsSubject.next(this.incidentList);
+      this.dateModifiedBoolean = true;
     }
   }
 

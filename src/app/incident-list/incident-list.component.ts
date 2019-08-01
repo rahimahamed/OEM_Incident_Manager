@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
@@ -62,7 +62,7 @@ export class IncidentListComponent implements OnInit {
     },
   ];
 
-  columnsToDisplay = ['title', 'location', 'status', 'date_created'];
+  columnsToDisplay = ['title', 'location', 'status', 'date_created', 'date_modified'];
   expandedElement: Incident | null;
 
   constructor(private incidentService: IncidentService) { }
@@ -71,7 +71,6 @@ export class IncidentListComponent implements OnInit {
     this.dataSource = new IncidentsDataSource(this.incidentService, true);
     this.dataSource.loadLessons();
     this.onSelect();
-    // this.sortDate();
   }
 
   closeForm() {
@@ -110,6 +109,10 @@ export class IncidentListComponent implements OnInit {
 
   sortDate(){
     this.dataSource.sortDate();
+  }
+
+  sortDateModified(){
+    this.dataSource.sortDateModified();
   }
 
   updateSummary(incident: Incident) {
