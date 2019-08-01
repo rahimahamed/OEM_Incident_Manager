@@ -3,7 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +20,9 @@ import { UserCreateComponent } from './user-components/user-create/user-create.c
 import { UserLoginComponent } from './user-components/user-login/user-login.component';
 import { AlertComponent } from './user-components/alert/alert.component';
 import { UserProfileComponent } from './user-components/user-profile/user-profile.component';
+import { AgmCoreModule } from '@agm/core';
+import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 @NgModule({
   declarations: [
@@ -40,7 +46,18 @@ import { UserProfileComponent } from './user-components/user-profile/user-profil
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    DropDownsModule,
+    EditorModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCEigp32HEupcc9Jh209-DqzAqGPGlCfqU',
+      language: 'en',
+      libraries: ['places']
+    }),
+    AgmSnazzyInfoWindowModule
   ],
   providers: [],
   bootstrap: [AppComponent]
