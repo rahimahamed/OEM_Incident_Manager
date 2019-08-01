@@ -43,14 +43,42 @@
             <input matInput placeholder="Input Location" formControlName="address">
           </mat-form-field>
       </div>
-      <button style="margin-bottom: 10px" type="submit" class="btn btn-primary">Submit</button>
+      <button style="margin-bottom: 10px" type="submit"
+        class="btn btn-primary">Submit
+      </button>
     </form>
+    <form *ngIf="updateForm" #form="ngForm" (ngSubmit)="onUpdateIncident()">
+        <div class="form-group">
+          <label for="INCIDENT_NAME">Title</label>
+          <input type="text" class="form-control" id="INCIDENT_NAME"
+                 required
+                 [(ngModel)]="model.INCIDENT_NAME" name="INCIDENT_NAME">
+        </div>
+        <div class="form-group">
+          <label for="LOCATION_NAME">Location</label>
+          <input type="text" class="form-control" id="LOCATION_NAME"
+                 required
+                 [(ngModel)]="model.LOCATION_NAME" name="LOCATION_NAME">
+        </div>
+        <div class="form-group">
+          <label for="STATUS">Status</label>
+          <input type="text" class="form-control" id="STATUS"
+                 required
+                 [(ngModel)]="model.STATUS" name="STATUS">
+        </div>
+        <button style="margin-bottom: 10px" type="submit"
+          class="btn btn-success exp-btn">Update
+        </button>
+
+      </form>
   </div>
   <div><div [ngStyle]="displayStyle">{{str}}</div>
-
-
-  <app-incident-list (selectIncident)="incidentSelect($event)"
+    
+  <app-incident-list  (closeF)="closeForm()"
                       (archiveIncident)="archiveIncident($event)">
+                      (selectIncident)="incidentSelect($event)"
+                      (editIncident)="editIncident($event)"
+                      (updateSum)="updateSummary($event)">
   </app-incident-list>
 
 

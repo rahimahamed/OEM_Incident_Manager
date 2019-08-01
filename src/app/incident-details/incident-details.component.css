@@ -1,0 +1,20 @@
+.left{
+  float: left;
+}
+.right{
+  float: right;
+  margin-top: 13px;
+  margin-left: 50px;
+  margin-bottom: 20px;
+}
+
+.exp-btn{
+  margin-top: 15px;
+  margin-right: 10px;
+}
+.table {
+  width: 100%;
+}
+agm-map{
+  height: 300px;
+}

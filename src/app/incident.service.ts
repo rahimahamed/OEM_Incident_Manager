@@ -1,8 +1,6 @@
 import { Incident } from './incident';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { variable } from '@angular/compiler/src/output/output_ast';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +18,11 @@ export class IncidentService {
 
   getIncidents() {
     return this._http.get(this._getUrl);
+  }
+
+  getID(id: string) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this._http.get(this._getUrl + '/' + id, {headers});
   }
 
   addIncidents(incident: Incident) {

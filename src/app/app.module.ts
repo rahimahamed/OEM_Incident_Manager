@@ -17,6 +17,10 @@ import { MaterialModule } from '../material-module';
 import { IncidentCommentsComponent } from './incident-comments/incident-comments.component';
 import { IncidentDetailsComponent } from './incident-details/incident-details.component';
 import { IncidentMapComponent } from './incident-map/incident-map.component';
+import { EditorModule } from '@tinymce/tinymce-angular';
+
+import { AgmCoreModule } from '@agm/core';
+import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 
 
 @NgModule({
@@ -27,7 +31,7 @@ import { IncidentMapComponent } from './incident-map/incident-map.component';
     ArchivedIncidentsComponent,
     IncidentCommentsComponent,
     IncidentDetailsComponent,
-    IncidentMapComponent
+    IncidentMapComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +45,13 @@ import { IncidentMapComponent } from './incident-map/incident-map.component';
     ReactiveFormsModule,
     MatInputModule,
     DropDownsModule,
+    EditorModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyC-m5L1P9HTlapjjQeVapN1Oy4DxMXQogA',
+      language: 'en',
+      libraries: ['places']
+    }),
+    AgmSnazzyInfoWindowModule
   ],
   providers: [],
   bootstrap: [AppComponent]
