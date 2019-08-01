@@ -74,25 +74,9 @@
       </form>
   </div>
 
-  <app-incident-list  (closeF)="closeForm()"
-                      (archiveIncident)="archiveIncident($event)">
-                      (selectIncident)="incidentSelect($event)"
-                      (editIncident)="editIncident($event)"
-                      (updateSum)="updateSummary($event)">
+  <app-incident-list
+    (editIncident)="editIncident($event)"
+    (sendDataSource)="updateDataSource($event)">
   </app-incident-list>
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEigp32HEupcc9Jh209-DqzAqGPGlCfqU&libraries=places&callback=initMap" async defer></script>
-
-
-  <!--<form #form="ngForm" (ngSubmit)="onSubmitIncident()">
-    <div class = "form-group">
-      <mat-form-field appearance="standard">
-        <mat-label>Incident Name</mat-label>
-        <input matInput placeholder="Placeholder" name="INCIDENT_NAME" [(ngModel)]="model.INCIDENT_NAME">
-      </mat-form-field>
-    </div>
-  </form>-->
-
-  <!--https://angular.io/api/common/AsyncPipe-->
-
-  <!--https://stackblitz.com/edit/angular-material-mat-select-dynamic-data-binding-in-angular?file=app%2Fselect-value-binding-example.ts-->

@@ -17,10 +17,8 @@ import { IncidentsDataSource } from '../incident.data.source';
   ],
 })
 export class IncidentListComponent implements OnInit {
-  @Output() closeF = new EventEmitter();
-  @Output() selectIncident = new EventEmitter();
   @Output() editIncident = new EventEmitter();
-  @Output() updateSum = new EventEmitter();
+  @Output() sendDataSource = new EventEmitter();
 
   dataSource: IncidentsDataSource;
   incidentList: Incident[] = [
@@ -64,28 +62,12 @@ export class IncidentListComponent implements OnInit {
 
   columnsToDisplay = ['title', 'location', 'status'];
   expandedElement: Incident | null;
-  mapCenter = [40.730610, -73.935242];
-  basemapType = 'streets';
-  mapZoomLevel = 12;
-
-  mapLoadedEvent(status: boolean) {
-    console.log('The map has loaded: ' + status);
-  }
 
   constructor(private incidentService: IncidentService) { }
 
   ngOnInit() {
     this.dataSource = new IncidentsDataSource(this.incidentService, true);
     this.dataSource.loadLessons();
-    this.onSelect();
-  }
-
-  closeForm() {
-    this.closeF.emit();
-  }
-
-  onSelect() {
-    this.selectIncident.emit(this.dataSource);
   }
 
   onArchive(incident: Incident) {
@@ -97,13 +79,28 @@ export class IncidentListComponent implements OnInit {
     );
   }
 
+  emitDataSource(){
+    this.sendDataSource.emit(this.dataSource);
+  }
+
   onEdit(incident: Incident) {
     this.expandedElement = null;
     this.editIncident.emit(incident);
   }
 
   updateSummary(incident: Incident) {
-    this.updateSum.emit(incident);
+    this.incidentService.updateIncident(incident).subscribe(
+      newIncident => {
+        this.dataSource.loadLessons();
+      }
+    );
   }
 
+  updateLocation(incident: Incident) {
+    this.incidentService.updateIncident(incident).subscribe(
+      newIncident => {
+        this.dataSource.loadLessons();
+      }
+    );
+  }
 }

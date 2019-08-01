@@ -8,13 +8,11 @@ import { Incident } from '../incident';
 export class IncidentDetailsComponent implements OnInit {
 
   @Input() incident: Incident;
-  @Output() closeForm = new EventEmitter();
   @Output() archiveIncident = new EventEmitter();
   @Output() editIncident = new EventEmitter();
   @Output() updateSummary = new EventEmitter();
 
   summaryExists = false;
-  editPressed = false;
   summary: string;
   columnsToDisplay = ['title', 'location', 'status'];
 
@@ -29,12 +27,9 @@ export class IncidentDetailsComponent implements OnInit {
 
   generateArray(obj) {
     return Object.keys(obj).map((key) => {
-      // if (!(key === 'SUMMARY' || key === '__v' || key === '_id')) {
-        return {
-          key, value: obj[key]
-        };
-      // }
-      // return true;
+      return {
+        key, value: obj[key]
+      };
     });
   }
 

@@ -1,38 +1,38 @@
-import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit, Output, Input, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
-import { FormControl } from '@angular/forms';
 import {} from '@agm/core/services/google-maps-types';
 import { Incident } from '../incident';
+
 @Component({
   selector: 'app-incident-map',
   templateUrl: './incident-map.component.html',
   styleUrls: ['./incident-map.component.css']
 })
 export class IncidentMapComponent implements OnInit, AfterViewInit {
-
-  public latitude: number;
-  public longitude: number;
-  public searchControl: FormControl;
-  public zoom: number;
+  public latitude = 40.730610;
+  public longitude = -73.935242;
+  public zoom = 10;
   address: string;
   private geoCoder;
   @Input() incident: Incident;
   @Output() emitLocation = new EventEmitter();
+  @Output() emitUpdate = new EventEmitter();
 
   @ViewChild('search', {static: false}) public searchElementRef: ElementRef;
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngAfterViewInit() {
-    this.zoom = 10;
-    this.latitude = 40.730610;
-    this.longitude = -73.935242;
-
+    if ((this.incident.ADDRESS)) {
+      this.latitude = Number(this.incident.LATITUDE);
+      this.longitude = Number(this.incident.LONGITUDE);
+      this.address = this.incident.ADDRESS;
+    }
     // create search FormControl
-    this.searchControl = new FormControl();
     this.geoCoder = new google.maps.Geocoder();
 
     // set current position
@@ -57,11 +57,12 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
           // set latitude, longitude and zoom
           this.latitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
-          this.getAddress(this.latitude, this.longitude, this.incident);
+          this.getAddress(this.latitude, this.longitude);
           this.zoom = 15;
         });
       });
     });
+    this.cdr.detectChanges();
   }
 
   ngOnInit() {
@@ -71,7 +72,7 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
   // Get Current Location Coordinates
   private setCurrentLocation() {
     this.zoom = 10;
-    this.getAddress(this.latitude, this.longitude, this.incident);
+    this.getAddress(this.latitude, this.longitude);
   }
 
 
@@ -79,10 +80,10 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
     console.log($event);
     this.latitude = $event.coords.lat;
     this.longitude = $event.coords.lng;
-    this.getAddress(this.latitude, this.longitude, this.incident);
+    this.getAddress(this.latitude, this.longitude);
   }
 
-  getAddress(latitude, longitude, incident) {
+  getAddress(latitude, longitude) {
     this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
       console.log(results);
       console.log(status);
@@ -99,7 +100,14 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
       this.incident.LATITUDE = this.latitude.toString();
       this.incident.LONGITUDE = this.longitude.toString();
       this.incident.ADDRESS = this.address;
-      this.emitLocation.emit(incident);
+      this.emitLocation.emit(this.incident);
     });
+  }
+
+  emitAddress() {
+    this.incident.LATITUDE = this.latitude.toString();
+    this.incident.LONGITUDE = this.longitude.toString();
+    this.incident.ADDRESS = this.address;
+    this.emitUpdate.emit(this.incident);
   }
 }

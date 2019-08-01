@@ -29,7 +29,6 @@ export class HomeComponent implements OnInit {
     location: new FormControl(this.model.LOCATION_NAME),
     status: new FormControl(this.model.STATUS),
     prognosis: new FormControl(),
-    address: new FormControl(this.model.ADDRESS),
   });
 
   statusList: any = [
@@ -81,15 +80,21 @@ export class HomeComponent implements OnInit {
     this.model = new Incident();
   }
 
+  updateDataSource(dataSource: IncidentsDataSource){
+    this.dataSource = dataSource;
+  }
+
   onSubmitIncident() {
-    console.log('Hello this is a test');
-    console.log(this.model.INCIDENT_NAME);
     this.model.INCIDENT_NAME = this.submitForm.controls.incidentName.value;
     console.log(this.model.INCIDENT_NAME);
     this.model.LOCATION_NAME = this.submitForm.controls.location.value;
-    console.log(this.submitForm.controls.prognosis.value);
-    this.model.STATUS = this.submitForm.controls.status.value + ',' + this.submitForm.controls.prognosis.value;
-    this.model.ADDRESS = this.submitForm.controls.address.value;
+    console.log(this.model.LOCATION_NAME);
+    this.model.STATUS = this.submitForm.controls.status.value +
+    ',' + this.submitForm.controls.prognosis.value;
+    console.log(this.model.STATUS);
+    console.log(this.model.ADDRESS);
+    console.log(this.model.LATITUDE);
+    console.log(this.model.LONGITUDE);
     this.incidentService.addIncidents(this.model).subscribe(
       newIncident => {
         this.ngOnInit();
@@ -112,22 +117,17 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  closeForm() {
-    this.hideForm = true;
-  }
-
-  incidentSelect(dataSource: IncidentsDataSource) {
-    this.dataSource = dataSource;
-  }
-
   editIncident(incident: Incident) {
     this.updateForm = true;
     this.hideForm = false;
     this.model = Object.assign({}, incident);
+    //NEED TO FIX LATER
   }
 
-  updateSummary(incident: Incident) {
-    this.model = Object.assign({}, incident);
-    this.onUpdateIncident();
+  setLocation(incident: Incident) {
+    console.log('Setting Location in the Home Component');
+    this.model.ADDRESS = incident.ADDRESS;
+    this.model.LATITUDE = incident.LATITUDE;
+    this.model.LONGITUDE = incident.LONGITUDE;
   }
 }
