@@ -1,4 +1,3 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <button type="button" style="margin-top:20px; margin-bottom: 30px"
         (click)="onClick()" class="btn btn-primary btn-lg">SUBMIT AN EMERGENCY!</button>
@@ -20,8 +19,8 @@
       </div>
       <div class="input 3-1">
         <mat-form-field>
-          <mat-select placeholder="Placeholder" (selectionChange)="statusChangeAction"
-          formControlName="status">
+          <mat-select placeholder="Placeholder" formControlName="status"
+          (selectionChange)="statusChangeAction()">
             <mat-option *ngFor="let status of statusList" [value]="status.statusName">
               {{status.statusName}}
             </mat-option>
@@ -31,18 +30,20 @@
       <div class="input 3-2">
         <mat-form-field>
           <mat-select matInput placeholder="Placeholder" formControlName="prognosis">
-            <mat-option *ngFor="let prognosis of prognosisList" [value]="prognosis">
+            <mat-option *ngFor="let prognosis of prognosisList"
+                                [value]="prognosis">
               {{prognosis}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="input4">
-          <mat-form-field appearance="standard">
-            <mat-label>Address</mat-label>
-            <input matInput placeholder="Input Location" formControlName="address">
-          </mat-form-field>
+      <div class="input 4" style="margin-right: 2000px;">
+        <app-incident-map
+          [incident] = "model"
+          (emitLocation) = setLocation($event)>
+        </app-incident-map>
       </div>
+      <br>
       <button style="margin-bottom: 10px" type="submit"
         class="btn btn-primary">Submit
       </button>
@@ -72,14 +73,15 @@
 
       </form>
   </div>
-  <div><div [ngStyle]="displayStyle">{{str}}</div>
-    
+
   <app-incident-list  (closeF)="closeForm()"
                       (archiveIncident)="archiveIncident($event)">
                       (selectIncident)="incidentSelect($event)"
                       (editIncident)="editIncident($event)"
                       (updateSum)="updateSummary($event)">
   </app-incident-list>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEigp32HEupcc9Jh209-DqzAqGPGlCfqU&libraries=places&callback=initMap" async defer></script>
 
 
   <!--<form #form="ngForm" (ngSubmit)="onSubmitIncident()">
