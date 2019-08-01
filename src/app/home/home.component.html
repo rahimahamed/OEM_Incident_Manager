@@ -5,24 +5,43 @@
 </div>
   <div style="margin-left: 20px" *ngIf="!hideForm">
     <h2>New Emergency</h2>
-    <form *ngIf="!updateForm" #form="ngForm" (ngSubmit)="onSubmitIncident()">
-      <div class="form-group">
-        <label for="INCIDENT_NAME">Title</label>
-        <input type="text" class="form-control" id="INCIDENT_NAME"
-               required
-               [(ngModel)]="model.INCIDENT_NAME" name="INCIDENT_NAME">
+    <form [formGroup] = "submitForm" (ngSubmit)="onSubmitIncident()">
+      <div class="input1">
+        <mat-form-field appearance="standard">
+          <mat-label>Incident Name</mat-label>
+          <input matInput placeholder="Input Incident Name" formControlName="incidentName">
+        </mat-form-field>
       </div>
-      <div class="form-group">
-        <label for="LOCATION_NAME">Location</label>
-        <input type="text" class="form-control" id="LOCATION_NAME"
-               required
-               [(ngModel)]="model.LOCATION_NAME" name="LOCATION_NAME">
+      <div class="input2">
+          <mat-form-field appearance="standard">
+            <mat-label>Location</mat-label>
+            <input matInput placeholder="Input Location" formControlName="location">
+          </mat-form-field>
       </div>
-      <div class="form-group">
-        <label for="STATUS">Status</label>
-        <input type="text" class="form-control" id="STATUS"
-               required
-               [(ngModel)]="model.STATUS" name="STATUS">
+      <div class="input 3-1">
+        <mat-form-field>
+          <mat-select placeholder="Placeholder" (selectionChange)="statusChangeAction"
+          formControlName="status">
+            <mat-option *ngFor="let status of statusList" [value]="status.statusName">
+              {{status.statusName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="input 3-2">
+        <mat-form-field>
+          <mat-select matInput placeholder="Placeholder" formControlName="prognosis">
+            <mat-option *ngFor="let prognosis of prognosisList" [value]="prognosis">
+              {{prognosis}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="input4">
+          <mat-form-field appearance="standard">
+            <mat-label>Address</mat-label>
+            <input matInput placeholder="Input Location" formControlName="address">
+          </mat-form-field>
       </div>
       <button style="margin-bottom: 10px" type="submit"
         class="btn btn-primary">Submit
@@ -54,9 +73,24 @@
       </form>
   </div>
   <div><div [ngStyle]="displayStyle">{{str}}</div>
-
+    
   <app-incident-list  (closeF)="closeForm()"
+                      (archiveIncident)="archiveIncident($event)">
                       (selectIncident)="incidentSelect($event)"
                       (editIncident)="editIncident($event)"
                       (updateSum)="updateSummary($event)">
   </app-incident-list>
+
+
+  <!--<form #form="ngForm" (ngSubmit)="onSubmitIncident()">
+    <div class = "form-group">
+      <mat-form-field appearance="standard">
+        <mat-label>Incident Name</mat-label>
+        <input matInput placeholder="Placeholder" name="INCIDENT_NAME" [(ngModel)]="model.INCIDENT_NAME">
+      </mat-form-field>
+    </div>
+  </form>-->
+
+  <!--https://angular.io/api/common/AsyncPipe-->
+
+  <!--https://stackblitz.com/edit/angular-material-mat-select-dynamic-data-binding-in-angular?file=app%2Fselect-value-binding-example.ts-->

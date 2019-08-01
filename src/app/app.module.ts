@@ -3,7 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatSelectModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 
 import { AppRoutingModule, routingComponents} from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +21,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 
 import { AgmCoreModule } from '@agm/core';
 import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
+
 
 @NgModule({
   declarations: [
@@ -36,6 +41,10 @@ import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
     BrowserAnimationsModule,
     MaterialModule,
     MatNativeDateModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    DropDownsModule,
     EditorModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC-m5L1P9HTlapjjQeVapN1Oy4DxMXQogA',

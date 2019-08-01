@@ -27,7 +27,6 @@ export class AppComponent {
   //   let h = date.getHours();
   //   let m = date.getMinutes();
   //   let s = date.getSeconds();
-
   //   time = h + ":" + m + ":" + s;
   //   setTimeout(this.showTime, 1000)
   //   return time;
