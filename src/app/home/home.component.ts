@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
     prognosis: new FormControl(),
     incidentType: new FormControl(this.model.INCIDENT_TYPE),
     incidentDescription: new FormControl(),
+    leadingAgency: new FormControl(),
 
   });
 
@@ -137,6 +138,18 @@ export class HomeComponent implements OnInit {
 
   incidentDescriptionList: any = [];
 
+  leadingAgencyList: any = [
+    'Aging, Department for the (DFTA)', 'Amtrak Police (Amtrak PD)',
+    'Buildings, Department of (DOB)', 'Centers for Disease Control and Prevention (CDC)',
+    'Consolidated Edison (Con Ed)', 'Education, Department of (DOE)',
+    'Emergency Management, NYC Office of (OEM)', 'Environmental Protection, Department of (DEP)',
+    'Federal Aviation Administration (FAA)', 'Fire Department EMS Command (FDNY-EMS)',
+    'Fire Department, City of New York (FDNY)', 'Greater New York Hospital Association (GNYHA)',
+    'MTA Bridges and Tunnels (MTA B&T)', 'MTA New York City Transit (MTA)',
+    'National Grid', 'National Weather Service (NWS)', 'Police Department, New York City (NYPD)',
+    'Port Authority of NY/NJ Police (PA-PD)', 'Public Service Electric and Gas (PSEG)',
+    'Transcom', 'Transportation, Department of (DOT)', 'Verizon', 'Other'
+  ];
   constructor(private incidentService: IncidentService,
               private router: Router,
               private route: ActivatedRoute,

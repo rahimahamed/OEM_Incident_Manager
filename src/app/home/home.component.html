@@ -56,6 +56,15 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <div class="input 5">
+        <mat-form-field>
+          <mat-select matInput placeholder="Select Leading Agency" formControlName="leadingAgency">
+            <mat-option *ngFor="let leadingAgency of leadingAgencyList" [value]="leadingAgency">
+              {{leadingAgency}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
       <!--<div class="input 4-2">
         <mat-form-field>
           <mat-select matInput placeholder="Placeholder" formControlName="incidentDescription">
@@ -66,7 +75,7 @@
           </mat-select>
         </mat-form-field>
       </div>-->
-      <div class="input 5" style="margin-right: 2000px;">
+      <div class="input 6" style="margin-right: 2000px;">
         <app-incident-map
           [incident] = "model"
           (emitLocation) = setLocation($event)>
