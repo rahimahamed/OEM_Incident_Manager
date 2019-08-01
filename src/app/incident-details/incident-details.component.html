@@ -1,25 +1,37 @@
-<div class="wrap">
+<script src="https://cdn.tiny.cloud/1/xzmeuzojpn81uz66dyexlm02jfmh3h3mn02a03cxk5ew37lm/tinymce/5/tinymce.min.js"></script> <div class="wrap">
   <div class="left">
-      <table class="mat-table" >
+      <table class="mat-table" width="600">
           <tr class="mat-header-row">
-            <th scope="col" class="mat-header-cell"></th>
+            <th scope="col" class="mat-header-cell">Title</th>
             <th scope="col" class="mat-header-cell">Details</th>
           </tr>
           <tr *ngFor="let item of generateArray(incident)" class="mat-row">
-            <th scope="row" class="mat-row"> {{item.key}}</th>
-            <td class="mat-cell">{{item.value}}</td>
+            <th *ngIf="displayItem(item.key)" scope="row" class="mat-row"> {{item.key}}</th>
+            <td *ngIf="displayItem(item.key)" class="mat-cell">{{item.value}}</td>
           </tr>
       </table>
   </div>
   <div class="right">
-      <div *ngIf="!summaryExists" class="form-group">
-          <label>Summary:</label>
-          <!-- <p *ngIf="summaryExists">{{incident.SUMMARY}}</p> -->
-          <textarea class="form-control" rows="20" cols="80"
-          [(ngModel)] = "summary"></textarea>
+      <div class="form-group">
+          <h3 style="align-content: center"><b><u>Summary</u></b></h3>
+          <p style="width: 600px; align-content: left;" *ngIf="summaryExists" [innerHTML]="incident.SUMMARY"></p>
+          <editor *ngIf="!summaryExists"
+            apiKey="xzmeuzojpn81uz66dyexlm02jfmh3h3mn02a03cxk5ew37lm"
+            [init]="{
+              height: 600,
+              paste_retain_style_properties: 'all'
+            }"
+            [(ngModel)]="summary"></editor>
+
       </div>
-      <button type="button" (click)="onEdit()" class="btn btn-warning exp-btn">Edit</button>
-      <button type="button" (click)="onSubmitSummary()" class="btn btn-success exp-btn">Submit</button>
-      <button type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Archive</button>
+      <div style="float: center">
+        <button type="button" (click)="onEdit()" class="btn btn-warning exp-btn">Edit</button>
+        <button type="button" *ngIf="!summaryExists" (click)="onSubmitSummary()" class="btn btn-success exp-btn">Submit</button>
+        <button type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Archive</button>
+      </div>
   </div>
-</div>
+  <!-- <div class="column right">
+      <agm-map [latitude]="lat" [longitude]="lng">
+          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+      </agm-map>
+  </div> -->

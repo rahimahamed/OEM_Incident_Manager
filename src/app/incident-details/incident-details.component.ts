@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Incident } from '../incident';
-import { skip } from 'rxjs/operators';
 @Component({
   selector: 'app-incident-details',
   templateUrl: './incident-details.component.html',
@@ -9,15 +8,12 @@ import { skip } from 'rxjs/operators';
 export class IncidentDetailsComponent implements OnInit {
 
   @Input() incident: Incident;
-  @Output() closeForm = new EventEmitter();
   @Output() archiveIncident = new EventEmitter();
   @Output() editIncident = new EventEmitter();
   @Output() updateSummary = new EventEmitter();
 
   summaryExists = false;
-  editPressed = false;
   summary: string;
-
   columnsToDisplay = ['title', 'location', 'status'];
 
   constructor() {
@@ -27,14 +23,13 @@ export class IncidentDetailsComponent implements OnInit {
     if (this.incident.SUMMARY) {
       this.summaryExists = true;
     }
-    this.closeForm.emit();
   }
 
   generateArray(obj) {
-    return Object.keys(obj).map((key)=> {
+    return Object.keys(obj).map((key) => {
       return {
-        key:key, value:obj[key]
-      }
+        key, value: obj[key]
+      };
     });
   }
 
@@ -53,4 +48,13 @@ export class IncidentDetailsComponent implements OnInit {
       this.summaryExists = true;
     }
   }
+
+  displayItem(key) {
+    if (!(key === 'SUMMARY' || key === '__v' || key === '_id')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }
