@@ -1,8 +1,8 @@
-import { BehaviorSubject, Observable, of } from "rxjs";
-import { DataSource, CollectionViewer } from "@angular/cdk/collections";
-import { IncidentService } from "./incident.service";
-import { Incident } from "./incident";
-import { catchError, finalize } from "rxjs/operators";
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { DataSource, CollectionViewer } from '@angular/cdk/collections';
+import { IncidentService } from './incident.service';
+import { Incident } from './incident';
+import { catchError, finalize } from 'rxjs/operators';
 
 export class IncidentsDataSource implements DataSource<Incident> {
   incidentList: Incident[] = [];
@@ -43,10 +43,21 @@ export class IncidentsDataSource implements DataSource<Incident> {
         )
         .subscribe((resIncidentData: Incident[]) => {
           for (const incident of resIncidentData) {
-            if (!(incident.STATUS === "Closed")) {
+            if (!(incident.STATUS === 'Closed')) {
               this.incidentList.push(incident);
             }
           }
+          this.incidentList.sort((a, b) => {
+            if (a.CREATION_DATE < b.CREATION_DATE) {
+              return 1;
+            } else if (
+              a.CREATION_DATE > b.CREATION_DATE
+            ) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
           this.lessonsSubject.next(this.incidentList);
         });
     } else {
@@ -58,10 +69,21 @@ export class IncidentsDataSource implements DataSource<Incident> {
         )
         .subscribe((resIncidentData: Incident[]) => {
           for (const incident of resIncidentData) {
-            if (incident.STATUS === "Closed") {
+            if (incident.STATUS === 'Closed') {
               this.incidentList.push(incident);
             }
           }
+          this.incidentList.sort((a, b) => {
+            if (a.CREATION_DATE < b.CREATION_DATE) {
+              return 1;
+            } else if (
+              a.CREATION_DATE > b.CREATION_DATE
+            ) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
           this.lessonsSubject.next(this.incidentList);
         });
     }
@@ -240,7 +262,7 @@ export class IncidentsDataSource implements DataSource<Incident> {
         )
         .subscribe((resIncidentData: Incident[]) => {
           for (const incident of resIncidentData) {
-            if (!(incident.STATUS === "Closed")) {
+            if (!(incident.STATUS === 'Closed')) {
               if (incident.STATUS.toLowerCase().includes(str)) {
                 this.incidentList.push(incident);
               } else if (incident.INCIDENT_NAME.toLowerCase().includes(str)) {
@@ -261,7 +283,7 @@ export class IncidentsDataSource implements DataSource<Incident> {
         )
         .subscribe((resIncidentData: Incident[]) => {
           for (const incident of resIncidentData) {
-            if (incident.STATUS === "Closed") {
+            if (incident.STATUS === 'Closed') {
               if (incident.STATUS.toLowerCase().includes(str)) {
                 this.incidentList.push(incident);
               } else if (incident.INCIDENT_NAME.toLowerCase().includes(str)) {
