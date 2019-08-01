@@ -14,8 +14,8 @@
     <h5>Address: {{address}}</h5>
     <div>Latitude: {{latitude}}</div>
     <div>Longitude: {{longitude}}</div>
-    <div><button type="button" (click)="emitAddress()"
-      class="btn btn-success exp-btn">Submit</button>
+    <div *ngIf="loadSubmitButton"><button type="button" (click)="emitAddress()"
+      class="btn btn-success exp-btn">Submit Updated Address</button>
     </div>
   </div>
 

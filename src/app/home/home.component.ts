@@ -62,6 +62,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.date = Date.now();
+    this.dataSource = new IncidentsDataSource(this.incidentService, true);
   }
 
   statusChangeAction() {
@@ -81,33 +82,21 @@ export class HomeComponent implements OnInit {
     this.model = new Incident();
   }
 
-  updateDataSource(dataSource: IncidentsDataSource){
-    this.dataSource = dataSource;
-  }
-
   onSubmitIncident() {
     this.date2 = new Date();
-    this.model.CREATION_DATE = "" + this.date2.toISOString().substr(0,10) + ", " + this.date2.toLocaleTimeString();
-    this.model.MODIFICATION_DATE = "" + this.date2.toISOString().substr(0,10) + ", " + this.date2.toLocaleTimeString();
-    this._incidentService.addIncidents(this.model).subscribe(
+    this.model.CREATION_DATE = '' + this.date2.toISOString().substr(0,10) + ', ' + this.date2.toLocaleTimeString();
+    this.model.MODIFICATION_DATE = '' + this.date2.toISOString().substr(0,10) + ', ' + this.date2.toLocaleTimeString();
+
     this.model.INCIDENT_NAME = this.submitForm.controls.incidentName.value;
-    console.log(this.model.INCIDENT_NAME);
     this.model.LOCATION_NAME = this.submitForm.controls.location.value;
-    console.log(this.model.LOCATION_NAME);
     this.model.STATUS = this.submitForm.controls.status.value +
     ',' + this.submitForm.controls.prognosis.value;
-    console.log(this.model.STATUS);
-    console.log(this.model.ADDRESS);
-    console.log(this.model.LATITUDE);
-    console.log(this.model.LONGITUDE);
+
     this.incidentService.addIncidents(this.model).subscribe(
       newIncident => {
-        this.ngOnInit();
         this.onClick();
         this.model = new Incident();
         this.dataSource.loadLessons();
-        this.dataSource.sortDate();
-        this.dataSource.sortDate();
       }
     );
   }
@@ -115,9 +104,7 @@ export class HomeComponent implements OnInit {
   onUpdateIncident() {
     this.incidentService.updateIncident(this.model).subscribe(
       newIncident => {
-        this.ngOnInit();
         this.onClick();
-        this.updateForm = false;
         this.model = new Incident();
         this.dataSource.loadLessons();
       }

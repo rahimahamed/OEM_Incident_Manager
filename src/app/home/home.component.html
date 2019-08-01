@@ -40,6 +40,7 @@
       <div class="input 4" style="margin-right: 2000px;">
         <app-incident-map
           [incident] = "model"
+          [loadSubmitButton]="false"
           (emitLocation) = setLocation($event)>
         </app-incident-map>
       </div>
@@ -76,7 +77,5 @@
 
   <app-incident-list
     (editIncident)="editIncident($event)"
-    (sendDataSource)="updateDataSource($event)">
+    [dataSource]="dataSource">
   </app-incident-list>
-
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEigp32HEupcc9Jh209-DqzAqGPGlCfqU&libraries=places&callback=initMap" async defer></script>

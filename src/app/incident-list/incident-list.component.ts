@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
@@ -18,14 +18,13 @@ import { IncidentsDataSource } from '../incident.data.source';
 })
 export class IncidentListComponent implements OnInit {
   @Output() editIncident = new EventEmitter();
-  @Output() sendDataSource = new EventEmitter();
 
-  dataSource: IncidentsDataSource;
+  @Input() dataSource: IncidentsDataSource;
   incidentList: Incident[] = [
     {
       _id: '5d3919a26ed54400177e1f1f',
       INCIDENT_NAME: 'Power Outage',
-      STATUS: 'NOT ACTIVE',
+      STATUS: 'Closed',
       LOCATION_NAME: 'Brooklyn',
       SUMMARY: null,
       INCIDENT_TYPE:  'CRAZY',
@@ -120,7 +119,6 @@ export class IncidentListComponent implements OnInit {
   constructor(private incidentService: IncidentService) { }
 
   ngOnInit() {
-    this.dataSource = new IncidentsDataSource(this.incidentService, true);
     this.dataSource.loadLessons();
   }
 
@@ -128,13 +126,9 @@ export class IncidentListComponent implements OnInit {
     incident.STATUS = 'Closed';
     this.incidentService.updateIncident(incident).subscribe(
       archivedIncident => {
-        this.ngOnInit();
+        this.dataSource.loadLessons();
       }
     );
-  }
-
-  emitDataSource(){
-    this.sendDataSource.emit(this.dataSource);
   }
 
   onEdit(incident: Incident) {
@@ -142,23 +136,23 @@ export class IncidentListComponent implements OnInit {
     this.editIncident.emit(incident);
   }
 
-  sortName(){
+  sortName() {
     this.dataSource.sortName();
   }
 
-  sortLocation(){
+  sortLocation() {
     this.dataSource.sortLocation();
   }
 
-  sortStatus(){
+  sortStatus() {
     this.dataSource.sortStatus();
   }
 
-  sortDate(){
+  sortDate() {
     this.dataSource.sortDate();
   }
 
-  sortDateModified(){
+  sortDateModified() {
     this.dataSource.sortDateModified();
   }
 
@@ -169,7 +163,7 @@ export class IncidentListComponent implements OnInit {
       }
     );
   }
-  
+
   applyFilter(filterValue: string) {
     this.dataSource = new IncidentsDataSource(this.incidentService, true);
     this.dataSource.filter(filterValue.trim().toLowerCase());

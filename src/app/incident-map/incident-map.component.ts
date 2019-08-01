@@ -15,8 +15,10 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
   address: string;
   private geoCoder;
   @Input() incident: Incident;
+  @Input() loadSubmitButton: boolean;
   @Output() emitLocation = new EventEmitter();
   @Output() emitUpdate = new EventEmitter();
+
 
   @ViewChild('search', {static: false}) public searchElementRef: ElementRef;
 
