@@ -63,13 +63,16 @@ export class IncidentDetailsComponent implements OnInit {
 
   updateList(id: string, value: string, event: any) {
     const editField = event.target.textContent;
-    if(editField === ''){
-      alert(value);
-    }
+    // if(editField === ''){
+    //   alert(value);
+    // }
   }
 
-  changeValue(id: string, event: any) {
+  changeValue(id: string, value: string, event: any) {
     this.editField = event.target.textContent;
+    if(event.keyCode === 13){
+      event.target.blur();
+    }
   }
 
   sortNull() {}

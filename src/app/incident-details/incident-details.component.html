@@ -15,7 +15,8 @@
                 </td>
                 <td>
                   <span contenteditable="true" 
-                  (keydown.enter)="updateList(item.key, item.value, $event)"
+                  (keyup)="changeValue(item.key, item.value, $event)"
+                  (keydown.enter)="$event.preventDefault()"
                   (blur)="updateList(item.key, item.value, $event)">{{item.value}}</span>
                 </td>
               </tr>
