@@ -17,12 +17,102 @@ import { IncidentsDataSource } from '../incident.data.source';
   ],
 })
 export class IncidentListComponent implements OnInit {
-  @Output() closeF = new EventEmitter();
-  @Output() selectIncident = new EventEmitter();
   @Output() editIncident = new EventEmitter();
-  @Output() updateSum = new EventEmitter();
+  @Output() sendDataSource = new EventEmitter();
 
   dataSource: IncidentsDataSource;
+  incidentList: Incident[] = [
+    {
+      _id: '5d3919a26ed54400177e1f1f',
+      INCIDENT_NAME: 'Power Outage',
+      STATUS: 'NOT ACTIVE',
+      LOCATION_NAME: 'Brooklyn',
+      SUMMARY: null,
+      INCIDENT_TYPE:  'CRAZY',
+      CREATION_DATE:  '2019-07-31, 3:52:57 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+    },
+    {
+      _id: '5d3919a26ed54400177e1f1f',
+      INCIDENT_NAME: 'Power Outage',
+      STATUS: 'Responding',
+      LOCATION_NAME: 'Queens',
+      SUMMARY: 'Failure',
+      INCIDENT_TYPE:  'LITT',
+      CREATION_DATE:  '2019-07-31, 4:00:34 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+    },
+    {
+      _id: '5d3919a26ed54400177e1f1f',
+      INCIDENT_NAME: 'Power Outage',
+      STATUS: 'Responding',
+      LOCATION_NAME: 'Queens',
+      SUMMARY: 'Failure',
+      INCIDENT_TYPE:  'LITT',
+      CREATION_DATE:  '2019-07-25, 4:00:34 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+    },
+    {
+      _id: '5d3919a26ed54400177e1f1f',
+      INCIDENT_NAME: 'Power Outage',
+      STATUS: 'Responding',
+      LOCATION_NAME: 'Queens',
+      SUMMARY: 'Failure',
+      INCIDENT_TYPE:  'LITT',
+      CREATION_DATE:  '2019-02-31, 4:00:34 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+    },
+    {
+      _id: '5d3919a26ed54400177e1f1f',
+      INCIDENT_NAME: 'Power Outage',
+      STATUS: 'Responding',
+      LOCATION_NAME: 'Queens',
+      SUMMARY: 'Failure',
+      INCIDENT_TYPE:  'LITT',
+      CREATION_DATE:  '2019-04-11, 4:00:34 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+    },
+  ];
 
   columnsToDisplay = ['title', 'location', 'status', 'date_created', 'date_modified'];
   expandedElement: Incident | null;
@@ -32,15 +122,6 @@ export class IncidentListComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new IncidentsDataSource(this.incidentService, true);
     this.dataSource.loadLessons();
-    this.onSelect();
-  }
-
-  closeForm() {
-    this.closeF.emit();
-  }
-
-  onSelect() {
-    this.selectIncident.emit(this.dataSource);
   }
 
   onArchive(incident: Incident) {
@@ -50,6 +131,10 @@ export class IncidentListComponent implements OnInit {
         this.ngOnInit();
       }
     );
+  }
+
+  emitDataSource(){
+    this.sendDataSource.emit(this.dataSource);
   }
 
   onEdit(incident: Incident) {
@@ -78,7 +163,11 @@ export class IncidentListComponent implements OnInit {
   }
 
   updateSummary(incident: Incident) {
-    this.updateSum.emit(incident);
+    this.incidentService.updateIncident(incident).subscribe(
+      newIncident => {
+        this.dataSource.loadLessons();
+      }
+    );
   }
 
   applyFilter(filterValue: string) {
@@ -86,4 +175,11 @@ export class IncidentListComponent implements OnInit {
     this.dataSource.filter(filterValue.trim().toLowerCase());
   }
 
+  updateLocation(incident: Incident) {
+    this.incidentService.updateIncident(incident).subscribe(
+      newIncident => {
+        this.dataSource.loadLessons();
+      }
+    );
+  }
 }
