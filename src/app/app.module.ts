@@ -7,7 +7,6 @@ import {MatSelectModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
-import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,7 +19,6 @@ import { IncidentMapComponent } from './incident-map/incident-map.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 
 import { AgmCoreModule } from '@agm/core';
-import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
@@ -44,14 +42,12 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     MatSelectModule,
     ReactiveFormsModule,
     MatInputModule,
-    DropDownsModule,
     EditorModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAArhePtiJGhta5z2dcWhcI88stTnP3emE',
       language: 'en',
       libraries: ['places']
     }),
-    AgmSnazzyInfoWindowModule,
     MDBBootstrapModule.forRoot()
   ],
   providers: [],
