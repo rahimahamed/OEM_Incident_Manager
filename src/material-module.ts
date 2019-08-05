@@ -34,12 +34,14 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSort} from '@angular/material';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
+import {MatTableDataSource} from '@angular/material'
 
 @NgModule({
   exports: [
@@ -84,7 +86,7 @@ import {MatTreeModule} from '@angular/material/tree';
     MatTooltipModule,
     MatTreeModule,
     PortalModule,
-    ScrollingModule,
+    ScrollingModule
   ]
 })
 export class MaterialModule {}

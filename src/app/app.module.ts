@@ -24,6 +24,7 @@ import { AgmCoreModule } from '@agm/core';
 import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { IncidentCommentsListComponent } from './incident-components/comments/incident-comments-list/incident-comments-list.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { IncidentCommentsListComponent } from './incident-components/comments/in
       language: 'en',
       libraries: ['places']
     }),
-    AgmSnazzyInfoWindowModule
+    AgmSnazzyInfoWindowModule,
+    MDBBootstrapModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

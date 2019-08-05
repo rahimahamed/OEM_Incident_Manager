@@ -26,21 +26,17 @@ import { IncidentsDataSource } from '../../helpers/incident.data.source';
   ]
 })
 export class IncidentListComponent implements OnInit {
-  @Output() closeF = new EventEmitter();
-  @Output() selectIncident = new EventEmitter();
-  @Output() editIncident = new EventEmitter();
-  @Output() updateSum = new EventEmitter();
 
-  dataSource: IncidentsDataSource;
+  @Input() dataSource: IncidentsDataSource;
   incidentList: Incident[] = [
     {
       _id: '5d3919a26ed54400177e1f1f',
       INCIDENT_NAME: 'Power Outage',
-      STATUS: 'NOT ACTIVE',
+      STATUS: 'Closed',
       LOCATION_NAME: 'Brooklyn',
       SUMMARY: null,
       INCIDENT_TYPE:  'CRAZY',
-      CREATION_DATE:  null,
+      CREATION_DATE:  '2019-07-31, 3:52:57 PM',
       ADDRESS:  null,
       LATITUDE:  null,
       LONGITUDE:  null,
@@ -58,7 +54,61 @@ export class IncidentListComponent implements OnInit {
       LOCATION_NAME: 'Queens',
       SUMMARY: 'Failure',
       INCIDENT_TYPE:  'LITT',
-      CREATION_DATE:  null,
+      CREATION_DATE:  '2019-07-31, 4:00:34 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+    },
+    {
+      _id: '5d3919a26ed54400177e1f1f',
+      INCIDENT_NAME: 'Power Outage',
+      STATUS: 'Responding',
+      LOCATION_NAME: 'Queens',
+      SUMMARY: 'Failure',
+      INCIDENT_TYPE:  'LITT',
+      CREATION_DATE:  '2019-07-25, 4:00:34 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+    },
+    {
+      _id: '5d3919a26ed54400177e1f1f',
+      INCIDENT_NAME: 'Power Outage',
+      STATUS: 'Responding',
+      LOCATION_NAME: 'Queens',
+      SUMMARY: 'Failure',
+      INCIDENT_TYPE:  'LITT',
+      CREATION_DATE:  '2019-02-31, 4:00:34 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+    },
+    {
+      _id: '5d3919a26ed54400177e1f1f',
+      INCIDENT_NAME: 'Power Outage',
+      STATUS: 'Responding',
+      LOCATION_NAME: 'Queens',
+      SUMMARY: 'Failure',
+      INCIDENT_TYPE:  'LITT',
+      CREATION_DATE:  '2019-04-11, 4:00:34 PM',
       ADDRESS:  null,
       LATITUDE:  null,
       LONGITUDE:  null,
@@ -71,48 +121,51 @@ export class IncidentListComponent implements OnInit {
     },
   ];
 
-  columnsToDisplay = ['title', 'location', 'status'];
+  columnsToDisplay = ['title', 'location', 'status', 'date_created', 'date_modified'];
   expandedElement: Incident | null;
-  mapCenter = [40.730610, -73.935242];
-  basemapType = 'streets';
-  mapZoomLevel = 12;
 
-  mapLoadedEvent(status: boolean) {
-    console.log('The map has loaded: ' + status);
-  }
-
-  constructor(private incidentService: IncidentService) {}
+  constructor(private incidentService: IncidentService, private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.dataSource = new IncidentsDataSource(this.incidentService, true);
     this.dataSource.loadLessons();
-    this.onSelect();
-  }
-
-  closeForm() {
-    this.closeF.emit();
-  }
-
-  onSelect() {
-    this.selectIncident.emit(this.dataSource);
   }
 
   onArchive(incident: Incident) {
     incident.STATUS = 'Closed';
     this.incidentService.updateIncident(incident).subscribe(
       archivedIncident => {
-        this.ngOnInit();
+        this.dataSource.loadLessons();
       }
     );
   }
 
-  onEdit(incident: Incident) {
-    this.expandedElement = null;
-    this.editIncident.emit(incident);
+  updateIncident(incident: Incident) {
+    this.dataSource.updateLessons(incident);
+    this.changeDetectorRef.detectChanges();
   }
 
-  updateSummary(incident: Incident) {
-    this.updateSum.emit(incident);
+  applyFilter(filterValue: string) {
+    this.dataSource = new IncidentsDataSource(this.incidentService, true);
+    this.dataSource.filter(filterValue.trim().toLowerCase());
   }
 
+  sortName() {
+    this.dataSource.sortName();
+  }
+
+  sortLocation() {
+    this.dataSource.sortLocation();
+  }
+
+  sortStatus() {
+    this.dataSource.sortStatus();
+  }
+
+  sortDate() {
+    this.dataSource.sortDate();
+  }
+
+  sortDateModified() {
+    this.dataSource.sortDateModified();
+  }
 }
