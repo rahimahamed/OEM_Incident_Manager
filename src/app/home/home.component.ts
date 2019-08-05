@@ -1,4 +1,3 @@
-
 import { Component, OnInit, ViewChild, ElementRef, } from '@angular/core';
 import { IncidentService } from './../incident.service';
 import { Incident } from './../incident';
