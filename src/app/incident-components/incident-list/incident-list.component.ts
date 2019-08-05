@@ -8,7 +8,7 @@ import {
 } from '@angular/animations';
 import { Incident } from '../../incident';
 import { IncidentService } from '../../services/incident.service';
-import { IncidentsDataSource } from '../../incident.data.source';
+import { IncidentsDataSource } from '../../helpers/incident.data.source';
 
 @Component({
   selector: 'app-incident-list',

@@ -5,14 +5,14 @@ import { first } from 'rxjs/operators';
 import { User } from '../../user';
 import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
-import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css']
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit, OnDestroy {
+  userDetails;
   currentUser: User;
   currentUserSubscription: Subscription;
   users: User[] = [];
@@ -24,11 +24,11 @@ export class UserProfileComponent implements OnInit {
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(
       user => {
         this.currentUser = user;
-      }
-    );
+      });
   }
 
   ngOnInit() {
+
     this.loadAllUsers();
   }
 

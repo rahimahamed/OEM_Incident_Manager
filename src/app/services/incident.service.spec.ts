@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { IncidentService } from './services/incident.service';
+import { IncidentService } from './incident.service';
 
 describe('IncidentService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

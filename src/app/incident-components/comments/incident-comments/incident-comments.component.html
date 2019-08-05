@@ -1,0 +1,42 @@
+<div style="text-align:center">
+  <button
+    type="button"
+    style="margin-top:20px; margin-bottom: 30px"
+    (click)="onClick()"
+    class="btn btn-primary btn-lg"
+  >
+    Submit a comment
+  </button>
+</div>
+
+<div style="margin-left: 20px" *ngIf="!hideForm">
+  <h2>New Comment</h2>
+  <form [formGroup]="submitComment" (ngSubmit)="onSubmitComment()">
+    <div class="input1">
+      <mat-form-field appearance="standard">
+        <mat-label>Comment</mat-label>
+        <input matInput placeholder="Input Comment" formControlName="comment" />
+      </mat-form-field>
+    </div>
+    <div class="input2">
+      <mat-form-field appearance="standard">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          placeholder="Input Username"
+          formControlName="commentator"
+        />
+      </mat-form-field>
+    </div>
+    <br />
+    <button style="margin-bottom: 10px" type="submit" class="btn btn-primary">
+      Submit
+    </button>
+  </form>
+
+  <app-incident-comments-list
+    (closeF)="closeForm()"
+    (selectComment)="commentSelect($event)"
+  >
+  </app-incident-comments-list>
+</div>

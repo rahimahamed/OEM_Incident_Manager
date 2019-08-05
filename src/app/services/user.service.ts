@@ -37,7 +37,7 @@ export class UserService {
   }
 
   delete(id: number) {
-    return this._http.delete(`/register/${id}`);
+    return this._http.delete(`/api/register/${id}`);
   }
 
   login(authCredentials) {

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { IncidentService } from '../services/incident.service';
 import { Incident } from './../incident';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IncidentsDataSource } from '../incident.data.source';
+import { IncidentsDataSource } from '../helpers/incident.data.source';
 import { User } from '../user';
 import { UserService } from '../services/user.service';
 import { AuthenticationService } from '../services/authentication.service';

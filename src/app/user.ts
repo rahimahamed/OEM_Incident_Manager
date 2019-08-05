@@ -2,7 +2,9 @@ export class User {
   firstName: String;
   lastName: String;
   department: String;
-  username: string;
-  password: string;
-  email: string;
+  username: String;
+  password: String;
+  email: String;
+
+  constructor() {}
 }

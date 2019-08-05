@@ -53,6 +53,15 @@
         <a
           *ngIf="currentUser"
           class="nav-link"
+          routerLink="/profile"
+          routerLinkActive="active"
+          >Users</a
+        >
+      </li>
+      <li class="nav-item active">
+        <a
+          *ngIf="currentUser"
+          class="nav-link"
           (click)="logout()"
           style="cursor:pointer"
           routerLinkActive="active"
@@ -61,7 +70,6 @@
       </li>
     </ul>
     <span class="navbar-text ml-auto">
-      <!--       {{date | date:'full'}} -->
       {{ day() + ', ' + monthDateYear() + ' at ' + showTime() }}
     </span>
   </div>

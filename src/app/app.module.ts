@@ -13,7 +13,7 @@ import { AppComponent } from './app.component';
 import { IncidentListComponent } from './incident-components/incident-list/incident-list.component';
 import { ArchivedIncidentsComponent } from './incident-components/archived-incidents/archived-incidents.component';
 import { MaterialModule } from '../material-module';
-import { IncidentCommentsComponent } from './incident-components/incident-comments/incident-comments.component';
+import { IncidentCommentsComponent } from './incident-components/comments/incident-comments/incident-comments.component';
 import { IncidentDetailsComponent } from './incident-components/incident-details/incident-details.component';
 import { IncidentMapComponent } from './incident-components/incident-map/incident-map.component';
 import { UserCreateComponent } from './user-components/user-create/user-create.component';
@@ -23,6 +23,7 @@ import { UserProfileComponent } from './user-components/user-profile/user-profil
 import { AgmCoreModule } from '@agm/core';
 import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { IncidentCommentsListComponent } from './incident-components/comments/incident-comments-list/incident-comments-list.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     UserCreateComponent,
     UserLoginComponent,
     AlertComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    IncidentCommentsListComponent
   ],
   imports: [
     BrowserModule,
