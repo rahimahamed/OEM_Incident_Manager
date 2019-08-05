@@ -8,9 +8,12 @@ import { Incident } from '../incident';
 export class IncidentDetailsComponent implements OnInit {
 
   @Input() incident: Incident;
+  incidentCopy: Incident;
   @Output() archiveIncident = new EventEmitter();
   @Output() editIncident = new EventEmitter();
   @Output() updateSummary = new EventEmitter();
+
+  editField: string;
 
   summaryExists = false;
   summary: string;
@@ -23,6 +26,7 @@ export class IncidentDetailsComponent implements OnInit {
     if (this.incident.SUMMARY) {
       this.summaryExists = true;
     }
+    this.incidentCopy = Object.assign({}, this.incident);
   }
 
   generateArray(obj) {
@@ -57,4 +61,16 @@ export class IncidentDetailsComponent implements OnInit {
     }
   }
 
+  updateList(id: string, value: string, event: any) {
+    const editField = event.target.textContent;
+    if(editField === ''){
+      alert(value);
+    }
+  }
+
+  changeValue(id: string, event: any) {
+    this.editField = event.target.textContent;
+  }
+
+  sortNull() {}
 }

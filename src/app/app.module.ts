@@ -21,7 +21,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 
 import { AgmCoreModule } from '@agm/core';
 import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
-
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
@@ -51,7 +51,8 @@ import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
       language: 'en',
       libraries: ['places']
     }),
-    AgmSnazzyInfoWindowModule
+    AgmSnazzyInfoWindowModule,
+    MDBBootstrapModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
