@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, ChangeDetectorRef } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
@@ -17,7 +17,6 @@ import { IncidentsDataSource } from '../incident.data.source';
   ],
 })
 export class IncidentListComponent implements OnInit {
-  @Output() editIncident = new EventEmitter();
 
   @Input() dataSource: IncidentsDataSource;
   incidentList: Incident[] = [
@@ -116,7 +115,7 @@ export class IncidentListComponent implements OnInit {
   columnsToDisplay = ['title', 'location', 'status', 'date_created', 'date_modified'];
   expandedElement: Incident | null;
 
-  constructor(private incidentService: IncidentService) { }
+  constructor(private incidentService: IncidentService, private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.dataSource.loadLessons();
@@ -131,8 +130,14 @@ export class IncidentListComponent implements OnInit {
     );
   }
 
-  onEdit(incident: Incident) {
-    this.editIncident.emit(incident);
+  updateIncident(incident: Incident) {
+    this.dataSource.updateLessons(incident);
+    this.changeDetectorRef.detectChanges();
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource = new IncidentsDataSource(this.incidentService, true);
+    this.dataSource.filter(filterValue.trim().toLowerCase());
   }
 
   sortName() {
@@ -153,26 +158,5 @@ export class IncidentListComponent implements OnInit {
 
   sortDateModified() {
     this.dataSource.sortDateModified();
-  }
-
-  updateSummary(incident: Incident) {
-    this.incidentService.updateIncident(incident).subscribe(
-      newIncident => {
-        this.dataSource.loadLessons();
-      }
-    );
-  }
-
-  applyFilter(filterValue: string) {
-    this.dataSource = new IncidentsDataSource(this.incidentService, true);
-    this.dataSource.filter(filterValue.trim().toLowerCase());
-  }
-
-  updateLocation(incident: Incident) {
-    this.incidentService.updateIncident(incident).subscribe(
-      newIncident => {
-        this.dataSource.loadLessons();
-      }
-    );
   }
 }

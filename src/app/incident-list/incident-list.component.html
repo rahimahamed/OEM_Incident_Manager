@@ -3,7 +3,7 @@
   </mat-form-field>
 
   <table mat-table
-          [dataSource]="dataSource" multiTemplateDataRows
+          [dataSource]="incidentList" multiTemplateDataRows
           matSort
           class="mat-elevation-z8">
 
@@ -41,14 +41,19 @@
                   <app-incident-details style="float: left; margin-right: 10px;"
                     [incident]="element"
                     (archiveIncident)="onArchive($event)"
-                    (editIncident)="onEdit($event)"
-                    (updateSummary)="updateSummary($event)">
+                    (editIncident)="updateIncident($event)"
+                    (updateSummary)="updateIncident($event)">
                   </app-incident-details>
-                  <app-incident-map style="float: right"
-                    [incident]="element"
-                    [loadSubmitButton]="true"
-                    (emitUpdate)="updateLocation($event)">
-                  </app-incident-map>
+                  <div *ngIf="loadSubmitButton" class="card">
+                    <h3 *ngIf="loadSubmitButton" class="card-header text-center font-weight-bold text-uppercase py-4">Incident MAP</h3>
+                    <div *ngIf="loadSubmitButton" class="card-body">
+                      <app-incident-map style="float: right"
+                        [incident]="element"
+                        [loadSubmitButton]="true"
+                        (emitUpdate)="updateIncident($event)">
+                      </app-incident-map>
+                    </div>
+                  </div>
         </div>
       </div>
     </td>

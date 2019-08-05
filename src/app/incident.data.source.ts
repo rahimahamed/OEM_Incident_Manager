@@ -55,10 +55,10 @@ export class IncidentsDataSource implements DataSource<Incident> {
             }
           }
           this.incidentList.sort((a, b) => {
-            if (a.CREATION_DATE < b.CREATION_DATE) {
+            if (a.MODIFICATION_DATE < b.MODIFICATION_DATE) {
               return 1;
             } else if (
-              a.CREATION_DATE > b.CREATION_DATE
+              a.MODIFICATION_DATE > b.MODIFICATION_DATE
             ) {
               return -1;
             } else {
@@ -67,6 +67,18 @@ export class IncidentsDataSource implements DataSource<Incident> {
           });
           this.lessonsSubject.next(this.incidentList);
         });
+  }
+
+  updateLessons(incident: Incident) {
+    const date = new Date();
+    incident.MODIFICATION_DATE = incident.MODIFICATION_DATE = ''
+      + date.toISOString().substr(0, 10) + ', '
+      + date.toLocaleTimeString();
+    this.incidentService.updateIncident(incident).subscribe(
+      newIncident => {
+        // this.loadLessons();
+      }
+    );
   }
 
   sortName() {
@@ -274,10 +286,10 @@ export class IncidentsDataSource implements DataSource<Incident> {
             }
           }
           this.incidentList.sort((a, b) => {
-            if (a.CREATION_DATE < b.CREATION_DATE) {
+            if (a.MODIFICATION_DATE < b.MODIFICATION_DATE) {
               return 1;
             } else if (
-              a.CREATION_DATE > b.CREATION_DATE
+              a.MODIFICATION_DATE > b.MODIFICATION_DATE
             ) {
               return -1;
             } else {
