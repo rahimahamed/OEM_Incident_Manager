@@ -5,6 +5,7 @@ import { Incident } from './../incident';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IncidentsDataSource } from '../incident.data.source';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -25,13 +26,14 @@ export class HomeComponent implements OnInit {
   model = new Incident();
 
   submitForm = new FormGroup({
-    incidentName: new FormControl(this.model.INCIDENT_NAME),
-    location: new FormControl(this.model.LOCATION_NAME),
-    status: new FormControl(this.model.STATUS),
-    prognosis: new FormControl(),
-    incidentType: new FormControl(this.model.INCIDENT_TYPE),
-    incidentDescription: new FormControl(),
-    leadingAgency: new FormControl(),
+    incidentName: new FormControl('', Validators.required),
+    location: new FormControl('', Validators.required),
+    status: new FormControl('', Validators.required),
+    prognosis: new FormControl('', Validators.required),
+    incidentType: new FormControl('', Validators.required),
+    incidentDescription: new FormControl('', Validators.required),
+    leadingAgency: new FormControl('', Validators.required),
+    supportingAgency: new FormControl(),
 
   });
 
@@ -186,6 +188,10 @@ export class HomeComponent implements OnInit {
     this.model = new Incident();
   }
 
+  hasError = (controlName: string, errorName: string) => {
+    return this.submitForm.controls[controlName].hasError(errorName);
+  }
+
   onSubmitIncident() {
     console.log('Hello this is a test');
     console.log(this.model.INCIDENT_NAME);
@@ -195,6 +201,8 @@ export class HomeComponent implements OnInit {
     console.log(this.submitForm.controls.prognosis.value);
     this.model.STATUS = this.submitForm.controls.status.value + '-' + this.submitForm.controls.prognosis.value;
     this.model.INCIDENT_TYPE =  this.submitForm.controls.incidentType.value + '-' + this.submitForm.controls.incidentDescription.value;
+    this.model.LEAD_AGENCY = this.submitForm.controls.leadingAgency.value;
+    this.model.SUPPORTING_AGENCY = this.submitForm.controls.supportingAgency.value;
     this.incidentService.addIncidents(this.model).subscribe(
       newIncident => {
         this.ngOnInit();
