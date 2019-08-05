@@ -14,7 +14,7 @@
                   <span contenteditable="false">{{item.key}}</span>
                 </td>
                 <td>
-                  <span contenteditable="true" 
+                  <span contenteditable="true"
                   (keyup)="changeValue(item.key, item.value, $event)"
                   (keydown.enter)="$event.preventDefault()"
                   (blur)="updateList(item.key, item.value, $event)">{{item.value}}</span>
@@ -39,7 +39,12 @@
               }"
               [(ngModel)]="summary">
             </editor>
-          </div>  
+          </div>
+          <div style="float: center">
+            <!-- <button type="button" (click)="onEdit()" class="btn btn-warning exp-btn">Edit</button> -->
+            <button type="button" *ngIf="!summaryExists" (click)="onSubmitSummary()" class="btn btn-success exp-btn">Submit Summary</button>
+            <button type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Archive</button>
+          </div>
         </div>
     </div>
   </div>

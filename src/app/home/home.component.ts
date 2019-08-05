@@ -102,20 +102,21 @@ export class HomeComponent implements OnInit {
   }
 
   onUpdateIncident() {
+    this.date2 = new Date();
+    this.model.MODIFICATION_DATE = '' + this.date2.toISOString().substr(0,10) + ', ' + this.date2.toLocaleTimeString();
     this.incidentService.updateIncident(this.model).subscribe(
       newIncident => {
         this.onClick();
         this.model = new Incident();
-        this.dataSource.loadLessons();
+        // this.dataSource.loadLessons();
       }
     );
   }
 
   editIncident(incident: Incident) {
-    this.updateForm = true;
     this.hideForm = false;
     this.model = Object.assign({}, incident);
-    //NEED TO FIX LATER
+    this.onUpdateIncident();
   }
 
   setLocation(incident: Incident) {

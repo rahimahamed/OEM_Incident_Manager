@@ -29,20 +29,11 @@ export class IncidentDetailsComponent implements OnInit {
     this.incidentCopy = Object.assign({}, this.incident);
   }
 
-  generateArray(obj) {
-    return Object.keys(obj).map((key) => {
-      return {
-        key, value: obj[key]
-      };
-    });
-  }
-
   onArchive() {
     this.archiveIncident.emit(this.incident);
   }
 
   onEdit() {
-    this.editIncident.emit(this.incident);
   }
 
   onSubmitSummary() {
@@ -63,14 +54,17 @@ export class IncidentDetailsComponent implements OnInit {
 
   updateList(id: string, value: string, event: any) {
     const editField = event.target.textContent;
-    // if(editField === ''){
-    //   alert(value);
-    // }
+    if (editField === '') {
+      alert('VALUE CANNOT BE EMPTY');
+    } else {
+      this.incidentCopy[id] = editField;
+      this.editIncident.emit(this.incidentCopy);
+    }
   }
 
   changeValue(id: string, value: string, event: any) {
     this.editField = event.target.textContent;
-    if(event.keyCode === 13){
+    if (event.keyCode === 13) {
       event.target.blur();
     }
   }

@@ -132,7 +132,6 @@ export class IncidentListComponent implements OnInit {
   }
 
   onEdit(incident: Incident) {
-    this.expandedElement = null;
     this.editIncident.emit(incident);
   }
 
