@@ -1,5 +1,5 @@
 <mat-form-field style="left:20px">
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search Archived incidents" #input>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search Incidents" #input>
   </mat-form-field>
 
   <table mat-table
@@ -44,11 +44,10 @@
                     (editIncident)="onEdit($event)"
                     (updateSummary)="updateSummary($event)">
                   </app-incident-details>
-                  <app-incident-map
+                  <app-incident-map style="float: right"
                     [incident]="element"
                     [loadSubmitButton]="true"
-                    (emitUpdate)="updateLocation($event)"
-                    style="float: right; margin-left: 10px; margin-top: 20px;">
+                    (emitUpdate)="updateLocation($event)">
                   </app-incident-map>
         </div>
       </div>

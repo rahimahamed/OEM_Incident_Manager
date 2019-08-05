@@ -1,22 +1,27 @@
-<div class="container">
-    <div class="form-group">
-        <label>Enter address</label>
-        <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()"
-          placeholder="Search Nearest Location"
-          autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
-    </div>
-
-    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-      <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
-        (dragEnd)="markerDragEnd($event)"></agm-marker>
-    </agm-map>
-    <br>
-    <h5>Address: {{address}}</h5>
-    <div>Latitude: {{latitude}}</div>
-    <div>Longitude: {{longitude}}</div>
-    <div *ngIf="loadSubmitButton"><button type="button" (click)="emitAddress()"
-      class="btn btn-success exp-btn">Submit Updated Address</button>
-    </div>
+<div class="card">
+  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Incident MAP</h3>
+  <div class="container">
+    <div class="card-body"></div>
+      <label>Enter address</label>
+      <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()"
+        placeholder="Search Nearest Location"
+        autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
+      <br>
+      <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+        <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
+          (dragEnd)="markerDragEnd($event)"></agm-marker>
+      </agm-map>
+      <br>
+      <h5>Address: {{address}}</h5>
+      <div>Latitude: {{latitude}}</div>
+      <div>Longitude: {{longitude}}</div>
+      <br>
+      <div *ngIf="loadSubmitButton"><button type="button" (click)="emitAddress()"
+        class="btn btn-success exp-btn">Submit Updated Address</button>
+      </div>
+      <br>
   </div>
+</div>
+
 
   <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEigp32HEupcc9Jh209-DqzAqGPGlCfqU&libraries=places&callback=initMap" async defer></script> -->

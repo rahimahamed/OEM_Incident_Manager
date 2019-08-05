@@ -16,6 +16,7 @@ export class IncidentDetailsComponent implements OnInit {
   editField: string;
 
   summaryExists = false;
+  summaryEdit = false;
   summary: string;
   columnsToDisplay = ['title', 'location', 'status'];
 
@@ -34,10 +35,12 @@ export class IncidentDetailsComponent implements OnInit {
   }
 
   onEdit() {
+    this.summaryEdit = !this.summaryEdit;
   }
 
   onSubmitSummary() {
     this.incident.SUMMARY = this.summary;
+    this.summaryEdit = false;
     this.updateSummary.emit(this.incident);
     if (this.incident.SUMMARY) {
       this.summaryExists = true;
@@ -45,7 +48,8 @@ export class IncidentDetailsComponent implements OnInit {
   }
 
   displayItem(key) {
-    if (!(key === 'SUMMARY' || key === '__v' || key === '_id')) {
+    if (!(key === 'SUMMARY' || key === '__v' || key === '_id'
+        || key === 'COMMENTS')) {
       return true;
     } else {
       return false;

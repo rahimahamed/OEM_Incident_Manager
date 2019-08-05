@@ -10,10 +10,10 @@
                 <th class="text-center">Details</th>
               </tr>
               <tr *ngFor="let item of incident | keyvalue: sortNull">
-                <td>
+                <td *ngIf="displayItem(item.key)">
                   <span contenteditable="false">{{item.key}}</span>
                 </td>
-                <td>
+                <td *ngIf="displayItem(item.key)">
                   <span contenteditable="true"
                   (keyup)="changeValue(item.key, item.value, $event)"
                   (keydown.enter)="$event.preventDefault()"
@@ -30,8 +30,9 @@
         <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Summary</h3>
         <div class="card-body">
           <div class="form-group">
-            <p style="width: 600px; align-content: left;" *ngIf="summaryExists" [innerHTML]="incident.SUMMARY"></p>
-            <editor *ngIf="!summaryExists"
+            <p *ngIf="summaryExists && !summaryEdit"
+              style="width: 600px; align-content: left;" [innerHTML]="incident.SUMMARY"></p>
+            <editor *ngIf="!summaryExists || summaryEdit"
               apiKey="xzmeuzojpn81uz66dyexlm02jfmh3h3mn02a03cxk5ew37lm"
               [init]="{
                 height: 600,
@@ -41,15 +42,10 @@
             </editor>
           </div>
           <div style="float: center">
-            <!-- <button type="button" (click)="onEdit()" class="btn btn-warning exp-btn">Edit</button> -->
-            <button type="button" *ngIf="!summaryExists" (click)="onSubmitSummary()" class="btn btn-success exp-btn">Submit Summary</button>
-            <button type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Archive</button>
+            <button type="button" (click)="onEdit()" class="btn btn-warning exp-btn">Edit Summary</button>
+            <button type="button" *ngIf="!summaryExists || summaryEdit" (click)="onSubmitSummary()" class="btn btn-success exp-btn">Submit Summary</button>
+            <button type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Archive Incident</button>
           </div>
         </div>
     </div>
   </div>
-  <!-- <div class="column right">
-      <agm-map [latitude]="lat" [longitude]="lng">
-          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-      </agm-map>
-  </div> -->
