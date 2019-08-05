@@ -7,22 +7,20 @@
     <form [formGroup] = "submitForm" autocomplete="off" novalidate (ngSubmit)="onSubmitIncident()">
     <mat-card-content>
       <div class="input1">
-        <mat-form-field appearance="standard">
+        <mat-form-field appearance="legacy">
           <mat-label>Incident Name</mat-label>
           <input matInput type="text" placeholder="Input Incident Name"
           formControlName="incidentName" id="incidentName" required >
           <mat-error *ngIf="hasError('incidentName', 'required')">Incident Name is Required</mat-error>
         </mat-form-field>
       </div>
-      <br/>
       <div class="input2">
-          <mat-form-field appearance="standard">
+          <mat-form-field appearance="legacy">
             <mat-label>Location</mat-label>
             <input matInput placeholder="Input Location" formControlName="location">
             <mat-error *ngIf="hasError('location', 'required')">Incident Name is Required</mat-error>
           </mat-form-field>
       </div>
-      <br/>
       <div class="input 3-1">
         <mat-form-field>
           <mat-select placeholder="Select Status" formControlName="status"
@@ -33,7 +31,6 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <br/>
       <div class="input 3-2">
         <mat-form-field>
           <mat-select matInput placeholder="Select Prognosis" formControlName="prognosis">
@@ -44,7 +41,6 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <br/>
       <div class="input 4-1">
         <mat-form-field>
           <mat-select matInput placeholder="Select Incident Type" formControlName="incidentType"
@@ -55,7 +51,6 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <br/>
       <div class="input 4-2">
         <mat-form-field>
           <mat-select matInput placeholder="Select Incident Description" formControlName="incidentDescription">
@@ -65,7 +60,6 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <br/>
       <div class="input 5">
         <mat-form-field>
           <mat-select matInput placeholder="Select Leading Agency" formControlName="leadingAgency">
@@ -75,9 +69,8 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <br/>
       <div class="input 6">
-        <mat-form-field appearance="standard">
+        <mat-form-field appearance="legacy">
             <input matInput placeholder="Input Supporting Agency" formControlName="supportingAgency">
         </mat-form-field>
       </div>
@@ -97,7 +90,6 @@
           (emitLocation) = setLocation($event)>
         </app-incident-map>
       </div> -->
-      <br>
       <!--<button style="margin-bottom: 10px" type="submit"
         class="btn btn-primary">Submit
       </button>-->
@@ -105,7 +97,6 @@
     <mat-card-actions>
       <button mat-raised-button color="primary" [disabled]="!submitForm.valid">Submit</button>
     </mat-card-actions>
-    <br/>
     </form>
   </div>
 
