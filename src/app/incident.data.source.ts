@@ -55,10 +55,10 @@ export class IncidentsDataSource implements DataSource<Incident> {
             }
           }
           this.incidentList.sort((a, b) => {
-            if (a.CREATION_DATE < b.CREATION_DATE) {
+            if (a.MODIFICATION_DATE < b.MODIFICATION_DATE) {
               return 1;
             } else if (
-              a.CREATION_DATE > b.CREATION_DATE
+              a.MODIFICATION_DATE > b.MODIFICATION_DATE
             ) {
               return -1;
             } else {
@@ -201,10 +201,10 @@ export class IncidentsDataSource implements DataSource<Incident> {
   sortDateModified() {
     if (this.dateModifiedBoolean) {
       this.incidentList.sort((a, b) => {
-          if (a.CREATION_DATE > b.CREATION_DATE) {
+          if (a.MODIFICATION_DATE > b.MODIFICATION_DATE) {
             return 1;
           } else if (
-            a.CREATION_DATE < b.CREATION_DATE
+            a.MODIFICATION_DATE < b.MODIFICATION_DATE
           ) {
             return -1;
           } else {
@@ -215,10 +215,10 @@ export class IncidentsDataSource implements DataSource<Incident> {
       this.dateModifiedBoolean = false;
     } else {
       this.incidentList.sort((a, b) => {
-          if (a.CREATION_DATE < b.CREATION_DATE) {
+          if (a.MODIFICATION_DATE < b.MODIFICATION_DATE) {
             return 1;
           } else if (
-            a.CREATION_DATE > b.CREATION_DATE
+            a.MODIFICATION_DATE > b.MODIFICATION_DATE
           ) {
             return -1;
           } else {
@@ -274,10 +274,10 @@ export class IncidentsDataSource implements DataSource<Incident> {
             }
           }
           this.incidentList.sort((a, b) => {
-            if (a.CREATION_DATE < b.CREATION_DATE) {
+            if (a.MODIFICATION_DATE < b.MODIFICATION_DATE) {
               return 1;
             } else if (
-              a.CREATION_DATE > b.CREATION_DATE
+              a.MODIFICATION_DATE > b.MODIFICATION_DATE
             ) {
               return -1;
             } else {
