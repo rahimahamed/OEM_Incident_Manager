@@ -273,6 +273,17 @@ export class IncidentsDataSource implements DataSource<Incident> {
               }
             }
           }
+          this.incidentList.sort((a, b) => {
+            if (a.CREATION_DATE < b.CREATION_DATE) {
+              return 1;
+            } else if (
+              a.CREATION_DATE > b.CREATION_DATE
+            ) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
           this.lessonsSubject.next(this.incidentList);
         });
   }
