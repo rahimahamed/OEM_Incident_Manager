@@ -14,7 +14,25 @@ export class CommentService {
 
   comments: Array<Comment>;
 
-  constructor(private _http: HttpClient) {}
+  options;
+  domain = this.authService.domain;
+
+  constructor(
+    private _http: HttpClient,
+    private authService: AuthenticationService
+  ) {}
+
+  // // Function to create headers, add token, to be used in HTTP requests
+  createAuthenticationHeaders() {
+    this.authService.loadToken(); // Get token so it can be attached to headers
+    // Headers configuration options
+    this.options = new RequestOptions({
+      headers: new Headers({
+        'Content-Type': 'application/json', // Format set to JSON
+        authorization: this.authService.authToken // Attach token
+      })
+    });
+  }
 
   addComments(comment: Comment) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -22,6 +40,7 @@ export class CommentService {
   }
 
   getComments() {
+    this.createAuthenticationHeaders(); // Create headers
     return this._http.get(this._postUrl);
   }
 }

@@ -60,7 +60,6 @@ export class IncidentCommentsComponent implements OnInit {
   }
 
   onSubmitComment() {
-    console.log('Hello this is a test');
     console.log(this.model.comment);
     this.model.comment = this.submitComment.controls.comment.value;
     console.log(this.model.commentator);

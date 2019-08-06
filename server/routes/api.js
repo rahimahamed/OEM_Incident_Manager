@@ -142,7 +142,6 @@ router.get('/register/:id', function(req, res) {
   });
 });
 
-
 router.delete('/register/:id', function(req, res) {
   console.log('DELETING a user!');
   User.findByIdAndRemove(req.params.id, function(err, deletedUser) {
@@ -158,6 +157,55 @@ router.delete('/register/:id', function(req, res) {
 router.post('/register', authService.register);
 
 router.post('/login', authService.login);
+
+router.get('/comment', function(req, res) {
+  console.log('GET request for all comments!');
+  Comment.find({}).exec(function(err, comment) {
+    if (err) {
+      console.log('Error retrieving ACTIVE comments!');
+    } else {
+      res.json(comment);
+    }
+  });
+});
+
+router.get('/comment/:id', function(req, res) {
+  console.log('Get request for a single comment!');
+  Comment.findById(req.params.id).exec(function(err, comment) {
+    if (err) {
+      console.log('Error retrieving comment!');
+    } else {
+      res.json(comment);
+    }
+  });
+});
+
+router.post('/comment', (req, res) => {
+  console.log('POST a new comment!');
+  var newComment = new Comment();
+  newComment.comment = req.body.comment;
+  newComment.commentator = req.body.commentator;
+  newComment.save(function(err, insertedComment) {
+    if (err) {
+      console.log('Error saving new incident!');
+    } else {
+      res.json(insertedComment);
+    }
+  });
+});
+
+router.delete('/comment/:id', function(req, res) {
+  console.log('DELETING an comment!');
+  Comment.findByIdAndRemove(req.params.id, function(err, deletedComment) {
+    if (err) {
+      res.send('Error deleting comment!');
+    } else {
+      res.json(deletedComment);
+    }
+  });
+});
+
+module.exports = router;
 
 // router.post('/comment', (req, res) => {
 //   if (!req.body.comment) {
@@ -211,41 +259,3 @@ router.post('/login', authService.login);
 //     }
 //   }
 // });
-
-router.get('/comment', function(req, res) {
-  console.log('GET request for all comments!');
-  Comment.find({}).exec(function(err, comment) {
-    if (err) {
-      console.log('Error retrieving ACTIVE comments!');
-    } else {
-      res.json(comment);
-    }
-  });
-});
-
-router.get('/comment/:id', function(req, res) {
-  console.log('Get request for a single comment!');
-  Comment.findById(req.params.id).exec(function(err, comment) {
-    if (err) {
-      console.log('Error retrieving comment!');
-    } else {
-      res.json(comment);
-    }
-  });
-});
-
-router.post('/comment', (req, res) => {
-  console.log('POST a new comment!');
-  var newComment = new Comment();
-  newComment.comment = req.body.comment;
-  newComment.commentator = req.body.commentator;
-  newComment.save(function(err, insertedComment) {
-    if (err) {
-      console.log('Error saving new incident!');
-    } else {
-      res.json(insertedComment);
-    }
-  });
-});
-
-module.exports = router;

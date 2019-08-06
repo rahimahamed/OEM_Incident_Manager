@@ -1,15 +1,12 @@
-<div style="text-align:center">
-  <button
-    type="button"
-    style="margin-top:20px; margin-bottom: 30px"
-    (click)="onClick()"
-    class="btn btn-primary btn-lg"
-  >
+<div style="text-align:left">
+  <button type="button" (click)="onClick()" class="btn btn-primary btn-sm">
     Submit a comment
   </button>
 </div>
 
-<div style="margin-left: 20px" *ngIf="!hideForm">
+<br />
+
+<div style="text-align:left" *ngIf="!hideForm">
   <h2>New Comment</h2>
   <form [formGroup]="submitComment" (ngSubmit)="onSubmitComment()">
     <div class="input1">
@@ -33,10 +30,11 @@
       Submit
     </button>
   </form>
-
-  <app-incident-comments-list
-    (closeF)="closeForm()"
-    (selectComment)="commentSelect($event)"
-  >
-  </app-incident-comments-list>
 </div>
+
+<app-incident-comments-list
+  (closeF)="closeForm()"
+  (selectComment)="commentSelect($event)"
+  [dataSource]="dataSource"
+>
+</app-incident-comments-list>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
@@ -12,23 +12,22 @@ import { AuthenticationService } from '../../services/authentication.service';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
-  userDetails;
-  currentUser: User;
+  user: User;
+  firstName;
   currentUserSubscription: Subscription;
   users: User[] = [];
 
   constructor(
     private authenticationService: AuthenticationService,
     private userService: UserService
-  ) {
-    this.currentUserSubscription = this.authenticationService.currentUser.subscribe(
-      user => {
-        this.currentUser = user;
-      });
-  }
+  ) {}
 
   ngOnInit() {
-
+    this.currentUserSubscription = this.authenticationService.currentUser.subscribe(
+      user => {
+        this.firstName = user.firstName;
+      }
+    );
     this.loadAllUsers();
   }
 

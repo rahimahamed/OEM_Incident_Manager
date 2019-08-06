@@ -20,12 +20,14 @@ export class AppComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private userService: UserService
   ) {
-    this.currentUser = this.authenticationService.currentUser;
+    this.authenticationService.currentUser.subscribe(
+      x => (this.currentUser = x)
+    );
   }
 
   ngOnInit() {
-    this.authenticationService.currentUser.subscribe(
-      user => this.currentUser = user);
+    // this.authenticationService.currentUser.subscribe(
+    //   user => this.currentUser = user);
   }
 
   logout() {

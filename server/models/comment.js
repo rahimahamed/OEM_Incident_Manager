@@ -26,6 +26,7 @@ const commentValidators = [
 ];
 
 var commentSchema = new Schema({
+  incident_id: String,
   comment: { type: String, validate: commentValidators },
   commentator: String
 });

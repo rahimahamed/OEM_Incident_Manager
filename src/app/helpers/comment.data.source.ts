@@ -5,15 +5,14 @@ import { Comment } from '../comment';
 import { catchError, finalize } from 'rxjs/operators';
 
 export class CommentsDataSource implements DataSource<Comment> {
+  commentList: Comment[] = [];
+
   private lessonsSubject = new BehaviorSubject<Comment[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
 
   public loading$ = this.loadingSubject.asObservable();
 
-  constructor(
-    private commentService: CommentService,
-    private loadOpen: boolean
-  ) {}
+  constructor(private commentService: CommentService) {}
 
   connect(collectionViewer: CollectionViewer): Observable<Comment[]> {
     return this.lessonsSubject.asObservable();
@@ -25,28 +24,19 @@ export class CommentsDataSource implements DataSource<Comment> {
   }
 
   loadLessons() {
+    this.commentList.length = 0;
     this.loadingSubject.next(true);
-    const commentList: Comment[] = [];
-    if (this.loadOpen) {
-      this.commentService
-        .getComments()
-        .pipe(
-          catchError(() => of([])),
-          finalize(() => this.loadingSubject.next(false))
-        )
-        .subscribe((resCommentData: Comment[]) => {
-          this.lessonsSubject.next(commentList);
-        });
-    } else {
-      this.commentService
-        .getComments()
-        .pipe(
-          catchError(() => of([])),
-          finalize(() => this.loadingSubject.next(false))
-        )
-        .subscribe((resCommentData: Comment[]) => {
-          this.lessonsSubject.next(commentList);
-        });
-    }
+    this.commentService
+      .getComments()
+      .pipe(
+        catchError(() => of([])),
+        finalize(() => this.loadingSubject.next(false))
+      )
+      .subscribe((resCommentData: Comment[]) => {
+        for (const comment of resCommentData) {
+          this.commentList.push(comment);
+        }
+        this.lessonsSubject.next(this.commentList);
+      });
   }
 }
