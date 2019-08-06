@@ -15,7 +15,6 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class HomeComponent implements OnInit {
   title = 'NYC Emergency Incident Tracker';
   private hideForm = true;
-  private updateForm = false;
   date: number = Date.now();
   dataSource: IncidentsDataSource;
   date2: Date = new Date();
@@ -74,7 +73,6 @@ export class HomeComponent implements OnInit {
 
   onClick() {
     console.log('Submit Emergency');
-    this.updateForm = false;
     this.hideForm = !this.hideForm;
     this.model = new Incident();
   }

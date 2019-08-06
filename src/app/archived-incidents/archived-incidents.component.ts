@@ -64,7 +64,6 @@ export class ArchivedIncidentsComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource = new IncidentsDataSource(this.incidentService, false);
     this.dataSource.filter(filterValue.trim().toLowerCase());
   }
 
