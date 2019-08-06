@@ -20,8 +20,6 @@ export class HomeComponent implements OnInit {
   dataSource: IncidentsDataSource;
   date2: Date = new Date();
 
-  @ViewChild('search', {static: false}) public searchElementRef: ElementRef;
-
   model = new Incident();
 
   submitForm = new FormGroup({
