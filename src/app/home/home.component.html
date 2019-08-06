@@ -41,7 +41,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="input 4-1">
+      <div *ngIf='!incidentTypeOther' class="input 4-1">
         <mat-form-field>
           <mat-select matInput placeholder="Select Incident Type" formControlName="incidentType"
           (selectionChange)="incidentTypeChangeAction()">
@@ -51,22 +51,39 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="input 4-2">
+      <div *ngIf = 'incidentTypeOther' class="input 4-2" id="other1">
+        <mat-form-field appearance="legacy">
+            <input matInput placeholder="If Other Type, Please Specify" formControlName="incidentType">
+        </mat-form-field>
+      </div>
+      <div *ngIf='!incidentDescriptionOther' class="input 4-3">
         <mat-form-field>
-          <mat-select matInput placeholder="Select Incident Description" formControlName="incidentDescription">
+          <mat-select matInput placeholder="Select Incident Description" formControlName="incidentDescription"
+          (selectionChange)="otherDescription()">
             <mat-option *ngFor="let incidentDescription of incidentDescriptionList" [value]="incidentDescription">
               {{incidentDescription}}
           </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="input 5">
+      <div *ngIf='incidentDescriptionOther' class="input 4-4" id="other2">
+        <mat-form-field appearance="legacy">
+            <input matInput placeholder="If Other Description, Please Specify" formControlName="incidentDescription">
+        </mat-form-field>
+      </div>
+      <div *ngIf='!agencyOther' class="input 5-1">
         <mat-form-field>
-          <mat-select matInput placeholder="Select Leading Agency" formControlName="leadingAgency">
+          <mat-select matInput placeholder="Select Leading Agency" formControlName="leadingAgency"
+          (selectionChange)="otherAgency()">
             <mat-option *ngFor="let leadingAgency of leadingAgencyList" [value]="leadingAgency">
               {{leadingAgency}}
             </mat-option>
           </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngIf='agencyOther' class="input 5-2" id="other3">
+        <mat-form-field appearance="legacy">
+            <input matInput placeholder="If Other Agency, Please Specify" formControlName="leadingAgency">
         </mat-form-field>
       </div>
       <div class="input 6">
@@ -74,25 +91,6 @@
             <input matInput placeholder="Input Supporting Agency" formControlName="supportingAgency">
         </mat-form-field>
       </div>
-      <!--<div class="input 4-2">
-        <mat-form-field>
-          <mat-select matInput placeholder="Placeholder" formControlName="incidentDescription">
-            <mat-option *ngFor="let incidentDescription of incidentDescriptionList"
-              value]="incidentDescription">
-              {{incidentDescription}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>-->
-      <!-- <div class="input 6" style="margin-right: 2000px;">
-        <app-incident-map
-          [incident] = "model"
-          (emitLocation) = setLocation($event)>
-        </app-incident-map>
-      </div> -->
-      <!--<button style="margin-bottom: 10px" type="submit"
-        class="btn btn-primary">Submit
-      </button>-->
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" [disabled]="!submitForm.valid">Submit</button>

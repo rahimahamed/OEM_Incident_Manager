@@ -20,6 +20,9 @@ export class HomeComponent implements OnInit {
   private updateForm = false;
   date: number = Date.now();
   dataSource: IncidentsDataSource;
+  private incidentTypeOther = false;
+  private incidentDescriptionOther = false;
+  private agencyOther = false;
 
   @ViewChild('search', {static: false}) public searchElementRef: ElementRef;
 
@@ -31,8 +34,11 @@ export class HomeComponent implements OnInit {
     status: new FormControl('', Validators.required),
     prognosis: new FormControl('', Validators.required),
     incidentType: new FormControl('', Validators.required),
+    otherType: new FormControl(''),
     incidentDescription: new FormControl('', Validators.required),
+    otherDescription: new FormControl(''),
     leadingAgency: new FormControl('', Validators.required),
+    otherAgency: new FormControl(''),
     supportingAgency: new FormControl(),
 
   });
@@ -134,6 +140,12 @@ export class HomeComponent implements OnInit {
       incidentDescriptionList: [
         'Hurricane', 'Rain', 'Tropical Depression', 'Wind', 'Other'
       ]
+    },
+    {
+      incidentTypeName: 'Other',
+      incidentDescriptionList: [
+        'Other'
+      ]
     }
 
   ];
@@ -172,12 +184,39 @@ export class HomeComponent implements OnInit {
   }
 
   incidentTypeChangeAction(){
+    if(this.submitForm.controls.incidentType.value === 'Other'){
+      //this.submitForm.controls.incidentType.setValue(' ');
+      this.incidentTypeOther = true;
+      //document.getElementById('other1').focus;
+    } else {
+      this.incidentTypeOther = false;
+    }
     const dropDownIncidentData = this.incidentTypeList.find((data2: any) =>
             data2.incidentTypeName === this.submitForm.controls.incidentType.value);
     if(dropDownIncidentData){
       this.incidentDescriptionList = dropDownIncidentData.incidentDescriptionList;
     } else {
       this.incidentDescriptionList = [];
+    }
+  }
+
+  otherDescription(){
+    if(this.submitForm.controls.incidentDescription.value === 'Other'){
+      //this.submitForm.controls.incidentDescription.setValue(' ');
+      this.incidentDescriptionOther = true;
+      //document.getElementById('other2').focus;
+    } else {
+      this.incidentDescriptionOther = false;
+    }
+  }
+
+  otherAgency(){
+    if(this.submitForm.controls.leadingAgency.value === 'Other'){
+      this.submitForm.controls.leadingAgency.setValue(' ');
+      this.agencyOther = true;
+      document.getElementById('other3').focus;
+    } else {
+      this.agencyOther = false;
     }
   }
 
@@ -193,12 +232,8 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmitIncident() {
-    console.log('Hello this is a test');
-    console.log(this.model.INCIDENT_NAME);
     this.model.INCIDENT_NAME = this.submitForm.controls.incidentName.value;
-    console.log(this.model.INCIDENT_NAME);
     this.model.LOCATION_NAME = this.submitForm.controls.location.value;
-    console.log(this.submitForm.controls.prognosis.value);
     this.model.STATUS = this.submitForm.controls.status.value + '-' + this.submitForm.controls.prognosis.value;
     this.model.INCIDENT_TYPE =  this.submitForm.controls.incidentType.value + '-' + this.submitForm.controls.incidentDescription.value;
     this.model.LEAD_AGENCY = this.submitForm.controls.leadingAgency.value;
