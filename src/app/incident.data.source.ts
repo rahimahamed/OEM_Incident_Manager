@@ -6,6 +6,7 @@ import { catchError, finalize } from 'rxjs/operators';
 
 export class IncidentsDataSource implements DataSource<Incident> {
   incidentList: Incident[] = [];
+  incidentList2: Incident[] = [];
   titleBoolean = true;
   locationBoolean = true;
   statusBoolean = true;
@@ -230,94 +231,105 @@ export class IncidentsDataSource implements DataSource<Incident> {
     }
   }
 
-  filter(str: string) {
-    this.incidentList.length = 0;
-    this.loadingSubject.next(true);
-    this.incidentService
-        .getIncidents()
-        .pipe(
-          catchError(() => of([])),
-          finalize(() => this.loadingSubject.next(false))
-        )
-        .subscribe((resIncidentData: Incident[]) => {
-          if (this.loadOpen) {
-            for (const incident of resIncidentData) {
-              if (!(incident.STATUS === 'Closed')) {
-                if (incident.STATUS.toLowerCase().includes(str)) {
-                  this.incidentList.push(incident);
-                } else if (incident.INCIDENT_NAME.toLowerCase().includes(str)) {
-                  this.incidentList.push(incident);
-                } else if (incident.LOCATION_NAME.toLowerCase().includes(str)) {
-                  this.incidentList.push(incident);
-                } else if (incident.CREATION_DATE.toLowerCase().includes(str)) {
-                  this.incidentList.push(incident);
-                } else if (incident.MODIFICATION_DATE.toLowerCase().includes(str)) {
-                  this.incidentList.push(incident);
-                }
-              }
-            }
-          } else {
-            for (const incident of resIncidentData) {
-              if (incident.STATUS === 'Closed') {
-                if (incident.STATUS.toLowerCase().includes(str)) {
-                  this.incidentList.push(incident);
-                } else if (incident.INCIDENT_NAME.toLowerCase().includes(str)) {
-                  this.incidentList.push(incident);
-                } else if (incident.LOCATION_NAME.toLowerCase().includes(str)) {
-                  this.incidentList.push(incident);
-                } else if (incident.CREATION_DATE.toLowerCase().includes(str)) {
-                  this.incidentList.push(incident);
-                } else if (incident.MODIFICATION_DATE.toLowerCase().includes(str)) {
-                  this.incidentList.push(incident);
-                }
-              }
-            }
-          }
-          this.incidentList.sort((a, b) => {
-            if (a.MODIFICATION_DATE < b.MODIFICATION_DATE) {
-              return 1;
-            } else if (
-              a.MODIFICATION_DATE > b.MODIFICATION_DATE
-            ) {
-              return -1;
-            } else {
-              return 0;
-            }
-          });
-          this.lessonsSubject.next(this.incidentList);
-        });
-  }
+//  FILTER METHOD WITHOUT SUBSCRIBING
 
-  // FILTER METHOD WITHOUT SUBSCRIBING
+  filter(str: string) {
+    this.incidentList2.length = 0;
+    this.loadingSubject.next(true);
+    if (this.loadOpen) {
+      for (const incident of this.incidentList) {
+        if (!(incident.STATUS === 'Closed')) {
+          if (incident.STATUS.toLowerCase().includes(str)) {
+            this.incidentList2.push(incident);
+          } else if (incident.INCIDENT_NAME.toLowerCase().includes(str)) {
+            this.incidentList2.push(incident);
+          } else if (incident.LOCATION_NAME.toLowerCase().includes(str)) {
+            this.incidentList2.push(incident);
+          } else if (incident.CREATION_DATE.toLowerCase().includes(str)) {
+            this.incidentList2.push(incident);
+          } else if (incident.MODIFICATION_DATE.toLowerCase().includes(str)) {
+            this.incidentList2.push(incident);
+          }
+        }
+      }
+    } else {
+      for (const incident of this.incidentList) {
+        if (incident.STATUS === 'Closed') {
+          if (incident.STATUS.toLowerCase().includes(str)) {
+            this.incidentList2.push(incident);
+          } else if (incident.INCIDENT_NAME.toLowerCase().includes(str)) {
+            this.incidentList2.push(incident);
+          } else if (incident.LOCATION_NAME.toLowerCase().includes(str)) {
+            this.incidentList2.push(incident);
+          } else if (incident.CREATION_DATE.toLowerCase().includes(str)) {
+            this.incidentList2.push(incident);
+          } else if (incident.MODIFICATION_DATE.toLowerCase().includes(str)) {
+            this.incidentList2.push(incident);
+          }
+        }
+      }
+    }
+    this.lessonsSubject.next(this.incidentList2);
+  }
+}
+
+  //  FILTER METHOD WITH SUBSCRIBING
 
   // filter(str: string) {
   //   this.incidentList.length = 0;
   //   this.loadingSubject.next(true);
-  //   if (this.loadOpen) {
-  //     for (const incident of this.incidentList) {
-  //       if (!(incident.STATUS === 'Closed')) {
-  //         if (incident.STATUS.toLowerCase().includes(str)) {
-  //           this.incidentList.push(incident);
-  //         } else if (incident.INCIDENT_NAME.toLowerCase().includes(str)) {
-  //           this.incidentList.push(incident);
-  //         } else if (incident.LOCATION_NAME.toLowerCase().includes(str)) {
-  //           this.incidentList.push(incident);
+  //   this.incidentService
+  //       .getIncidents()
+  //       .pipe(
+  //         catchError(() => of([])),
+  //         finalize(() => this.loadingSubject.next(false))
+  //       )
+  //       .subscribe((resIncidentData: Incident[]) => {
+  //         if (this.loadOpen) {
+  //           for (const incident of resIncidentData) {
+  //             if (!(incident.STATUS === 'Closed')) {
+  //               if (incident.STATUS.toLowerCase().includes(str)) {
+  //                 this.incidentList.push(incident);
+  //               } else if (incident.INCIDENT_NAME.toLowerCase().includes(str)) {
+  //                 this.incidentList.push(incident);
+  //               } else if (incident.LOCATION_NAME.toLowerCase().includes(str)) {
+  //                 this.incidentList.push(incident);
+  //               } else if (incident.CREATION_DATE.toLowerCase().includes(str)) {
+  //                 this.incidentList.push(incident);
+  //               } else if (incident.MODIFICATION_DATE.toLowerCase().includes(str)) {
+  //                 this.incidentList.push(incident);
+  //               }
+  //             }
+  //           }
+  //         } else {
+  //           for (const incident of resIncidentData) {
+  //             if (incident.STATUS === 'Closed') {
+  //               if (incident.STATUS.toLowerCase().includes(str)) {
+  //                 this.incidentList.push(incident);
+  //               } else if (incident.INCIDENT_NAME.toLowerCase().includes(str)) {
+  //                 this.incidentList.push(incident);
+  //               } else if (incident.LOCATION_NAME.toLowerCase().includes(str)) {
+  //                 this.incidentList.push(incident);
+  //               } else if (incident.CREATION_DATE.toLowerCase().includes(str)) {
+  //                 this.incidentList.push(incident);
+  //               } else if (incident.MODIFICATION_DATE.toLowerCase().includes(str)) {
+  //                 this.incidentList.push(incident);
+  //               }
+  //             }
+  //           }
   //         }
-  //       }
-  //     }
-  //   } else {
-  //     for (const incident of this.incidentList) {
-  //       if (incident.STATUS === 'Closed') {
-  //         if (incident.STATUS.toLowerCase().includes(str)) {
-  //           this.incidentList.push(incident);
-  //         } else if (incident.INCIDENT_NAME.toLowerCase().includes(str)) {
-  //           this.incidentList.push(incident);
-  //         } else if (incident.LOCATION_NAME.toLowerCase().includes(str)) {
-  //           this.incidentList.push(incident);
-  //         }
-  //       }
-  //     }
-  //   }
-  //   this.lessonsSubject.next(this.incidentList);
+  //         this.incidentList.sort((a, b) => {
+  //           if (a.MODIFICATION_DATE < b.MODIFICATION_DATE) {
+  //             return 1;
+  //           } else if (
+  //             a.MODIFICATION_DATE > b.MODIFICATION_DATE
+  //           ) {
+  //             return -1;
+  //           } else {
+  //             return 0;
+  //           }
+  //         });
+  //         this.lessonsSubject.next(this.incidentList);
+  //       });
   // }
-}
+
