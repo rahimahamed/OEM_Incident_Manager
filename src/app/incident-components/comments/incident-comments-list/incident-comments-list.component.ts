@@ -48,7 +48,7 @@ export class IncidentCommentsListComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new CommentsDataSource(this.commentService, true);
-    this.dataSource.loadLessons();
+    // this.dataSource.loadLessons();
   }
 
   onSelect() {

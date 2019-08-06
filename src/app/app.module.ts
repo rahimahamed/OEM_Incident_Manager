@@ -6,8 +6,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
-import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
-
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IncidentListComponent } from './incident-components/incident-list/incident-list.component';
@@ -53,7 +51,6 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     MatSelectModule,
     ReactiveFormsModule,
     MatInputModule,
-    DropDownsModule,
     EditorModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAArhePtiJGhta5z2dcWhcI88stTnP3emE',

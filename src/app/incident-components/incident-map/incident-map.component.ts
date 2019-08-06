@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit, Output, Input, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
 import {} from '@agm/core/services/google-maps-types';
-import { Incident } from '../incident';
+import { Incident } from '../../incident';
 
 @Component({
   selector: 'app-incident-map',
@@ -99,7 +99,7 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
         this.incident.LATITUDE = this.latitude.toString();
         this.incident.LONGITUDE = this.longitude.toString();
         this.incident.ADDRESS = this.address;
-        this.emitLocation.emit(incident);
+        this.emitLocation.emit(this.incident);
       }
       this.incident.LATITUDE = this.latitude.toString();
       this.incident.LONGITUDE = this.longitude.toString();
