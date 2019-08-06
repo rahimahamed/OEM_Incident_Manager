@@ -70,6 +70,8 @@ export class IncidentsDataSource implements DataSource<Incident> {
         });
   }
 
+  // SORTING METHOD FOR INCIDENT NAMES
+
   sortName() {
     if (this.titleBoolean) {
       this.incidentList.sort((a, b) => {
@@ -101,6 +103,8 @@ export class IncidentsDataSource implements DataSource<Incident> {
       this.titleBoolean = true;
     }
   }
+
+  // SORTING METHOD FOR INCIDENT LOCATIONS
 
   sortLocation() {
     if (this.locationBoolean) {
@@ -134,6 +138,8 @@ export class IncidentsDataSource implements DataSource<Incident> {
     }
   }
 
+  // SORTING METHOD FOR INCIDENT STATUSES
+
   sortStatus() {
     if (this.statusBoolean) {
       this.incidentList.sort((a, b) => {
@@ -165,6 +171,8 @@ export class IncidentsDataSource implements DataSource<Incident> {
       this.statusBoolean = true;
     }
   }
+
+  // SORTING METHOD FOR INCIDENT DATES CREATED
 
   sortDate() {
     console.log(this.dateBoolean);
@@ -199,6 +207,8 @@ export class IncidentsDataSource implements DataSource<Incident> {
     }
   }
 
+  // SORTING METHOD FOR INCIDENT DATES MODIFIED
+
   sortDateModified() {
     if (this.dateModifiedBoolean) {
       this.incidentList.sort((a, b) => {
@@ -231,7 +241,7 @@ export class IncidentsDataSource implements DataSource<Incident> {
     }
   }
 
-//  FILTER METHOD WITHOUT SUBSCRIBING
+//  FILTER METHOD FOR SEARCHING INCIDENTS IN INCIDENT TABLE
 
   filter(str: string) {
     this.incidentList2.length = 0;
@@ -273,63 +283,4 @@ export class IncidentsDataSource implements DataSource<Incident> {
   }
 }
 
-  //  FILTER METHOD WITH SUBSCRIBING
-
-  // filter(str: string) {
-  //   this.incidentList.length = 0;
-  //   this.loadingSubject.next(true);
-  //   this.incidentService
-  //       .getIncidents()
-  //       .pipe(
-  //         catchError(() => of([])),
-  //         finalize(() => this.loadingSubject.next(false))
-  //       )
-  //       .subscribe((resIncidentData: Incident[]) => {
-  //         if (this.loadOpen) {
-  //           for (const incident of resIncidentData) {
-  //             if (!(incident.STATUS === 'Closed')) {
-  //               if (incident.STATUS.toLowerCase().includes(str)) {
-  //                 this.incidentList.push(incident);
-  //               } else if (incident.INCIDENT_NAME.toLowerCase().includes(str)) {
-  //                 this.incidentList.push(incident);
-  //               } else if (incident.LOCATION_NAME.toLowerCase().includes(str)) {
-  //                 this.incidentList.push(incident);
-  //               } else if (incident.CREATION_DATE.toLowerCase().includes(str)) {
-  //                 this.incidentList.push(incident);
-  //               } else if (incident.MODIFICATION_DATE.toLowerCase().includes(str)) {
-  //                 this.incidentList.push(incident);
-  //               }
-  //             }
-  //           }
-  //         } else {
-  //           for (const incident of resIncidentData) {
-  //             if (incident.STATUS === 'Closed') {
-  //               if (incident.STATUS.toLowerCase().includes(str)) {
-  //                 this.incidentList.push(incident);
-  //               } else if (incident.INCIDENT_NAME.toLowerCase().includes(str)) {
-  //                 this.incidentList.push(incident);
-  //               } else if (incident.LOCATION_NAME.toLowerCase().includes(str)) {
-  //                 this.incidentList.push(incident);
-  //               } else if (incident.CREATION_DATE.toLowerCase().includes(str)) {
-  //                 this.incidentList.push(incident);
-  //               } else if (incident.MODIFICATION_DATE.toLowerCase().includes(str)) {
-  //                 this.incidentList.push(incident);
-  //               }
-  //             }
-  //           }
-  //         }
-  //         this.incidentList.sort((a, b) => {
-  //           if (a.MODIFICATION_DATE < b.MODIFICATION_DATE) {
-  //             return 1;
-  //           } else if (
-  //             a.MODIFICATION_DATE > b.MODIFICATION_DATE
-  //           ) {
-  //             return -1;
-  //           } else {
-  //             return 0;
-  //           }
-  //         });
-  //         this.lessonsSubject.next(this.incidentList);
-  //       });
-  // }
 

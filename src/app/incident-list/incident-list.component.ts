@@ -142,6 +142,8 @@ export class IncidentListComponent implements OnInit {
     this.editIncident.emit(incident);
   }
 
+// SORTING HELPER METHODS
+
   sortName(){
     this.dataSource.sortName();
   }
@@ -162,6 +164,8 @@ export class IncidentListComponent implements OnInit {
     this.dataSource.sortDateModified();
   }
 
+
+
   updateSummary(incident: Incident) {
     this.incidentService.updateIncident(incident).subscribe(
       newIncident => {
@@ -169,6 +173,8 @@ export class IncidentListComponent implements OnInit {
       }
     );
   }
+
+// HELPER METHOD FOR FILTER METHOD IN incident.data.source.ts
 
   applyFilter(filterValue: string) {
     this.dataSource.filter(filterValue.trim().toLowerCase());

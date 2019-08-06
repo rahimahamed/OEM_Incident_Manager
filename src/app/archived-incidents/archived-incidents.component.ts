@@ -43,6 +43,8 @@ export class ArchivedIncidentsComponent implements OnInit {
     return;
   }
 
+// SORTING HELPER METHODS
+
   sortName(){
     this.dataSource.sortName();
   }
@@ -62,6 +64,8 @@ export class ArchivedIncidentsComponent implements OnInit {
   sortDateModified(){
     this.dataSource.sortDateModified();
   }
+
+// HELPER METHOD FOR FILTER METHOD IN incident.data.source.ts
 
   applyFilter(filterValue: string) {
     this.dataSource.filter(filterValue.trim().toLowerCase());
