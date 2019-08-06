@@ -185,9 +185,11 @@ export class HomeComponent implements OnInit {
 
   incidentTypeChangeAction(){
     if(this.submitForm.controls.incidentType.value === 'Other'){
-      //this.submitForm.controls.incidentType.setValue(' ');
+      this.submitForm.controls.incidentType.setValue(' ');
       this.incidentTypeOther = true;
-      //document.getElementById('other1').focus;
+      window.setTimeout(function (){
+        document.getElementById('other1').focus();
+      }, 0);
     } else {
       this.incidentTypeOther = false;
     }
@@ -202,9 +204,11 @@ export class HomeComponent implements OnInit {
 
   otherDescription(){
     if(this.submitForm.controls.incidentDescription.value === 'Other'){
-      //this.submitForm.controls.incidentDescription.setValue(' ');
+      this.submitForm.controls.incidentDescription.setValue(' ');
       this.incidentDescriptionOther = true;
-      //document.getElementById('other2').focus;
+      window.setTimeout(function (){
+        document.getElementById('other2').focus();
+      }, 0);
     } else {
       this.incidentDescriptionOther = false;
     }
@@ -214,7 +218,10 @@ export class HomeComponent implements OnInit {
     if(this.submitForm.controls.leadingAgency.value === 'Other'){
       this.submitForm.controls.leadingAgency.setValue(' ');
       this.agencyOther = true;
-      document.getElementById('other3').focus;
+      window.setTimeout(function (){
+        document.getElementById('other3').focus();
+      }, 0);
+
     } else {
       this.agencyOther = false;
     }

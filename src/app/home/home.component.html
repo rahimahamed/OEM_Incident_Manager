@@ -51,12 +51,12 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div *ngIf = 'incidentTypeOther' class="input 4-2" id="other1">
+      <div *ngIf = 'incidentTypeOther' class="input 4-2">
         <mat-form-field appearance="legacy">
-            <input matInput placeholder="If Other Type, Please Specify" formControlName="incidentType">
+            <input matInput  id="other1" placeholder="If Other Type, Please Specify" formControlName="incidentType">
         </mat-form-field>
       </div>
-      <div *ngIf='!incidentDescriptionOther' class="input 4-3">
+      <div *ngIf='!incidentDescriptionOther && !incidentTypeOther' class="input 4-3">
         <mat-form-field>
           <mat-select matInput placeholder="Select Incident Description" formControlName="incidentDescription"
           (selectionChange)="otherDescription()">
@@ -66,9 +66,9 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div *ngIf='incidentDescriptionOther' class="input 4-4" id="other2">
+      <div *ngIf="incidentDescriptionOther || incidentTypeOther" class="input 4-4">
         <mat-form-field appearance="legacy">
-            <input matInput placeholder="If Other Description, Please Specify" formControlName="incidentDescription">
+            <input matInput id="other2" placeholder="If Other Description, Please Specify" formControlName="incidentDescription">
         </mat-form-field>
       </div>
       <div *ngIf='!agencyOther' class="input 5-1">
@@ -81,9 +81,9 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div *ngIf='agencyOther' class="input 5-2" id="other3">
+      <div *ngIf='agencyOther' class="input 5-2" >
         <mat-form-field appearance="legacy">
-            <input matInput placeholder="If Other Agency, Please Specify" formControlName="leadingAgency">
+            <input matInput id="other3" placeholder="If Other Agency, Please Specify" formControlName="leadingAgency">
         </mat-form-field>
       </div>
       <div class="input 6">
