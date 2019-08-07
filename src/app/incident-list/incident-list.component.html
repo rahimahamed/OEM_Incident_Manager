@@ -3,7 +3,7 @@
   </mat-form-field>
 
   <table mat-table
-          [dataSource]="incidentList" multiTemplateDataRows
+          [dataSource]="dataSource" multiTemplateDataRows
           matSort
           class="mat-elevation-z8">
 
@@ -22,10 +22,10 @@
             <td mat-cell *matCellDef="let element">
                 <span class ="dot" [ngClass]="{
                   'dot-green' :
-                  element.STATUS === 'Open,Monitoring' ||
-                  element.STATUS === 'Open,Response' ||
-                  element.STATUS === 'Open,Extended Operation',
-                  'dot-yellow' : element.STATUS === 'Special Attention,Monitoring'}"></span>
+                  element.STATUS === 'Open-Monitoring' ||
+                  element.STATUS === 'Open-Response' ||
+                  element.STATUS === 'Open-Extended Operation',
+                  'dot-yellow' : element.STATUS === 'Special Attention-Monitoring'}"></span>
               {{element.STATUS}} </td>
           </ng-container>
 
@@ -53,9 +53,9 @@
                     (updateSummary)="updateIncident($event)">
                   </app-incident-details>
                 <div class="card">
-                  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Incident MAP</h3>
+                  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Incident Map</h3>
                   <div class="card-body">
-                    <app-incident-map style="float: right"
+                    <app-incident-map
                       [incident]="element"
                       [loadSubmitButton]="true"
                       (emitUpdate)="updateIncident($event)">

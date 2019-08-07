@@ -1,80 +1,111 @@
 <div style="text-align:center">
-  <button type="button" style="margin-top:20px; margin-bottom: 30px"
-        (click)="onClick()" class="btn btn-primary btn-lg">SUBMIT AN EMERGENCY!</button>
-</div>
-  <div style="margin-left: 20px" *ngIf="!hideForm">
-    <h2>New Emergency</h2>
-    <form [formGroup] = "submitForm" (ngSubmit)="onSubmitIncident()">
-      <div class="input1">
-        <mat-form-field appearance="standard">
-          <mat-label>Incident Name</mat-label>
-          <input matInput placeholder="Input Incident Name" formControlName="incidentName">
-        </mat-form-field>
-      </div>
-      <div class="input2">
-          <mat-form-field appearance="standard">
-            <mat-label>Location</mat-label>
-            <input matInput placeholder="Input Location" formControlName="location">
-          </mat-form-field>
-      </div>
-      <div class="input 3-1">
-        <mat-form-field>
-          <mat-select placeholder="Placeholder" formControlName="status"
-          (selectionChange)="statusChangeAction()">
-            <mat-option *ngFor="let status of statusList" [value]="status.statusName">
-              {{status.statusName}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="input 3-2">
-        <mat-form-field>
-          <mat-select matInput placeholder="Placeholder" formControlName="prognosis">
-            <mat-option *ngFor="let prognosis of prognosisList"
-                                [value]="prognosis">
-              {{prognosis}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div style="float: center; margin-top: -250px">
-        <app-incident-map
-          [incident] = "model"
-          [loadSubmitButton]="false"
-          (emitLocation) = setLocation($event)>
-        </app-incident-map>
-      </div>
-      <br>
-      <button style="margin-bottom: 10px" type="submit"
-        class="btn btn-primary">Submit
-      </button>
-    </form>
-    <form *ngIf="updateForm" #form="ngForm" (ngSubmit)="onUpdateIncident()">
-        <div class="form-group">
-          <label for="INCIDENT_NAME">Title</label>
-          <input type="text" class="form-control" id="INCIDENT_NAME"
-                 required
-                 [(ngModel)]="model.INCIDENT_NAME" name="INCIDENT_NAME">
-        </div>
-        <div class="form-group">
-          <label for="LOCATION_NAME">Location</label>
-          <input type="text" class="form-control" id="LOCATION_NAME"
-                 required
-                 [(ngModel)]="model.LOCATION_NAME" name="LOCATION_NAME">
-        </div>
-        <div class="form-group">
-          <label for="STATUS">Status</label>
-          <input type="text" class="form-control" id="STATUS"
-                 required
-                 [(ngModel)]="model.STATUS" name="STATUS">
-        </div>
-        <button style="margin-bottom: 10px" type="submit"
-          class="btn btn-success exp-btn">Update
-        </button>
-
-      </form>
+    <button type="button" style="margin-top:20px; margin-bottom: 30px"
+          (click)="onClick()" class="btn btn-primary btn-lg">SUBMIT AN EMERGENCY!</button>
   </div>
+    <div style="margin-left: 20px" *ngIf="!hideForm">
+      <h2>New Emergency</h2>
+      <form [formGroup] = "submitForm" autocomplete="off" novalidate (ngSubmit)="onSubmitIncident()">
+      <mat-card-content>
+        <div class="input1">
+          <mat-form-field appearance="legacy">
+            <mat-label>Incident Name</mat-label>
+            <input matInput type="text" placeholder="Input Incident Name"
+            formControlName="incidentName" id="incidentName" required >
+            <mat-error *ngIf="hasError('incidentName', 'required')">Incident Name is Required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="input2">
+            <mat-form-field appearance="legacy">
+              <mat-label>Location</mat-label>
+              <input matInput placeholder="Input Location" formControlName="location">
+              <mat-error *ngIf="hasError('location', 'required')">Incident Name is Required</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="input 3-1">
+          <mat-form-field>
+            <mat-select placeholder="Select Status" formControlName="status"
+            (selectionChange)="statusChangeAction()">
+              <mat-option *ngFor="let status of statusList" [value]="status.statusName">
+                {{status.statusName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="input 3-2">
+          <mat-form-field>
+            <mat-select matInput placeholder="Select Prognosis" formControlName="prognosis">
+              <mat-option *ngFor="let prognosis of prognosisList"
+                [value]="prognosis">
+                {{prognosis}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="input 4-1">
+          <mat-form-field>
+            <mat-select matInput placeholder="Select Incident Type" formControlName="incidentType"
+            (selectionChange)="incidentTypeChangeAction()">
+              <mat-option *ngFor="let incidentType of incidentTypeList" [value]='incidentType.incidentTypeName'>
+                {{incidentType.incidentTypeName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div *ngIf = 'incidentTypeOther' class="input 4-2">
+          <mat-form-field appearance="legacy">
+              <input matInput  id="other1" placeholder="If Other Type, Please Specify" formControlName="otherType">
+          </mat-form-field>
+        </div>
+        <div *ngIf='!incidentDescriptionOther && !incidentTypeOther' class="input 4-3">
+          <mat-form-field>
+            <mat-select matInput placeholder="Select Incident Description" formControlName="incidentDescription"
+            (selectionChange)="otherDescription()">
+              <mat-option *ngFor="let incidentDescription of incidentDescriptionList" [value]="incidentDescription">
+                {{incidentDescription}}
+            </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div *ngIf="incidentDescriptionOther || incidentTypeOther" class="input 4-4">
+          <mat-form-field appearance="legacy">
+              <input matInput id="other2" placeholder="If Other Description, Please Specify" formControlName="incidentDescription">
+          </mat-form-field>
+        </div>
+        <div *ngIf='!agencyOther' class="input 5-1">
+          <mat-form-field>
+            <mat-select matInput placeholder="Select Leading Agency" formControlName="leadingAgency"
+            (selectionChange)="otherAgency()">
+              <mat-option *ngFor="let leadingAgency of leadingAgencyList" [value]="leadingAgency">
+                {{leadingAgency}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div *ngIf='agencyOther' class="input 5-2" >
+          <mat-form-field appearance="legacy">
+              <input matInput id="other3" placeholder="If Other Agency, Please Specify" formControlName="leadingAgency">
+          </mat-form-field>
+        </div>
+        <div class="input 6">
+          <mat-form-field appearance="legacy">
+              <input matInput placeholder="Input Supporting Agency" formControlName="supportingAgency">
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" [disabled]="!submitForm.valid">Submit</button>
+        <button class="btn btn-danger exp-btn" style="margin-left: 10px" (click)="resetForm()">Reset</button>
+      </mat-card-actions>
+      <div style="float: center; margin-top: -490px">
+          <app-incident-map
+            [incident] = "model"
+            [loadSubmitButton]="false"
+            (emitLocation) = setLocation($event)>
+          </app-incident-map>
+      </div>
+      </form>
+</div>
 
-  <app-incident-list
-    [dataSource]="dataSource">
-  </app-incident-list>
+<app-incident-list
+  [dataSource]="dataSource">
+</app-incident-list>
