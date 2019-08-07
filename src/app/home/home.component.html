@@ -41,7 +41,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div *ngIf='!incidentTypeOther' class="input 4-1">
+      <div class="input 4-1">
         <mat-form-field>
           <mat-select matInput placeholder="Select Incident Type" formControlName="incidentType"
           (selectionChange)="incidentTypeChangeAction()">
@@ -53,7 +53,7 @@
       </div>
       <div *ngIf = 'incidentTypeOther' class="input 4-2">
         <mat-form-field appearance="legacy">
-            <input matInput  id="other1" placeholder="If Other Type, Please Specify" formControlName="incidentType">
+            <input matInput  id="other1" placeholder="If Other Type, Please Specify" formControlName="otherType">
         </mat-form-field>
       </div>
       <div *ngIf='!incidentDescriptionOther && !incidentTypeOther' class="input 4-3">

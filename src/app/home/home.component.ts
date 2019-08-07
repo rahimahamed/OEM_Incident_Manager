@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
     status: new FormControl('', Validators.required),
     prognosis: new FormControl('', Validators.required),
     incidentType: new FormControl('', Validators.required),
-    otherType: new FormControl(''),
+    otherType: new FormControl('', Validators.required),
     incidentDescription: new FormControl('', Validators.required),
     otherDescription: new FormControl(''),
     leadingAgency: new FormControl('', Validators.required),
@@ -185,13 +185,15 @@ export class HomeComponent implements OnInit {
 
   incidentTypeChangeAction(){
     if(this.submitForm.controls.incidentType.value === 'Other'){
-      this.submitForm.controls.incidentType.setValue(' ');
+      //this.submitForm.controls.incidentType.setValue();
       this.incidentTypeOther = true;
+      this.incidentDescriptionOther =true;
       window.setTimeout(function (){
         document.getElementById('other1').focus();
       }, 0);
     } else {
       this.incidentTypeOther = false;
+      this.incidentDescriptionOther = false;
     }
     const dropDownIncidentData = this.incidentTypeList.find((data2: any) =>
             data2.incidentTypeName === this.submitForm.controls.incidentType.value);
@@ -216,7 +218,7 @@ export class HomeComponent implements OnInit {
 
   otherAgency(){
     if(this.submitForm.controls.leadingAgency.value === 'Other'){
-      this.submitForm.controls.leadingAgency.setValue(' ');
+      this.submitForm.controls.leadingAgency.setValue('');
       this.agencyOther = true;
       window.setTimeout(function (){
         document.getElementById('other3').focus();
@@ -242,7 +244,11 @@ export class HomeComponent implements OnInit {
     this.model.INCIDENT_NAME = this.submitForm.controls.incidentName.value;
     this.model.LOCATION_NAME = this.submitForm.controls.location.value;
     this.model.STATUS = this.submitForm.controls.status.value + '-' + this.submitForm.controls.prognosis.value;
-    this.model.INCIDENT_TYPE =  this.submitForm.controls.incidentType.value + '-' + this.submitForm.controls.incidentDescription.value;
+    if(this.submitForm.controls.incidentType.value === 'Other'){
+      this.model.INCIDENT_TYPE =  this.submitForm.controls.otherType.value + '-' + this.submitForm.controls.incidentDescription.value;
+    } else {
+      this.model.INCIDENT_TYPE =  this.submitForm.controls.incidentType.value + '-' + this.submitForm.controls.incidentDescription.value;
+    }
     this.model.LEAD_AGENCY = this.submitForm.controls.leadingAgency.value;
     this.model.SUPPORTING_AGENCY = this.submitForm.controls.supportingAgency.value;
     this.incidentService.addIncidents(this.model).subscribe(
