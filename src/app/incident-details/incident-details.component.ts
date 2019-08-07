@@ -24,8 +24,8 @@ export class IncidentDetailsComponent implements OnInit {
   ngOnInit() {
     if (this.incident.SUMMARY) {
       this.summaryExists = true;
+      this.summary = this.incident.SUMMARY;
     }
-    this.incident = Object.assign({}, this.incident);
   }
 
   onArchive() {

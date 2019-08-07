@@ -53,7 +53,7 @@
           <div style="float: center">
             <button type="button" (click)="onEdit()" class="btn btn-warning exp-btn">Edit Summary</button>
             <button type="button" *ngIf="!summaryExists || summaryEdit" (click)="onSubmitSummary()" class="btn btn-success exp-btn">Submit Summary</button>
-            <button *ngIf="archive" type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Re-Open Incident</button>
+            <!-- <button *ngIf="archive" type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Re-Open Incident</button> -->
             <button *ngIf="!archive" type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Archive Incident</button>
           </div>
         </div>
