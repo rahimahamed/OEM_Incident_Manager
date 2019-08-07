@@ -40,7 +40,7 @@
           <div class="form-group">
             <p *ngIf="summaryExists && !summaryEdit"
               style="width: 600px; align-content: left;" [innerHTML]="incident.SUMMARY"></p>
-            <editor *ngIf="!summaryExists || summaryEdit"
+            <editor *ngIf="!summaryExists || summaryEdit" id="textBox"
               apiKey="xzmeuzojpn81uz66dyexlm02jfmh3h3mn02a03cxk5ew37lm"
               [init]="{
                 height: 600,

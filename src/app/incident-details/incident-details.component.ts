@@ -34,6 +34,9 @@ export class IncidentDetailsComponent implements OnInit {
 
   onEdit() {
     this.summaryEdit = !this.summaryEdit;
+    window.setTimeout( () => {
+      document.getElementById('textBox').focus();
+    }, 0);
   }
 
   onSubmitSummary() {
