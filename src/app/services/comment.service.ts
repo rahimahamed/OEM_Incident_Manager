@@ -1,4 +1,4 @@
-import { Comment } from '../comment';
+import { Comment } from '../comment-components/comment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Http, Headers, RequestOptions } from '@angular/http';

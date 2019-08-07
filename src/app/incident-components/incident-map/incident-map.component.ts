@@ -1,7 +1,18 @@
-import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit, Output, Input, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  NgZone,
+  AfterViewInit,
+  Output,
+  Input,
+  EventEmitter,
+  ChangeDetectorRef
+} from '@angular/core';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
 import {} from '@agm/core/services/google-maps-types';
-import { Incident } from '../../incident';
+import { Incident } from '../../incident-components/incident';
 
 @Component({
   selector: 'app-incident-map',
@@ -9,7 +20,7 @@ import { Incident } from '../../incident';
   styleUrls: ['./incident-map.component.css']
 })
 export class IncidentMapComponent implements OnInit, AfterViewInit {
-  public latitude = 40.730610;
+  public latitude = 40.73061;
   public longitude = -73.935242;
   public zoom = 10;
   address: string;
@@ -19,17 +30,16 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
   @Output() emitLocation = new EventEmitter();
   @Output() emitUpdate = new EventEmitter();
 
-
   @ViewChild('search', { static: false }) public searchElementRef: ElementRef;
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngAfterViewInit() {
-    if ((this.incident.ADDRESS)) {
+    if (this.incident.ADDRESS) {
       this.latitude = Number(this.incident.LATITUDE);
       this.longitude = Number(this.incident.LONGITUDE);
       this.address = this.incident.ADDRESS;
@@ -86,26 +96,25 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
   }
 
   getAddress(latitude, longitude) {
-    this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
-      console.log(results);
-      console.log(status);
-      if (status === 'OK') {
-        if (results[0]) {
-          this.zoom = 15;
-          this.address = results[0].formatted_address;
-        } else {
-          window.alert('Geocoder failed due to: ' + status);
+    this.geoCoder.geocode(
+      { location: { lat: latitude, lng: longitude } },
+      (results, status) => {
+        console.log(results);
+        console.log(status);
+        if (status === 'OK') {
+          if (results[0]) {
+            this.zoom = 15;
+            this.address = results[0].formatted_address;
+          } else {
+            window.alert('Geocoder failed due to: ' + status);
+          }
+          this.incident.LATITUDE = this.latitude.toString();
+          this.incident.LONGITUDE = this.longitude.toString();
+          this.incident.ADDRESS = this.address;
+          this.emitLocation.emit(this.incident);
         }
-        this.incident.LATITUDE = this.latitude.toString();
-        this.incident.LONGITUDE = this.longitude.toString();
-        this.incident.ADDRESS = this.address;
-        this.emitLocation.emit(this.incident);
       }
-      this.incident.LATITUDE = this.latitude.toString();
-      this.incident.LONGITUDE = this.longitude.toString();
-      this.incident.ADDRESS = this.address;
-      this.emitLocation.emit(this.incident);
-    });
+    );
   }
 
   emitAddress() {

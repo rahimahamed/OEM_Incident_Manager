@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { IncidentService } from '../services/incident.service';
-import { Incident } from './../incident';
+import { Incident } from '../incident-components/incident';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IncidentsDataSource } from '../helpers/incident.data.source';
-import { User } from '../user';
+import { User } from '../user-components/user';
 import { UserService } from '../services/user.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -86,33 +86,43 @@ export class HomeComponent implements OnInit {
 
   onSubmitIncident() {
     this.date2 = new Date();
-    this.model.CREATION_DATE = '' + this.date2.toISOString().substr(0,10) + ', ' + this.date2.toLocaleTimeString();
-    this.model.MODIFICATION_DATE = '' + this.date2.toISOString().substr(0,10) + ', ' + this.date2.toLocaleTimeString();
+    this.model.CREATION_DATE =
+      '' +
+      this.date2.toISOString().substr(0, 10) +
+      ', ' +
+      this.date2.toLocaleTimeString();
+    this.model.MODIFICATION_DATE =
+      '' +
+      this.date2.toISOString().substr(0, 10) +
+      ', ' +
+      this.date2.toLocaleTimeString();
 
     this.model.INCIDENT_NAME = this.submitForm.controls.incidentName.value;
     this.model.LOCATION_NAME = this.submitForm.controls.location.value;
-    this.model.STATUS = this.submitForm.controls.status.value +
-    ',' + this.submitForm.controls.prognosis.value;
+    this.model.STATUS =
+      this.submitForm.controls.status.value +
+      ',' +
+      this.submitForm.controls.prognosis.value;
 
-    this.incidentService.addIncidents(this.model).subscribe(
-      newIncident => {
-        this.onClick();
-        this.model = new Incident();
-        this.dataSource.loadLessons();
-      }
-    );
+    this.incidentService.addIncidents(this.model).subscribe(newIncident => {
+      this.onClick();
+      this.model = new Incident();
+      this.dataSource.loadLessons();
+    });
   }
 
   onUpdateIncident() {
     this.date2 = new Date();
-    this.model.MODIFICATION_DATE = '' + this.date2.toISOString().substr(0,10) + ', ' + this.date2.toLocaleTimeString();
-    this.incidentService.updateIncident(this.model).subscribe(
-      newIncident => {
-        this.onClick();
-        this.model = new Incident();
-        // this.dataSource.loadLessons();
-      }
-    );
+    this.model.MODIFICATION_DATE =
+      '' +
+      this.date2.toISOString().substr(0, 10) +
+      ', ' +
+      this.date2.toLocaleTimeString();
+    this.incidentService.updateIncident(this.model).subscribe(newIncident => {
+      this.onClick();
+      this.model = new Incident();
+      // this.dataSource.loadLessons();
+    });
   }
 
   editIncident(incident: Incident) {

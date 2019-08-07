@@ -6,7 +6,7 @@ import {
   transition,
   trigger
 } from '@angular/animations';
-import { Incident } from '../../incident';
+import { Incident } from '../../incident-components/incident';
 import { IncidentService } from '../../services/incident.service';
 import { IncidentsDataSource } from '../../helpers/incident.data.source';
 @Component({
@@ -29,7 +29,13 @@ export class ArchivedIncidentsComponent implements OnInit {
   @Output() archiveIncident = new EventEmitter();
 
   dataSource: IncidentsDataSource;
-  columnsToDisplay = ['title', 'location', 'status', 'date_created', 'date_modified'];
+  columnsToDisplay = [
+    'title',
+    'location',
+    'status',
+    'date_created',
+    'date_modified'
+  ];
   expandedElement: Incident | null;
 
   constructor(private incidentService: IncidentService) {}
@@ -51,23 +57,23 @@ export class ArchivedIncidentsComponent implements OnInit {
     return;
   }
 
-  sortName(){
+  sortName() {
     this.dataSource.sortName();
   }
 
-  sortLocation(){
+  sortLocation() {
     this.dataSource.sortLocation();
   }
 
-  sortStatus(){
+  sortStatus() {
     this.dataSource.sortStatus();
   }
 
-  sortDate(){
+  sortDate() {
     this.dataSource.sortDate();
   }
 
-  sortDateModified(){
+  sortDateModified() {
     this.dataSource.sortDateModified();
   }
 
@@ -75,5 +81,4 @@ export class ArchivedIncidentsComponent implements OnInit {
     this.dataSource = new IncidentsDataSource(this.incidentService, false);
     this.dataSource.filter(filterValue.trim().toLowerCase());
   }
-
 }

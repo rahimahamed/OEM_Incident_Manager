@@ -1,4 +1,4 @@
-import { Incident } from '../incident';
+import { Incident } from '../incident-components/incident';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Http, Headers, RequestOptions } from '@angular/http';

@@ -13,7 +13,7 @@ import {
   transition,
   trigger
 } from '@angular/animations';
-import { Incident } from '../../incident';
+import { Incident } from '../../incident-components/incident';
 import { IncidentService } from '../../services/incident.service';
 import { IncidentsDataSource } from '../../helpers/incident.data.source';
 

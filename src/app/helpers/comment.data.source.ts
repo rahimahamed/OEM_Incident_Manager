@@ -1,7 +1,7 @@
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { DataSource, CollectionViewer } from '@angular/cdk/collections';
 import { CommentService } from '../services/comment.service';
-import { Comment } from '../comment';
+import { Comment } from '../comment-components/comment';
 import { catchError, finalize } from 'rxjs/operators';
 
 export class CommentsDataSource implements DataSource<Comment> {

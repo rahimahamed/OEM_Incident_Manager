@@ -1,15 +1,15 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { Incident } from '../../../incident';
-import { User } from '../../../user';
+import { Incident } from '../../incident-components/incident';
+import { User } from '../../user-components/user';
 
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { Comment } from '../../../comment';
-import { CommentService } from '../../../services/comment.service';
-import { AuthenticationService } from '../../../services/authentication.service';
+import { Comment } from '../../comment-components/comment';
+import { CommentService } from '../../services/comment.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
-import { CommentsDataSource } from '../../../helpers/comment.data.source';
+import { CommentsDataSource } from '../../helpers/comment.data.source';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
