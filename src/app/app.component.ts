@@ -23,6 +23,15 @@ export class AppComponent implements OnInit {
     this.authenticationService.currentUser.subscribe(
       x => (this.currentUser = x)
     );
+
+    // this.userService.getUser(User).subscribe(
+    //   res => {
+    //     this.currentUser = res['user'];
+    //   },
+    //   err => {
+    //     console.log(err);
+    //   }
+    // );
   }
 
   ngOnInit() {

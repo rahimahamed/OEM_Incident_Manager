@@ -43,4 +43,8 @@ export class CommentService {
     this.createAuthenticationHeaders(); // Create headers
     return this._http.get(this._postUrl);
   }
+
+  deleteComment(comment: Comment) {
+    return this._http.delete(this._postUrl + comment._id);
+  }
 }

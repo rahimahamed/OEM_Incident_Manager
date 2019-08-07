@@ -6,17 +6,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UserService {
-  selectedUser: User = {
-    firstName: '',
-    lastName: '',
-    department: '',
-    username: '',
-    password: '',
-    email: ''
-  };
-
   noAuthHeader = { headers: new HttpHeaders({ NoAuth: 'True' }) };
 
+  users: Array<User>;
+
+  private _getUrl = '/api/user';
   private _postUrl = '/api/register';
 
   constructor(private _http: HttpClient) {}
@@ -29,15 +23,15 @@ export class UserService {
   }
 
   getAll() {
-    return this._http.get<User[]>(this._postUrl);
+    return this._http.get<User[]>(this._getUrl);
   }
 
   register(user: User) {
-    return this._http.post(`api/register`, user);
+    return this._http.post(this._postUrl, user);
   }
 
   delete(id: number) {
-    return this._http.delete(`/api/register/${id}`);
+    return this._http.delete(this._getUrl + `/${id}`);
   }
 
   login(authCredentials) {
@@ -48,8 +42,8 @@ export class UserService {
     );
   }
 
-  getUserProfile() {
-    return this._http.get(this._postUrl + '/userProfile');
+  getUser(user: User) {
+    return this._http.get(this._getUrl + user._id);
   }
 
   //Helper Methods
