@@ -1,5 +1,5 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
 import { IncidentsDataSource } from '../incident.data.source';
@@ -17,30 +17,145 @@ import { IncidentsDataSource } from '../incident.data.source';
   ],
 })
 export class IncidentListComponent implements OnInit {
-  @Output() selectIncident = new EventEmitter();
-  @Output() archiveIncident = new EventEmitter();
 
-  dataSource: IncidentsDataSource;
-  columnsToDisplay = ['title', 'location', 'status'];
+  @Input() dataSource: IncidentsDataSource;
+  incidentList: Incident[] = [
+    {
+      _id: '5d3919a26ed54400177e1f1f',
+      INCIDENT_NAME: 'Power Outage',
+      STATUS: 'Closed',
+      LOCATION_NAME: 'Brooklyn',
+      SUMMARY: null,
+      INCIDENT_TYPE:  'CRAZY',
+      CREATION_DATE:  '2019-07-31, 3:52:57 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+    },
+    {
+      _id: '5d3919a26ed54400177e1f1f',
+      INCIDENT_NAME: 'Power Outage',
+      STATUS: 'Responding',
+      LOCATION_NAME: 'Queens',
+      SUMMARY: 'Failure',
+      INCIDENT_TYPE:  'LITT',
+      CREATION_DATE:  '2019-07-31, 4:00:34 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+    },
+    {
+      _id: '5d3919a26ed54400177e1f1f',
+      INCIDENT_NAME: 'Power Outage',
+      STATUS: 'Responding',
+      LOCATION_NAME: 'Queens',
+      SUMMARY: 'Failure',
+      INCIDENT_TYPE:  'LITT',
+      CREATION_DATE:  '2019-07-25, 4:00:34 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+    },
+    {
+      _id: '5d3919a26ed54400177e1f1f',
+      INCIDENT_NAME: 'Power Outage',
+      STATUS: 'Open,Response',
+      LOCATION_NAME: 'Queens',
+      SUMMARY: 'Failure',
+      INCIDENT_TYPE:  'LITT',
+      CREATION_DATE:  '2019-02-31, 4:00:34 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+    },
+    {
+      _id: '5d3919a26ed54400177e1f1f',
+      INCIDENT_NAME: 'Power Outage',
+      STATUS: 'Open,Monitoring',
+      LOCATION_NAME: 'Queens',
+      SUMMARY: 'Failure',
+      INCIDENT_TYPE:  'LITT',
+      CREATION_DATE:  '2019-04-11, 4:00:34 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+    },
+  ];
+
+  columnsToDisplay = ['title', 'location', 'status', 'date_created', 'date_modified'];
   expandedElement: Incident | null;
 
-  constructor(private incidentService: IncidentService) { }
+  constructor(private incidentService: IncidentService, private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.dataSource = new IncidentsDataSource(this.incidentService, true);
     this.dataSource.loadLessons();
-    this.onSelect();
   }
 
-  onSelect() {
-    this.selectIncident.emit(this.dataSource);
+  onArchive(incident: Incident) {
+    incident.STATUS = 'Closed';
+    this.incidentService.updateIncident(incident).subscribe(
+      archivedIncident => {
+        this.dataSource.loadLessons();
+      }
+    );
   }
 
-  onArchive(incident) {
-    this.archiveIncident.emit(incident);
+  updateIncident(incident: Incident) {
+    this.dataSource.updateLessons(incident);
+    this.changeDetectorRef.detectChanges();
   }
 
-  onOpen(incident) {
-    return;
+  applyFilter(filterValue: string) {
+    this.dataSource.filter(filterValue.trim().toLowerCase());
+  }
+
+  sortName() {
+    this.dataSource.sortName();
+  }
+
+  sortLocation() {
+    this.dataSource.sortLocation();
+  }
+
+  sortStatus() {
+    this.dataSource.sortStatus();
+  }
+
+  sortDate() {
+    this.dataSource.sortDate();
+  }
+
+  sortDateModified() {
+    this.dataSource.sortDateModified();
   }
 }

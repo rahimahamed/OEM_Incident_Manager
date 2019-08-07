@@ -17,11 +17,10 @@ import { IncidentsDataSource } from '../incident.data.source';
 })
 export class ArchivedIncidentsComponent implements OnInit {
 
-  @Output() selectIncident = new EventEmitter();
-  @Output() archiveIncident = new EventEmitter();
+  @Output() unArchiveIncident = new EventEmitter();
 
   dataSource: IncidentsDataSource;
-  columnsToDisplay = ['title', 'location', 'status'];
+  columnsToDisplay = ['title', 'location', 'status', 'date_created', 'date_modified'];
   expandedElement: Incident | null;
 
   constructor(private incidentService: IncidentService) { }
@@ -31,16 +30,37 @@ export class ArchivedIncidentsComponent implements OnInit {
     this.dataSource.loadLessons();
   }
 
-  onSelect(incident) {
-    this.selectIncident.emit(incident);
-  }
-
-  onArchive(incident) {
-    this.archiveIncident.emit(incident);
+  unArchive(incident: Incident) {
+    incident.STATUS = 'Special Attention, Monitoring';
+    this.unArchiveIncident.emit(incident);
   }
 
   onOpen(incident) {
     return;
+  }
+
+  sortName(){
+    this.dataSource.sortName();
+  }
+
+  sortLocation(){
+    this.dataSource.sortLocation();
+  }
+
+  sortStatus(){
+    this.dataSource.sortStatus();
+  }
+
+  sortDate(){
+    this.dataSource.sortDate();
+  }
+
+  sortDateModified(){
+    this.dataSource.sortDateModified();
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter(filterValue.trim().toLowerCase());
   }
 
 }
