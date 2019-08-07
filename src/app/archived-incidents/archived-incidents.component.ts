@@ -17,8 +17,7 @@ import { IncidentsDataSource } from '../incident.data.source';
 })
 export class ArchivedIncidentsComponent implements OnInit {
 
-  @Output() selectIncident = new EventEmitter();
-  @Output() archiveIncident = new EventEmitter();
+  @Output() unArchiveIncident = new EventEmitter();
 
   dataSource: IncidentsDataSource;
   columnsToDisplay = ['title', 'location', 'status', 'date_created', 'date_modified'];
@@ -31,12 +30,9 @@ export class ArchivedIncidentsComponent implements OnInit {
     this.dataSource.loadLessons();
   }
 
-  onSelect(incident) {
-    this.selectIncident.emit(incident);
-  }
-
-  onArchive(incident) {
-    this.archiveIncident.emit(incident);
+  unArchive(incident: Incident) {
+    incident.STATUS = 'Special Attention, Monitoring';
+    this.unArchiveIncident.emit(incident);
   }
 
   onOpen(incident) {

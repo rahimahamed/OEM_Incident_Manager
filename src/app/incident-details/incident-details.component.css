@@ -10,3 +10,11 @@
   margin-top: 15px;
   margin-right: 10px;
 }
+
+td.example-element-row:not(.example-expanded-row):hover {
+  background: #F5F5F5;
+}
+
+td.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}

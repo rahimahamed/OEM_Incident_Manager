@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit, Output, Input, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit,
+         Output, Input, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
 import {} from '@agm/core/services/google-maps-types';
 import { Incident } from '../incident';
@@ -9,9 +10,9 @@ import { Incident } from '../incident';
   styleUrls: ['./incident-map.component.css']
 })
 export class IncidentMapComponent implements OnInit, AfterViewInit {
-  public latitude = 40.730610;
-  public longitude = -73.935242;
-  public zoom = 10;
+  public latitude = 40.6990819;
+  public longitude = -73.98933879999998;
+  public zoom = 18;
   address: string;
   private geoCoder;
   @Input() incident: Incident;
@@ -60,7 +61,7 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
           this.latitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
           this.getAddress(this.latitude, this.longitude);
-          this.zoom = 15;
+          this.zoom = 18;
         });
       });
     });
@@ -73,7 +74,7 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
 
   // Get Current Location Coordinates
   private setCurrentLocation() {
-    this.zoom = 10;
+    this.zoom = 18;
     this.getAddress(this.latitude, this.longitude);
   }
 
@@ -91,7 +92,7 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
       console.log(status);
       if (status === 'OK') {
         if (results[0]) {
-          this.zoom = 15;
+          this.zoom = 18;
           this.address = results[0].formatted_address;
         } else {
           window.alert('No results found');
@@ -102,10 +103,12 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
       this.incident.LATITUDE = this.latitude.toString();
       this.incident.LONGITUDE = this.longitude.toString();
       this.incident.ADDRESS = this.address;
+      // This emits address to the form! The incident dropdown page does not look for this!
       this.emitLocation.emit(this.incident);
     });
   }
 
+  // This emits to incident dropdown map, when 'Submit Updated Address' is pressed
   emitAddress() {
     this.incident.LATITUDE = this.latitude.toString();
     this.incident.LONGITUDE = this.longitude.toString();

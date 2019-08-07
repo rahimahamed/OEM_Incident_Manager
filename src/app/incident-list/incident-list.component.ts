@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
@@ -77,7 +77,7 @@ export class IncidentListComponent implements OnInit {
     {
       _id: '5d3919a26ed54400177e1f1f',
       INCIDENT_NAME: 'Power Outage',
-      STATUS: 'Responding',
+      STATUS: 'Open,Response',
       LOCATION_NAME: 'Queens',
       SUMMARY: 'Failure',
       INCIDENT_TYPE:  'LITT',
@@ -95,7 +95,7 @@ export class IncidentListComponent implements OnInit {
     {
       _id: '5d3919a26ed54400177e1f1f',
       INCIDENT_NAME: 'Power Outage',
-      STATUS: 'Responding',
+      STATUS: 'Open,Monitoring',
       LOCATION_NAME: 'Queens',
       SUMMARY: 'Failure',
       INCIDENT_TYPE:  'LITT',
