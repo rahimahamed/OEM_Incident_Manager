@@ -25,6 +25,8 @@ export class IncidentCommentsComponent implements OnInit {
   currentIncident: Incident;
   dataSource: CommentsDataSource;
 
+  idMatch = false;
+
   private hideForm = true;
 
   @ViewChild('search', { static: false }) public searchElementRef: ElementRef;
@@ -64,12 +66,17 @@ export class IncidentCommentsComponent implements OnInit {
     this.model.comment = this.submitComment.controls.comment.value;
     console.log(this.model.commentator);
     this.model.commentator = this.submitComment.controls.commentator.value;
+    this.model.incident_id = this.incident._id; // should align IDs
     this.commentService.addComments(this.model).subscribe(newComment => {
       this.ngOnInit();
       this.onClick();
       this.model = new Comment();
       this.dataSource.loadLessons();
     });
+  }
+
+  deleteComment(comment: Comment) {
+    this.commentService.deleteComment(comment);
   }
 
   closeForm() {

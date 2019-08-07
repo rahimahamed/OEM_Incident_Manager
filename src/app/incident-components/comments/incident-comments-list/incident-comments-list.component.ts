@@ -37,14 +37,25 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class IncidentCommentsListComponent implements OnInit {
   @Input() dataSource: CommentsDataSource;
+  @Input() incident: Incident;
+  @Input() comment: Comment;
 
   @Output() closeF = new EventEmitter();
   @Output() selectComment = new EventEmitter();
+  @Output() deleteComment = new EventEmitter();
 
   columnsToDisplay = ['commentator', 'comment'];
   expandedElement: Comment | null;
 
   constructor(private commentService: CommentService) {}
+
+  idMatch() {
+    if (this.comment.incident_id == this.incident._id) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   ngOnInit() {
     this.dataSource = new CommentsDataSource(this.commentService);
@@ -53,5 +64,9 @@ export class IncidentCommentsListComponent implements OnInit {
 
   onSelect() {
     this.selectComment.emit(this.dataSource);
+  }
+
+  onDelete(comment: Comment) {
+    this.deleteComment.emit(comment);
   }
 }

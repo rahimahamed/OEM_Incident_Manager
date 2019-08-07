@@ -120,7 +120,7 @@ router.delete('/active/:id', function(req, res) {
   });
 });
 
-router.get('/register', function(req, res) {
+router.get('/user', function(req, res) {
   console.log('GET request for all ACTIVE users!');
   User.find({}).exec(function(err, users) {
     if (err) {
@@ -131,7 +131,7 @@ router.get('/register', function(req, res) {
   });
 });
 
-router.get('/register/:id', function(req, res) {
+router.get('/user/:id', function(req, res) {
   console.log('Get request for a single user!');
   User.findById(req.params.id).exec(function(err, user) {
     if (err) {
@@ -142,7 +142,7 @@ router.get('/register/:id', function(req, res) {
   });
 });
 
-router.delete('/register/:id', function(req, res) {
+router.delete('/user/:id', function(req, res) {
   console.log('DELETING a user!');
   User.findByIdAndRemove(req.params.id, function(err, deletedUser) {
     if (err) {
