@@ -93,9 +93,10 @@
         </div>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="primary" [disabled]="!submitForm.valid">Submit</button>
-        <button class="btn btn-danger exp-btn" style="margin-left: 10px" (click)="resetForm()">Reset</button>
+        <button class="btn btn-success exp-btn btn-width" [disabled]="!submitForm.valid">Submit</button>
       </mat-card-actions>
+      </form>
+      <button class="btn btn-danger exp-btn btn-width" style="margin-top: 10px" (click)="resetForm()">Reset</button>
       <div style="float: center; margin-top: -490px">
           <app-incident-map
             [incident] = "model"
@@ -103,7 +104,6 @@
             (emitLocation) = setLocation($event)>
           </app-incident-map>
       </div>
-      </form>
 </div>
 
 <app-incident-list

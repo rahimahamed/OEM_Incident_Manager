@@ -46,6 +46,13 @@ tr.example-element-row:not(.example-expanded-row):active {
   opacity: 0.5;
 }
 
+.dot {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
 .dot-red {
   background-color: rgb(241, 63, 63);
 }
