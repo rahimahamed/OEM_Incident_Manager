@@ -20,6 +20,7 @@ export class IncidentListComponent implements OnInit {
   @Output() editIncident = new EventEmitter();
   @Output() sendDataSource = new EventEmitter();
 
+  isLoading = true;
   dataSource: IncidentsDataSource;
   incidentList: Incident[] = [
     {
@@ -120,8 +121,18 @@ export class IncidentListComponent implements OnInit {
   constructor(private incidentService: IncidentService) { }
 
   ngOnInit() {
+    // this.incidentService.getIncidents()
+    //    .subscribe(
+    //     data => {
+    //       this.isLoading = false;
+    //       this.dataSource.data = data
+    //     },
+    //     error => this.isLoading = false
+    // );
+    this.isLoading = true;
     this.dataSource = new IncidentsDataSource(this.incidentService, true);
     this.dataSource.loadLessons();
+    this.isLoading = false;
   }
 
   onArchive(incident: Incident) {

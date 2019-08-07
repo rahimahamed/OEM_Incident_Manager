@@ -20,6 +20,7 @@ export class ArchivedIncidentsComponent implements OnInit {
   @Output() selectIncident = new EventEmitter();
   @Output() archiveIncident = new EventEmitter();
 
+  isLoading = true;
   dataSource: IncidentsDataSource;
   columnsToDisplay = ['title', 'location', 'status', 'date_created', 'date_modified'];
   expandedElement: Incident | null;
@@ -27,8 +28,10 @@ export class ArchivedIncidentsComponent implements OnInit {
   constructor(private incidentService: IncidentService) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.dataSource = new IncidentsDataSource(this.incidentService, false);
     this.dataSource.loadLessons();
+    this.isLoading = false;
   }
 
   onSelect(incident) {
