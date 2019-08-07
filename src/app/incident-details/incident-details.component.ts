@@ -69,8 +69,8 @@ export class IncidentDetailsComponent implements OnInit {
 
   updateList(id: string, value: string, event: any) {
     const editField = event.target.textContent;
-    if (editField === '' || editField === ' ') {
-      alert('VALUE CANNOT BE EMPTY');
+    if (editField === value || editField === '' || editField === ' ') {
+
     } else {
       this.incident[id] = editField;
       this.editIncident.emit(this.incident);
