@@ -3,6 +3,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
 import { IncidentsDataSource } from '../incident.data.source';
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-incident-list',
@@ -21,7 +23,8 @@ export class IncidentListComponent implements OnInit {
   @Output() sendDataSource = new EventEmitter();
 
   isLoading = true;
-  dataSource: IncidentsDataSource;
+  // dataSource: IncidentsDataSource;
+  dataSource: any;
   incidentList: Incident[] = [
     {
       _id: '5d3919a26ed54400177e1f1f',
@@ -121,18 +124,13 @@ export class IncidentListComponent implements OnInit {
   constructor(private incidentService: IncidentService) { }
 
   ngOnInit() {
-    // this.incidentService.getIncidents()
-    //    .subscribe(
-    //     data => {
-    //       this.isLoading = false;
-    //       this.dataSource.data = data
-    //     },
-    //     error => this.isLoading = false
-    // );
-    this.isLoading = true;
+    of(this.incidentList).pipe(delay(1000))
+     .subscribe(data => {
+       this.isLoading = false;
+       this.dataSource = data
+     }, error => this.isLoading = false);
     this.dataSource = new IncidentsDataSource(this.incidentService, true);
     this.dataSource.loadLessons();
-    this.isLoading = false;
   }
 
   onArchive(incident: Incident) {

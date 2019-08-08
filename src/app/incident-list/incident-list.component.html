@@ -5,8 +5,7 @@
 <table mat-table
       [dataSource]="dataSource" multiTemplateDataRows
       matSort
-      class="mat-elevation-z8"
-      *ngIf="!isLoading">
+      class="mat-elevation-z8">
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef mat-sort-header (click)=sortName()> Title </th>
         <td mat-cell *matCellDef="let element"> {{element.INCIDENT_NAME}} </td>
