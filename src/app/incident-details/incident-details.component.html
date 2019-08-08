@@ -39,6 +39,11 @@
     <div class="card">
       <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Summary</h3>
       <div class="card-body">
+        <div>
+          <app-incident-logistics
+            [incident]="incident">
+          </app-incident-logistics>
+        </div>
         <div class="form-group">
           <p *ngIf="summaryExists && !summaryEdit"
             style="width: 600px; align-content: left;" [innerHTML]="incident.SUMMARY"></p>
