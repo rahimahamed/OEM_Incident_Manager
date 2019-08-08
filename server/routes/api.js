@@ -131,6 +131,17 @@ router.get('/user', function(req, res) {
   });
 });
 
+router.get('/user/current', function(req, res) {
+  console.log('Get request for current user!');
+  User.findById(req.user.sub).exec(function(err, user) {
+    if (err) {
+      console.log('Error retrieving user!');
+    } else {
+      res.json(user);
+    }
+  });
+});
+
 router.get('/user/:id', function(req, res) {
   console.log('Get request for a single user!');
   User.findById(req.params.id).exec(function(err, user) {

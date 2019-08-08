@@ -22,6 +22,10 @@ export class UserService {
     });
   }
 
+  getCurrent() {
+    return this._http.get<User>(this._getUrl + 'current');
+  }
+
   getAll() {
     return this._http.get<User[]>(this._getUrl);
   }
