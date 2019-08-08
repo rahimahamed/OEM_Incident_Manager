@@ -53,7 +53,11 @@
                     (updateSummary)="updateIncident($event)">
                   </app-incident-details>
                 <div class="card">
-                  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Incident Map</h3>
+                    <mat-expansion-panel [expanded]="true">
+                        <mat-expansion-panel-header
+                        class="text-center font-weight-bold text-uppercase py-4">
+                          <h3>Incident Map</h3>
+                      </mat-expansion-panel-header>
                   <div class="card-body">
                     <app-incident-map
                       [incident]="element"
@@ -61,6 +65,7 @@
                       (emitUpdate)="updateIncident($event)">
                     </app-incident-map>
                   </div>
+                </mat-expansion-panel>
                 </div>
         </div>
       </div>
