@@ -12,10 +12,11 @@
         <a class="nav-link" routerLink="/archive" routerLinkActive="active">Past Incidents</a>
       </li>
     </ul>
-    <span class="navbar-text ml-auto">
-<!--       {{date | date:'full'}} -->
-      <!-- {{ day() + ', ' + monthDateYear() + ' at ' + showTime()}} -->
+    <span id="time" class="navbar-text ml-auto">
+      {{ date | date: 'fullDate'}}
+      {{ showTime() }}
     </span>
   </div>
 </nav>
 <router-outlet></router-outlet>
+

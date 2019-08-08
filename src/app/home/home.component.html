@@ -91,6 +91,32 @@
             <input matInput placeholder="Input Supporting Agency" formControlName="supportingAgency">
         </mat-form-field>
       </div>
+      <div class="SuppliesForms" formArrayName="supplies">
+        <div class="SuppliesDOM" *ngFor="let group of suppliesArray.controls; let i = index;"
+        [formGroupName] = "i">
+        <h4>Supplies</h4>
+        <div class="control-buttons">
+          <button type="button" style="margin-right: 16px" class="btn btn-outline-success btn-height " (click)="addSupply()">Add Supply</button>
+          <button (click)="removeSupply()">Remove Supply</button>
+        </div>
+          <div class="Supplies">
+              <mat-form-field appearance="legacy">
+                  <input matInput placeholder="Input Supply Name"
+                  formControlName="supplyName">
+              </mat-form-field>
+          </div>
+          <div class="Supplies">
+              <mat-form-field appearance="legacy">
+                  <input matInput placeholder="Input Quantity" formControlName="supplyQuantity">
+              </mat-form-field>
+          </div>
+          <div class="Supplies">
+              <mat-form-field appearance="legacy">
+                  <input matInput placeholder="Input Units" formControlName="supplyUnit">
+              </mat-form-field>
+          </div>
+        </div>
+      </div>
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" [disabled]="!submitForm.valid">Submit</button>

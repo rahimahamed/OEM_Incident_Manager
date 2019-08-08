@@ -4,7 +4,7 @@ import { IncidentService } from './../incident.service';
 import { Incident } from './../incident';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IncidentsDataSource } from '../incident.data.source';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { Validators } from '@angular/forms';
 
 @Component({
@@ -23,25 +23,55 @@ export class HomeComponent implements OnInit {
   private incidentTypeOther = false;
   private incidentDescriptionOther = false;
   private agencyOther = false;
+  submitForm: FormGroup;
 
   @ViewChild('search', {static: false}) public searchElementRef: ElementRef;
 
   model = new Incident();
 
-  submitForm = new FormGroup({
-    incidentName: new FormControl('', Validators.required),
-    location: new FormControl('', Validators.required),
-    status: new FormControl('', Validators.required),
-    prognosis: new FormControl('', Validators.required),
-    incidentType: new FormControl('', Validators.required),
-    otherType: new FormControl('', Validators.required),
-    incidentDescription: new FormControl('', Validators.required),
-    otherDescription: new FormControl(''),
-    leadingAgency: new FormControl('', Validators.required),
-    otherAgency: new FormControl(''),
-    supportingAgency: new FormControl(),
+  constructor(private incidentService: IncidentService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private fb: FormBuilder
+    ) { }
 
-  });
+
+    ngOnInit() {
+      this.date = Date.now();
+      this.submitForm = this.fb.group({
+        incidentName: ['', Validators.required],
+        location: ['', Validators.required],
+        status: ['', Validators.required],
+        prognosis: ['', Validators.required],
+        incidentType: ['', Validators.required],
+        otherType: ['', Validators.required],
+        incidentDescription: ['', Validators.required],
+        otherDescription: [''],
+        leadingAgency: ['', Validators.required],
+        supportingAgency: [''],
+        supplies: this.fb.array([this.addSuppliesGroup()])
+      })
+    }
+
+    addSuppliesGroup(){
+      return this.fb.group({
+        supplyName: [''],
+        supplyUnit: [''],
+        supplyQuantity: [''],
+      })
+    }
+
+    addSupply(){
+      this.suppliesArray.push(this.addSuppliesGroup());
+    }
+
+    removeSupply(index){
+      this.suppliesArray.removeAt(index);
+    }
+
+    get suppliesArray(){
+      return <FormArray>this.submitForm.get('supplies');
+    }
 
   statusList: any = [
     {
@@ -164,13 +194,46 @@ export class HomeComponent implements OnInit {
     'Port Authority of NY/NJ Police (PA-PD)', 'Public Service Electric and Gas (PSEG)',
     'Transcom', 'Transportation, Department of (DOT)', 'Verizon', 'Other'
   ];
-  constructor(private incidentService: IncidentService,
-              private router: Router,
-              private route: ActivatedRoute,
-              ) { }
 
-  ngOnInit() {
-    this.date = Date.now();
+  supplyList: any = [
+    {
+      supply: 'Water',
+      quantity: '0',
+      units: 'Cases'
+    },
+    {
+      supply: 'Blankets',
+      quantity: '0',
+      units: 'Individual'
+    },
+    {
+      supply: 'Hand Warmers',
+      quantity: '0',
+      units: 'Cases'
+    },
+    {
+      supply: 'Jackets',
+      quantity: '0',
+      units: 'Individual'
+    }
+  ];
+
+  // constructor(private incidentService: IncidentService,
+  //             private router: Router,
+  //             private route: ActivatedRoute,
+  //             ) { }
+
+  // ngOnInit() {
+  //   this.date = Date.now();
+  // }
+
+  supplyQuant(){
+    const supplyData = this.supplyList.find((data1: any) =>
+            data1.supply === this.submitForm.controls.supplyName.value);
+    if(supplyData){
+      this.submitForm.controls.supplyQuantity.setValue(supplyData.quantity);
+    }
+
   }
 
   statusChangeAction() {
@@ -194,6 +257,7 @@ export class HomeComponent implements OnInit {
     } else {
       this.incidentTypeOther = false;
       this.incidentDescriptionOther = false;
+      this.submitForm.controls.otherType.setValue(" ");
     }
     const dropDownIncidentData = this.incidentTypeList.find((data2: any) =>
             data2.incidentTypeName === this.submitForm.controls.incidentType.value);
@@ -251,6 +315,9 @@ export class HomeComponent implements OnInit {
     }
     this.model.LEAD_AGENCY = this.submitForm.controls.leadingAgency.value;
     this.model.SUPPORTING_AGENCY = this.submitForm.controls.supportingAgency.value;
+    console.log(this.submitForm.controls.supplyName);
+    console.log(this.submitForm.controls.supplyQuantity);
+    console.log(this.submitForm.controls.supplyUnit);
     this.incidentService.addIncidents(this.model).subscribe(
       newIncident => {
         this.ngOnInit();

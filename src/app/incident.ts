@@ -15,6 +15,7 @@ export class Incident {
   MODIFICATION_DATE: string;
   MODIFIED_BY: string;
   COMMENTS: string;
+  SUPPLIES: string;
 
   constructor() {
   }
