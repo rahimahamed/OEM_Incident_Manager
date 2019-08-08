@@ -10,15 +10,17 @@
                 <th class="text-center">Details</th>
               </tr>
               <tr *ngFor="let item of incident | keyvalue: sortNull">
-                <td *ngIf="displayItem(item.key)">
-                  <span contenteditable="false">{{cleanKey(item.key)}}</span>
+                <td *ngIf="displayItem(item.key)"
+                  contenteditable="false">
+                    <span>{{cleanKey(item.key)}}</span>
                 </td>
                 <td *ngIf="displayItem(item.key) && isEditable(item.key)"
-                  class="example-element-row" contenteditable="true"
+                  contenteditable="true"
+                  class="example-element-row"
                   (keyup)="changeValue(item.key, item.value, $event)"
                   (keydown.enter)="$event.preventDefault()"
                   (blur)="updateList(item.key, item.value, $event)">
-                  <span>{{item.value}}</span>
+                    <span>{{item.value}}</span>
                 </td>
                 <td *ngIf="displayItem(item.key) && !isEditable(item.key)"
                   contenteditable="false"
@@ -35,27 +37,27 @@
   </div>
   <div class="right">
     <div class="card">
-        <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Summary</h3>
-        <div class="card-body">
-          <div class="form-group">
-            <p *ngIf="summaryExists && !summaryEdit"
-              style="width: 600px; align-content: left;" [innerHTML]="incident.SUMMARY"></p>
-            <editor *ngIf="!summaryExists || summaryEdit" id="textBox"
-              apiKey="xzmeuzojpn81uz66dyexlm02jfmh3h3mn02a03cxk5ew37lm"
-              [init]="{
-                height: 600,
-                paste_retain_style_properties: 'all'
-              }"
-              [initialValue]="incident.SUMMARY"
-              [(ngModel)]="summary">
-            </editor>
-          </div>
-          <div style="float: center">
-            <button type="button" (click)="onEdit()" class="btn btn-warning exp-btn">Edit Summary</button>
-            <button type="button" *ngIf="!summaryExists || summaryEdit" (click)="onSubmitSummary()" class="btn btn-success exp-btn">Submit Summary</button>
-            <!-- <button *ngIf="archive" type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Re-Open Incident</button> -->
-            <button *ngIf="!archive" type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Archive Incident</button>
-          </div>
+      <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Summary</h3>
+      <div class="card-body">
+        <div class="form-group">
+          <p *ngIf="summaryExists && !summaryEdit"
+            style="width: 600px; align-content: left;" [innerHTML]="incident.SUMMARY"></p>
+          <editor *ngIf="!summaryExists || summaryEdit" id="textBox"
+            apiKey="xzmeuzojpn81uz66dyexlm02jfmh3h3mn02a03cxk5ew37lm"
+            [init]="{
+              height: 600,
+              paste_retain_style_properties: 'all'
+            }"
+            [initialValue]="incident.SUMMARY"
+            [(ngModel)]="summary">
+          </editor>
         </div>
+        <div style="float: center">
+          <button type="button" (click)="onEdit()" class="btn btn-warning exp-btn">Edit Summary</button>
+          <button type="button" *ngIf="!summaryExists || summaryEdit" (click)="onSubmitSummary()" class="btn btn-success exp-btn">Submit Summary</button>
+          <!-- <button *ngIf="archive" type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Re-Open Incident</button> -->
+          <button *ngIf="!archive" type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Archive Incident</button>
+        </div>
+      </div>
     </div>
   </div>

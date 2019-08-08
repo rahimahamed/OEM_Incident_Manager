@@ -1,9 +1,17 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Incident } from '../incident';
 @Component({
   selector: 'app-incident-details',
   templateUrl: './incident-details.component.html',
-  styleUrls: ['./incident-details.component.css']
+  styleUrls: ['./incident-details.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class IncidentDetailsComponent implements OnInit {
 
@@ -12,6 +20,8 @@ export class IncidentDetailsComponent implements OnInit {
   @Output() archiveIncident = new EventEmitter();
   @Output() editIncident = new EventEmitter();
   @Output() updateSummary = new EventEmitter();
+
+  expandedElement: any | null;
 
   summaryExists = false;
   summaryEdit = false;

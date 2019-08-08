@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { IncidentsDataSource } from '../incident.data.source';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { Supply } from '../supplies';
 
 @Component({
   selector: 'app-home',
@@ -148,6 +149,29 @@ export class HomeComponent implements OnInit {
     'National Grid', 'National Weather Service (NWS)', 'Police Department, New York City (NYPD)',
     'Port Authority of NY/NJ Police (PA-PD)', 'Public Service Electric and Gas (PSEG)',
     'Transcom', 'Transportation, Department of (DOT)', 'Verizon', 'Other'
+  ];
+
+  supplies: Supply[] = [
+    {
+      SUPPLY_NAME: 'Water Bottles',
+      SUPPLY_UNIT: 'Cases',
+      SUPPLY_QUANTITY: '0'
+    },
+    {
+      SUPPLY_NAME: 'Blankets',
+      SUPPLY_UNIT: 'Individual',
+      SUPPLY_QUANTITY: '0'
+    },
+    {
+      SUPPLY_NAME: 'Hand-Warmers',
+      SUPPLY_UNIT: 'Cases',
+      SUPPLY_QUANTITY: '0'
+    },
+    {
+      SUPPLY_NAME: 'Jackets',
+      SUPPLY_UNIT: 'Individual',
+      SUPPLY_QUANTITY: '0'
+    }
   ];
 
   constructor(private incidentService: IncidentService,

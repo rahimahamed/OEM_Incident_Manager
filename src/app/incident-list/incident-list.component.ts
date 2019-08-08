@@ -37,6 +37,7 @@ export class IncidentListComponent implements OnInit {
       MODIFICATION_DATE:  null,
       MODIFIED_BY:  null,
       COMMENTS:  null,
+      SUPPLIES: null,
     },
     {
       _id: '5d3919a26ed54400177e1f1f',
@@ -55,6 +56,7 @@ export class IncidentListComponent implements OnInit {
       MODIFICATION_DATE:  null,
       MODIFIED_BY:  null,
       COMMENTS:  null,
+      SUPPLIES: null,
     },
     {
       _id: '5d3919a26ed54400177e1f1f',
@@ -73,6 +75,7 @@ export class IncidentListComponent implements OnInit {
       MODIFICATION_DATE:  null,
       MODIFIED_BY:  null,
       COMMENTS:  null,
+      SUPPLIES: null,
     },
     {
       _id: '5d3919a26ed54400177e1f1f',
@@ -91,6 +94,7 @@ export class IncidentListComponent implements OnInit {
       MODIFICATION_DATE:  null,
       MODIFIED_BY:  null,
       COMMENTS:  null,
+      SUPPLIES: null,
     },
     {
       _id: '5d3919a26ed54400177e1f1f',
@@ -109,6 +113,7 @@ export class IncidentListComponent implements OnInit {
       MODIFICATION_DATE:  null,
       MODIFIED_BY:  null,
       COMMENTS:  null,
+      SUPPLIES: null,
     },
   ];
 
