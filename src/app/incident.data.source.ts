@@ -1,8 +1,8 @@
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { DataSource, CollectionViewer } from '@angular/cdk/collections';
 <<<<<<< HEAD
-import { IncidentService } from '../incident.service';
-import { Incident } from '../incident';
+import { IncidentService } from './incident.service';
+import { Incident } from './incident';
 =======
 import { IncidentService } from '../services/incident.service';
 import { Incident } from '../incident-components/incident';

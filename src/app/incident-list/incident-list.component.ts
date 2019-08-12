@@ -15,7 +15,7 @@ import {
 } from '@angular/animations';
 import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
-import { IncidentsDataSource } from '../helpers/incident.data.source';
+import { IncidentsDataSource } from '../incident.data.source';
 
 @Component({
   selector: 'app-incident-list',

@@ -5,7 +5,7 @@ import { ArchivedIncidentsComponent } from './archived-incidents/archived-incide
 import { UserCreateComponent } from './user-components/user-create/user-create.component';
 import { UserLoginComponent } from './user-components/user-login/user-login.component';
 import { UserProfileComponent } from './user-components/user-profile/user-profile.component';
-import { AuthGuard } from './helpers/auth.guard';
+import { AuthGuard } from './auth.guard.service';
 import { IncidentDetailsComponent } from './incident-details/incident-details.component';
 import { IncidentMapComponent } from './incident-map/incident-map.component';
 
