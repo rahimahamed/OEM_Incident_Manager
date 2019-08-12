@@ -18,6 +18,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { AgmCoreModule } from '@agm/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { IncidentLogisticsComponent } from './incident-logistics/incident-logistics.component';
+import { LogisticsDataComponent } from './logistics-data/logistics-data.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { IncidentLogisticsComponent } from './incident-logistics/incident-logist
     IncidentDetailsComponent,
     IncidentMapComponent,
     IncidentLogisticsComponent,
+    LogisticsDataComponent,
   ],
   imports: [
     BrowserModule,

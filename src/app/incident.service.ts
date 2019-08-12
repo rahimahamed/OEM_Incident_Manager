@@ -12,8 +12,6 @@ export class IncidentService {
   private _putUrl = '/api/active/';
   private _deleteUrl = '/api/active/';
 
-  incidents: Array<Incident>;
-
   constructor(private _http: HttpClient) { }
 
   getIncidents() {
