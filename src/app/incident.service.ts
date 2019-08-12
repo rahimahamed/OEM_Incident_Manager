@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/app/incident.service.ts
 import { Incident } from './incident';
+=======
+import { Incident } from '../incident-components/incident';
+>>>>>>> 409da9767381c94aad5f0a19569a0ff169f96a77:src/app/services/incident.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Http, Headers, RequestOptions } from '@angular/http';

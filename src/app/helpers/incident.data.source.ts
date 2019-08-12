@@ -1,7 +1,12 @@
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { DataSource, CollectionViewer } from '@angular/cdk/collections';
+<<<<<<< HEAD
 import { IncidentService } from '../incident.service';
 import { Incident } from '../incident';
+=======
+import { IncidentService } from '../services/incident.service';
+import { Incident } from '../incident-components/incident';
+>>>>>>> 409da9767381c94aad5f0a19569a0ff169f96a77
 import { catchError, finalize } from 'rxjs/operators';
 
 export class IncidentsDataSource implements DataSource<Incident> {

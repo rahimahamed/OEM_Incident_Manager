@@ -113,10 +113,6 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
           this.incident.ADDRESS = this.address;
           this.emitLocation.emit(this.incident);
         }
-        this.incident.LATITUDE = this.latitude.toString();
-        this.incident.LONGITUDE = this.longitude.toString();
-        this.incident.ADDRESS = this.address;
-        this.emitLocation.emit(this.incident);
       }
     );
   }

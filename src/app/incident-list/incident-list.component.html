@@ -9,7 +9,7 @@
 
 <table
   mat-table
-  [dataSource]="incidentList"
+  [dataSource]="dataSource"
   multiTemplateDataRows
   matSort
   class="mat-elevation-z8"
@@ -42,7 +42,19 @@
     >
       Status
     </th>
-    <td mat-cell *matCellDef="let element">{{ element.STATUS }}</td>
+    <td mat-cell *matCellDef="let element">
+      <span
+        class="dot"
+        [ngClass]="{
+          'dot-green':
+            element.STATUS === 'Open-Monitoring' ||
+            element.STATUS === 'Open-Response' ||
+            element.STATUS === 'Open-Extended Operation',
+          'dot-yellow': element.STATUS === 'Special Attention-Monitoring'
+        }"
+      ></span>
+      {{ element.STATUS }}
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="date_created">
@@ -84,7 +96,7 @@
             (updateSummary)="updateIncident($event)"
           >
           </app-incident-details>
-          <app-incident-comments [incident]="element"> </app-incident-comments>
+          <!-- <app-incident-comments [incident]="element"> </app-incident-comments> -->
           <div *ngIf="loadSubmitButton" class="card">
             <h3
               *ngIf="loadSubmitButton"

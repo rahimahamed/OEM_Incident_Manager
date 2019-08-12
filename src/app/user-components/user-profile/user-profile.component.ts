@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { User } from '../../../../server/models/user';
+import { User } from '../../user';
 import { UserService } from '../../user.service';
 import { AuthenticationService } from '../../authentication.service';
 
@@ -28,17 +28,22 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.currentUserSubscription = this.authenticationService.currentUser.subscribe(
-      user => {
-        this.currentUser = user;
-      }
-    );
+    this.getCurrentUser();
     this.loadAllUsers();
   }
 
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     this.currentUserSubscription.unsubscribe();
+  }
+
+  private getCurrentUser() {
+    this.userService
+      .getCurrent()
+      .pipe(first())
+      .subscribe(user => {
+        this.currentUser = user;
+      });
   }
 
   deleteUser(id: number) {
