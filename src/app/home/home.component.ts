@@ -1,11 +1,12 @@
 
-import { Component, OnInit, ViewChild, ElementRef, } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ɵConsole, } from '@angular/core';
 import { IncidentService } from './../incident.service';
 import { Incident } from './../incident';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IncidentsDataSource } from '../incident.data.source';
 import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { getLocaleFirstDayOfWeek } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit {
   private incidentDescriptionOther = false;
   private agencyOther = false;
   submitForm: FormGroup;
+  testSupplies;
 
   @ViewChild('search', {static: false}) public searchElementRef: ElementRef;
 
@@ -32,13 +34,13 @@ export class HomeComponent implements OnInit {
   constructor(private incidentService: IncidentService,
     private router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private _fb: FormBuilder
     ) { }
 
 
     ngOnInit() {
       this.date = Date.now();
-      this.submitForm = this.fb.group({
+      this.submitForm = this._fb.group({
         incidentName: ['', Validators.required],
         location: ['', Validators.required],
         status: ['', Validators.required],
@@ -49,16 +51,16 @@ export class HomeComponent implements OnInit {
         otherDescription: [''],
         leadingAgency: ['', Validators.required],
         supportingAgency: [''],
-        supplies: this.fb.array([this.addSuppliesGroup()])
+        supplies: this._fb.array([this.addSuppliesGroup()])
       })
     }
 
     addSuppliesGroup(){
-      return this.fb.group({
+      return this._fb.group({
         supplyName: [''],
         supplyUnit: [''],
-        supplyQuantity: [''],
-      })
+        supplyQuantity: ['']
+      });
     }
 
     addSupply(){
@@ -197,24 +199,24 @@ export class HomeComponent implements OnInit {
 
   supplyList: any = [
     {
-      supply: 'Water',
-      quantity: '0',
-      units: 'Cases'
+        supply: 'Water',
+        quantity: '0',
+        units: 'Cases'
     },
     {
-      supply: 'Blankets',
-      quantity: '0',
-      units: 'Individual'
+        supply: 'Blankets',
+        quantity: '0',
+        units: 'Individual'
     },
     {
-      supply: 'Hand Warmers',
-      quantity: '0',
-      units: 'Cases'
+        supply: 'Hand Warmers',
+        quantity: '0',
+        units: 'Cases'
     },
     {
-      supply: 'Jackets',
-      quantity: '0',
-      units: 'Individual'
+        supply: 'Jackets',
+        quantity: '0',
+        units: 'Individual'
     }
   ];
 
@@ -227,14 +229,14 @@ export class HomeComponent implements OnInit {
   //   this.date = Date.now();
   // }
 
-  supplyQuant(){
-    const supplyData = this.supplyList.find((data1: any) =>
-            data1.supply === this.submitForm.controls.supplyName.value);
-    if(supplyData){
-      this.submitForm.controls.supplyQuantity.setValue(supplyData.quantity);
-    }
+  // supplyQuant(){
+  //   const supplyData = this.supplyList.find((data1: any) =>
+  //           data1.supply === this.submitForm.controls.supplyName.value);
+  //   if(supplyData){
+  //     this.submitForm.controls.supplyQuantity.setValue(supplyData.quantity);
+  //   }
 
-  }
+  // }
 
   statusChangeAction() {
     const dropDownData = this.statusList.find((data: any) =>
@@ -315,9 +317,15 @@ export class HomeComponent implements OnInit {
     }
     this.model.LEAD_AGENCY = this.submitForm.controls.leadingAgency.value;
     this.model.SUPPORTING_AGENCY = this.submitForm.controls.supportingAgency.value;
-    console.log(this.submitForm.controls.supplyName);
-    console.log(this.submitForm.controls.supplyQuantity);
-    console.log(this.submitForm.controls.supplyUnit);
+    console.log(this.submitForm.value);
+    this.model.SUPPLIES = " ";
+    for(const control of this.submitForm.controls.supplies['controls']) {
+      this.model.SUPPLIES += control.controls.supplyName.value + '*' +
+      control.controls.supplyQuantity.value + '*' + control.controls.supplyUnit.value + ',';
+      //console.log(this.model.SUPPLIES);
+    }
+    this.model.SUPPLIES = this.model.SUPPLIES.substring(0,this.model.SUPPLIES.length-1);
+    console.log(this.model.SUPPLIES);
     this.incidentService.addIncidents(this.model).subscribe(
       newIncident => {
         this.ngOnInit();
