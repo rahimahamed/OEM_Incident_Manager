@@ -58,6 +58,7 @@ router.post('/active', function(req, res){
   newIncident.MODIFICATION_DATE = req.body.MODIFICATION_DATE;
   newIncident.MODIFIED_BY = req.body.MODIFIED_BY;
   newIncident.COMMENTS = req.body.COMMENTS;
+  newIncident.SUPPLIES = req.body.SUPPLIES;
   newIncident.save(function(err, insertedIncident){
       if (err){
           console.log('Error saving new incident!');
@@ -75,7 +76,7 @@ router.put('/active/:id', function(req, res){
         STATUS: req.body.STATUS, CREATION_DATE: req.body.CREATION_DATE,
         LOCATION_NAME: req.body.LOCATION_NAME, ADDRESS: req.body.ADDRESS, LATITUDE: req.body.LATITUDE,
         LONGITUDE: req.body.LONGITUDE, LEAD_AGENCY: req.body.LEAD_AGENCY,
-        SUPPORTING_AGENCY: req.body.SUPPORTING_AGENCY, CREATED_BY: req.body.CREATED_BY,
+        SUPPORTING_AGENCY: req.body.SUPPORTING_AGENCY, CREATED_BY: req.body.CREATED_BY, SUPPLIES: req.body.SUPPLIES,
         MODIFICATION_DATE: req.body.MODIFICATION_DATE, MODIFIED_BY: req.body.MODIFIED_BY, COMMENTS: req.body.COMMENTS}
   },
   {

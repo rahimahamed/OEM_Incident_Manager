@@ -14,15 +14,15 @@
           <span>{{supply.SUPPLY_NAME}}</span>
         </td>
         <td contenteditable="false">
-            <span>{{supply.SUPPLY_UNIT}}</span>
+            <span>{{supply.SUPPLY_QUANTITY}}</span>
         </td>
         <td
           contenteditable="true"
           class="example-element-row"
           (keyup)="changeValue($event)"
           (keydown.enter)="$event.preventDefault()"
-          (blur)="updateList(supply, $event)">
-            <span>{{supply.SUPPLY_QUANTITY}}</span>
+          (blur)="updateCount(supply.SUPPLY_NAME, $event)">
+            <span>{{supply.SUPPLY_UNIT}}</span>
         </td>
         <td><button type="button" (click)="clickAdd(supply, i)" class="btn btn-outline-dark btn-height">+</button></td>
         <td><button type="button" (click)="clickRemove(supply, i)"class="btn btn-outline-warning btn-height">-</button></td>
@@ -30,23 +30,24 @@
       <tr *ngIf="newSup">
         <td><button type="button" id="remove" (click)="unNewSupply()" class="btn btn-outline-danger">-</button></td>
         <td>
-          <mat-form-field>
-              <mat-select [(value)]="selected">
-                <mat-option *ngFor="let option of supplyList" [value]="option.SUPPLY_NAME" >
-                  {{option.SUPPLY_NAME}}
-                </mat-option>
-              </mat-select>
-          </mat-form-field>
+          <form [formGroup] = "submitForm" autocomplete="off" novalidate (ngSubmit)="onSubmitIncident()">
+            <mat-form-field>
+                <mat-select [(value)]="selected" formControlName="incidentSupply">
+                  <mat-option *ngFor="let option of supplyList" [value]="option.SUPPLY_NAME">
+                    <span>{{option.SUPPLY_NAME}}</span>
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+          </form>
         </td>
         <td>
-            <span>{{returnUnit()}}</span>
+            <span id="newSupplyUnit">{{returnUnit()}}</span>
         </td>
         <td
           contenteditable="true"
           class="example-element-row"
           (keyup)="changeValue($event)"
-          (keydown.enter)="$event.preventDefault()"
-          (blur)="changeValue($event)">
+          (keydown.enter)="$event.preventDefault()">
             <span id="newSupply">0</span>
         </td>
         <td><button type="button" (click)="clickAddd()" class="btn btn-outline-dark">+</button></td>

@@ -17,8 +17,8 @@ const incidentSchema = new Schema({
     CREATED_BY: String,
     MODIFICATION_DATE: String,
     MODIFIED_BY: String,
-    COMMENTS: String
-    SUPPLIES: String;
+    COMMENTS: String,
+    SUPPLIES: String
 });
 
 module.exports = mongoose.model('incident', incidentSchema, 'incidents');

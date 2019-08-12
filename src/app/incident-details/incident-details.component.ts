@@ -42,6 +42,12 @@ export class IncidentDetailsComponent implements OnInit {
     this.archiveIncident.emit(this.incident);
   }
 
+  emitEdit(incident: Incident) {
+    this.incident.SUPPLIES = incident.SUPPLIES;
+    console.log(incident.SUPPLIES);
+    this.editIncident.emit(this.incident);
+  }
+
   onEdit() {
     this.summaryEdit = !this.summaryEdit;
     window.setTimeout( () => {

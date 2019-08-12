@@ -41,7 +41,8 @@
       <div class="card-body">
         <div>
           <app-incident-logistics
-            [incident]="incident">
+            [incident]="incident"
+            (updateIncident)="emitEdit($event)">
           </app-incident-logistics>
         </div>
         <div class="form-group">
