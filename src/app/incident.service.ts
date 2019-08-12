@@ -1,8 +1,4 @@
-<<<<<<< HEAD:src/app/incident.service.ts
 import { Incident } from './incident';
-=======
-import { Incident } from '../incident-components/incident';
->>>>>>> 409da9767381c94aad5f0a19569a0ff169f96a77:src/app/services/incident.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Http, Headers, RequestOptions } from '@angular/http';
@@ -66,14 +62,14 @@ export class IncidentService {
     );
   }
 
-  postComment(id, comment) {
-    this.createAuthenticationHeaders();
-    const blogData = {
-      id: id,
-      comment: comment
-    };
-    return this._http
-      .post(this.domain + 'api/comment', blogData, this.options)
-      .pipe(map(response => console.log(response)));
-  }
+  // postComment(id, comment) {
+  //   this.createAuthenticationHeaders();
+  //   const blogData = {
+  //     id: id,
+  //     comment: comment
+  //   };
+  //   return this._http
+  //     .post(this.domain + 'api/comment', blogData, this.options)
+  //     .pipe(map(response => console.log(response)));
+  // }
 }

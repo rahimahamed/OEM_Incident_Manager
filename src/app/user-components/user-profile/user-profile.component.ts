@@ -17,14 +17,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   users: User[] = [];
 
   constructor(
-    private authenticationService: AuthenticationService,
+    private auth: AuthenticationService,
     private userService: UserService
   ) {
-    this.currentUserSubscription = this.authenticationService.currentUser.subscribe(
-      user => {
-        this.currentUser = user;
-      }
-    );
+    this.currentUserSubscription = this.auth.currentUser.subscribe(user => {
+      this.currentUser = user;
+    });
   }
 
   ngOnInit() {

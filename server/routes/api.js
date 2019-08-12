@@ -7,7 +7,6 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Incident = require('../models/incident');
 const User = require('../models/user');
-const Comment = require('../models/comment');
 const UserDAO = require('../DAO/userDAO');
 const MD5 = require('md5');
 const authService = require('../services/auth');
@@ -169,104 +168,4 @@ router.post('/register', authService.register);
 
 router.post('/login', authService.login);
 
-router.get('/comment', function(req, res) {
-  console.log('GET request for all comments!');
-  Comment.find({}).exec(function(err, comment) {
-    if (err) {
-      console.log('Error retrieving ACTIVE comments!');
-    } else {
-      res.json(comment);
-    }
-  });
-});
-
-router.get('/comment/:id', function(req, res) {
-  console.log('Get request for a single comment!');
-  Comment.findById(req.params.id).exec(function(err, comment) {
-    if (err) {
-      console.log('Error retrieving comment!');
-    } else {
-      res.json(comment);
-    }
-  });
-});
-
-router.post('/comment', (req, res) => {
-  console.log('POST a new comment!');
-  var newComment = new Comment();
-  newComment.comment = req.body.comment;
-  newComment.commentator = req.body.commentator;
-  newComment.save(function(err, insertedComment) {
-    if (err) {
-      console.log('Error saving new incident!');
-    } else {
-      res.json(insertedComment);
-    }
-  });
-});
-
-router.delete('/comment/:id', function(req, res) {
-  console.log('DELETING an comment!');
-  Comment.findByIdAndRemove(req.params.id, function(err, deletedComment) {
-    if (err) {
-      res.send('Error deleting comment!');
-    } else {
-      res.json(deletedComment);
-    }
-  });
-});
-
 module.exports = router;
-
-// router.post('/comment', (req, res) => {
-//   if (!req.body.comment) {
-//     console.log('No comment provided');
-//     res.json({ success: false, message: 'No comment provided' });
-//   } else {
-//     if (!req.body.id) {
-//       console.log('No id provided');
-//       res.json({ success: false, message: 'No id was provided' });
-//     } else {
-//       Incident.findOne({ _id: req.body.id }, (err, blog) => {
-//         if (err) {
-//           console.log('Invalid incident ID');
-//           res.json({ success: false, message: 'Invalid incident id' });
-//         } else {
-//           if (!incident) {
-//             console.log('Incident not found');
-//             res.json({ success: false, message: 'Incident not found' });
-//           } else {
-//             User.findOne({ _id: req.decoded.userId }, (err, user) => {
-//               if (err) {
-//                 console.log('Something went wrong');
-//                 res.json({ success: false, message: 'Something went wrong' });
-//               } else {
-//                 if (!user) {
-//                   console.log('User not found');
-//                   res.json({ success: false, message: 'User not found.' });
-//                 } else {
-//                   incident.comments.push({
-//                     comment: req.body.comment,
-//                     commentator: user.username
-//                   });
-//                   blog.save(err => {
-//                     if (err) {
-//                       console.log('Something went wrong');
-//                       res.json({
-//                         success: false,
-//                         message: 'Something went wrong.'
-//                       });
-//                     } else {
-//                       console.log('Comment saved!');
-//                       res.json({ success: true, message: 'Comment saved' });
-//                     }
-//                   });
-//                 }
-//               }
-//             });
-//           }
-//         }
-//       });
-//     }
-//   }
-// });
