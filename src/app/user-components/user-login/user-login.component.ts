@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertService } from '../../services/alert.service';
-import { AuthenticationService } from '../../services/authentication.service';
+import { AlertService } from '../../alert.service';
+import { AuthenticationService } from '../../authentication.service';
 
 @Component({
   selector: 'app-user-login',
@@ -19,11 +19,11 @@ export class UserLoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService,
+    private auth: AuthenticationService,
     private alertService: AlertService
   ) {
     // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue) {
+    if (this.auth.currentUserValue) {
       this.router.navigate(['/']);
     }
   }
@@ -52,16 +52,14 @@ export class UserLoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.authenticationService
-      .login(this.f.username.value, this.f.password.value)
-      .subscribe(
-        data => {
-          this.router.navigate(['/']);
-        },
-        error => {
-          this.alertService.error(error);
-          this.loading = false;
-        }
-      );
+    this.auth.login(this.f.username.value, this.f.password.value).subscribe(
+      data => {
+        this.router.navigate(['/']);
+      },
+      error => {
+        this.alertService.error(error);
+        this.loading = false;
+      }
+    );
   }
 }

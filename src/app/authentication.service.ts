@@ -4,10 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { User } from '../user';
-import { environment } from '../../environments/environment';
+import { User } from './user';
+import { environment } from './../environments/environment';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthenticationService {
   domain = environment.apiBaseUrl;
   authToken;

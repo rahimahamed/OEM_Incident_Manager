@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Incident } from '../../incident';
+import { Incident } from '../incident';
 @Component({
   selector: 'app-incident-details',
   templateUrl: './incident-details.component.html',
@@ -46,8 +46,14 @@ export class IncidentDetailsComponent implements OnInit {
   }
 
   displayItem(key) {
-    if (!(key === 'SUMMARY' || key === '__v' || key === '_id'
-        || key === 'COMMENTS')) {
+    if (
+      !(
+        key === 'SUMMARY' ||
+        key === '__v' ||
+        key === '_id' ||
+        key === 'COMMENTS'
+      )
+    ) {
       return true;
     } else {
       return false;

@@ -3,8 +3,8 @@ import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 import { User } from '../../../../server/models/user';
-import { UserService } from '../../services/user.service';
-import { AuthenticationService } from '../../services/authentication.service';
+import { UserService } from '../../user.service';
+import { AuthenticationService } from '../../authentication.service';
 
 @Component({
   selector: 'app-user-profile',

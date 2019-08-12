@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from './services/authentication.service';
+import { AuthenticationService } from './authentication.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../../server/models/user';
-import { UserService } from './services/user.service';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
