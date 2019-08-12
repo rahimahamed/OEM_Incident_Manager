@@ -3,6 +3,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
 import { IncidentsDataSource } from '../incident.data.source';
+import { LogisticsDataSource } from '../logistics-data/logistics.data.source';
+import { Supply } from '../supplies';
+import { LogisticsDataService } from '../logistics-data/logistics-data.service';
 
 @Component({
   selector: 'app-incident-list',
@@ -19,6 +22,8 @@ import { IncidentsDataSource } from '../incident.data.source';
 export class IncidentListComponent implements OnInit {
 
   @Input() dataSource: IncidentsDataSource;
+  logistics: LogisticsDataSource;
+  supplyList: Supply[];
   incidentList: Incident[] = [
     {
       _id: '5d3919a26ed54400177e1f1f',
@@ -120,10 +125,19 @@ export class IncidentListComponent implements OnInit {
   columnsToDisplay = ['title', 'location', 'status', 'date_created', 'date_modified'];
   expandedElement: Incident | null;
 
-  constructor(private incidentService: IncidentService, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(
+    private incidentService: IncidentService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private logisticsService: LogisticsDataService) { }
 
   ngOnInit() {
     this.dataSource.loadLessons();
+    this.logistics = new LogisticsDataSource(this.logisticsService);
+    this.getLogistics();
+  }
+
+  getLogistics() {
+    this.supplyList = Object.assign({}, this.logistics.getData());
   }
 
   onArchive(incident: Incident) {

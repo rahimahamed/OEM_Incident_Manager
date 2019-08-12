@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Incident } from '../incident';
 import { Supply } from '../supplies';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { LogisticsDataService } from '../logistics-data/logistics-data.service';
+import { catchError, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-incident-logistics',
@@ -19,34 +21,40 @@ export class IncidentLogisticsComponent implements OnInit {
     incidentSupply: new FormControl(''),
   });
 
-  supplyList: Supply[] = [
-    {
-      SUPPLY_NAME: 'Water Bottles',
-      SUPPLY_UNIT: 'Cases',
-      SUPPLY_QUANTITY: '0'
-    },
-    {
-      SUPPLY_NAME: 'Blankets',
-      SUPPLY_UNIT: 'Individual',
-      SUPPLY_QUANTITY: '0'
-    },
-    {
-      SUPPLY_NAME: 'Hand-Warmers',
-      SUPPLY_UNIT: 'Cases',
-      SUPPLY_QUANTITY: '0'
-    },
-    {
-      SUPPLY_NAME: 'Jackets',
-      SUPPLY_UNIT: 'Individual',
-      SUPPLY_QUANTITY: '0'
-    }
-  ];
+  @Input() supplyList: Supply[];
 
-  constructor() { }
+  constructor(
+    private logisticsService: LogisticsDataService
+  ) {
+    // logisticsService.getSupplies().subscribe(
+    //   resSup => {
+    //     for (const supply of resSup as Supply[]) {
+    //       this.supplyList.push(supply);
+    //     }
+    //   }
+    // );
+  }
 
   ngOnInit() {
+    // this.logisticsService.getSupplies().subscribe(
+    //   resSup => {
+    //     for (const supply of resSup as Supply[]) {
+    //       this.supplyList.push(supply);
+    //     }
+    //   }
+    // );
     if (this.incident.SUPPLIES) {
       this.stringToSupply(this.incident.SUPPLIES);
+    }
+  }
+
+  remaining(name: string) {
+    if (name === 'selected') {
+      return this.supplyList.find((supply: Supply) =>
+        supply.SUPPLY_NAME === this.selected).SUPPLY_QUANTITY;
+    } else {
+      return this.supplyList.find((supply: Supply) =>
+        supply.SUPPLY_NAME === name).SUPPLY_QUANTITY;
     }
   }
 

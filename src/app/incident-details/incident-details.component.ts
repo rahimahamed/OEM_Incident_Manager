@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Incident } from '../incident';
+import { LogisticsDataSource } from '../logistics-data/logistics.data.source';
+import { Supply } from '../supplies';
 @Component({
   selector: 'app-incident-details',
   templateUrl: './incident-details.component.html',
@@ -17,6 +19,7 @@ export class IncidentDetailsComponent implements OnInit {
 
   @Input() incident: Incident;
   @Input() archive: boolean;
+  @Input() supplyList: Supply[] = [];
   @Output() archiveIncident = new EventEmitter();
   @Output() editIncident = new EventEmitter();
   @Output() updateSummary = new EventEmitter();

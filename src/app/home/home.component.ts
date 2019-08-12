@@ -151,28 +151,28 @@ export class HomeComponent implements OnInit {
     'Transcom', 'Transportation, Department of (DOT)', 'Verizon', 'Other'
   ];
 
-  supplies: Supply[] = [
-    {
-      SUPPLY_NAME: 'Water Bottles',
-      SUPPLY_UNIT: 'Cases',
-      SUPPLY_QUANTITY: '0'
-    },
-    {
-      SUPPLY_NAME: 'Blankets',
-      SUPPLY_UNIT: 'Individual',
-      SUPPLY_QUANTITY: '0'
-    },
-    {
-      SUPPLY_NAME: 'Hand-Warmers',
-      SUPPLY_UNIT: 'Cases',
-      SUPPLY_QUANTITY: '0'
-    },
-    {
-      SUPPLY_NAME: 'Jackets',
-      SUPPLY_UNIT: 'Individual',
-      SUPPLY_QUANTITY: '0'
-    }
-  ];
+  // supplies: Supply[] = [
+  //   {
+  //     SUPPLY_NAME: 'Water Bottles',
+  //     SUPPLY_UNIT: 'Cases',
+  //     SUPPLY_QUANTITY: '0'
+  //   },
+  //   {
+  //     SUPPLY_NAME: 'Blankets',
+  //     SUPPLY_UNIT: 'Individual',
+  //     SUPPLY_QUANTITY: '0'
+  //   },
+  //   {
+  //     SUPPLY_NAME: 'Hand-Warmers',
+  //     SUPPLY_UNIT: 'Cases',
+  //     SUPPLY_QUANTITY: '0'
+  //   },
+  //   {
+  //     SUPPLY_NAME: 'Jackets',
+  //     SUPPLY_UNIT: 'Individual',
+  //     SUPPLY_QUANTITY: '0'
+  //   }
+  // ];
 
   constructor(private incidentService: IncidentService,
               private router: Router,

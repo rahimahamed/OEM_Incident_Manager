@@ -8,4 +8,4 @@ const logisticsSchema = new Schema({
   SUPPLY_QUANTITY: String
 });
 
-module.exports = mongoose.model('logistics', incidentSchema, 'logistics-data');
+module.exports = mongoose.model('logistics', logisticsSchema, 'logistics-data');
