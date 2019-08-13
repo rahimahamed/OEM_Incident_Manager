@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { Incident } from '../incident';
 import { Supply } from '../supplies';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -23,7 +23,8 @@ export class IncidentLogisticsComponent implements OnInit {
 
 
   constructor(
-    private logisticsService: LogisticsDataService
+    private logisticsService: LogisticsDataService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -39,14 +40,16 @@ export class IncidentLogisticsComponent implements OnInit {
 
   remaining(name: string) {
     if (name === 'selected') {
-      let supply = this.supplyList.find((s: Supply) => 
+      const supply = this.supplyList.find((s: Supply) =>
       s.SUPPLY_NAME === this.selected);
-      if(supply) return supply.SUPPLY_QUANTITY;
-      return '0';    
+      if (supply) { return supply.SUPPLY_QUANTITY; }
+      this.changeDetectorRef.detectChanges();
+      return '0';
     } else {
-      let supply = this.supplyList.find((s: Supply) => 
+      const supply = this.supplyList.find((s: Supply) =>
       s.SUPPLY_NAME === name);
-      if(supply) return supply.SUPPLY_QUANTITY;
+      if (supply) { return supply.SUPPLY_QUANTITY; }
+      this.changeDetectorRef.detectChanges();
       return '0';
     }
   }
@@ -72,18 +75,23 @@ export class IncidentLogisticsComponent implements OnInit {
       supS += supply.SUPPLY_QUANTITY;
       supplyString += supS + '%';
     }
+    this.changeDetectorRef.detectChanges();
     return supplyString.substring(0, supplyString.length - 1);
   }
 
   returnUnit() {
-    let supply = this.supplyList.find((supply: Supply) => 
+    const supply = this.supplyList.find((supply: Supply) =>
       supply.SUPPLY_NAME === this.selected);
-    if(supply) return supply.SUPPLY_UNIT;
+    if (supply) {
+      this.changeDetectorRef.detectChanges();
+      return supply.SUPPLY_UNIT;
+    }
     return '0';
   }
 
   containsSupply(supply: Supply) {
-    for(const sup of this.supplies) {
+    this.changeDetectorRef.detectChanges();
+    for (const sup of this.supplies) {
       if (sup.SUPPLY_NAME === supply.SUPPLY_NAME) {
         return false;
       }
@@ -98,6 +106,7 @@ export class IncidentLogisticsComponent implements OnInit {
   clickAdd(supply: Supply, index) {
     this.updateLogistics(false, this.supplies[index], index);
     this.updateSupply();
+    this.changeDetectorRef.detectChanges();
   }
 
   clickAddd() {
@@ -113,6 +122,7 @@ export class IncidentLogisticsComponent implements OnInit {
   }
 
   clickRemove(supply: Supply, index) {
+    this.changeDetectorRef.detectChanges();
     if (this.validCount(Number(supply.SUPPLY_QUANTITY))) {
       const count = Number(supply.SUPPLY_QUANTITY) - 1;
       this.supplies[index].SUPPLY_QUANTITY = count.toString();
@@ -122,29 +132,30 @@ export class IncidentLogisticsComponent implements OnInit {
   }
 
   updateLogistics(plus: boolean, sup: Supply, index) {
+    this.changeDetectorRef.detectChanges();
     if (plus) {
-      const supply = this.supplyList.find((s: Supply) => 
+      const supply = this.supplyList.find((s: Supply) =>
         s.SUPPLY_NAME === sup.SUPPLY_NAME);
       if (supply) {
         supply.SUPPLY_QUANTITY = (Number(supply.SUPPLY_QUANTITY) + 1).toString();
         this.logisticsService.updateSupplies(supply).subscribe(
           newSupply => {
-            
+
           }
         );
       }
     } else {
-      const supply = this.supplyList.find((s: Supply) => 
+      const supply = this.supplyList.find((s: Supply) =>
         s.SUPPLY_NAME === sup.SUPPLY_NAME);
       if (supply) {
         const count = (Number(supply.SUPPLY_QUANTITY) - 1);
-        if(count >= 0) {
+        if (count >= 0) {
           const ogCount = Number(sup.SUPPLY_QUANTITY) + 1;
           this.supplies[index].SUPPLY_QUANTITY = ogCount.toString();
           supply.SUPPLY_QUANTITY = count.toString();
           this.logisticsService.updateSupplies(supply).subscribe(
             newSupply => {
-              
+
             }
           );
         }
@@ -184,16 +195,17 @@ export class IncidentLogisticsComponent implements OnInit {
   }
 
   submitSupply() {
+    this.changeDetectorRef.detectChanges();
     if (this.newSup) {
       const supply = new Supply();
       supply.SUPPLY_NAME = this.submitForm.controls.incidentSupply.value;
       supply.SUPPLY_UNIT = document.getElementById('newSupplyUnit').textContent;
       supply.SUPPLY_QUANTITY = document.getElementById('newSupply').textContent;
-      if(supply.SUPPLY_QUANTITY === '0') {
+      if (supply.SUPPLY_QUANTITY === '0') {
         return;
       }
       this.supplies.push(supply);
-      let sup = this.supplyList.find((s: Supply) => 
+      const sup = this.supplyList.find((s: Supply) =>
         s.SUPPLY_NAME === supply.SUPPLY_NAME);
       if (sup) {
         sup.SUPPLY_QUANTITY = (Number(sup.SUPPLY_QUANTITY) - Number(supply.SUPPLY_QUANTITY)).toString();
@@ -210,6 +222,7 @@ export class IncidentLogisticsComponent implements OnInit {
   updateSupply() {
     this.incident.SUPPLIES = this.supplyToString();
     this.updateIncident.emit(this.incident);
+    this.changeDetectorRef.detectChanges();
   }
 
   deleteRow(d) {
@@ -217,13 +230,13 @@ export class IncidentLogisticsComponent implements OnInit {
     const temp = this.supplies[index];
     this.supplies.splice(index, 1);
     this.updateSupply();
-    let sup = this.supplyList.find((s: Supply) => 
+    const sup = this.supplyList.find((s: Supply) =>
       s.SUPPLY_NAME === temp.SUPPLY_NAME);
     if (sup) {
       sup.SUPPLY_QUANTITY = (Number(sup.SUPPLY_QUANTITY) + Number(temp.SUPPLY_QUANTITY)).toString();
       this.logisticsService.updateSupplies(sup).subscribe(
         newSupply => {
-          
+          this.changeDetectorRef.detectChanges();
         }
       );
     }
