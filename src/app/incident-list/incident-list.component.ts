@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  EventEmitter,
-  Input,
-  Output,
-  ChangeDetectorRef
-} from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import {
   animate,
   state,
@@ -92,7 +85,7 @@ export class IncidentListComponent implements OnInit {
     {
       _id: '5d3919a26ed54400177e1f1f',
       INCIDENT_NAME: 'Power Outage',
-      STATUS: 'Responding',
+      STATUS: 'Open,Response',
       LOCATION_NAME: 'Queens',
       SUMMARY: 'Failure',
       INCIDENT_TYPE: 'LITT',
@@ -110,7 +103,7 @@ export class IncidentListComponent implements OnInit {
     {
       _id: '5d3919a26ed54400177e1f1f',
       INCIDENT_NAME: 'Power Outage',
-      STATUS: 'Responding',
+      STATUS: 'Open,Monitoring',
       LOCATION_NAME: 'Queens',
       SUMMARY: 'Failure',
       INCIDENT_TYPE: 'LITT',
@@ -160,7 +153,6 @@ export class IncidentListComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource = new IncidentsDataSource(this.incidentService, true);
     this.dataSource.filter(filterValue.trim().toLowerCase());
   }
 

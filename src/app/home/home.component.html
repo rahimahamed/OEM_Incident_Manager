@@ -176,29 +176,26 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button
-        class="btn btn-success exp-btn btn-width"
-        [disabled]="!submitForm.valid"
-      >
+      <button mat-raised-button color="primary" [disabled]="!submitForm.valid">
         Submit
       </button>
+      <button
+        class="btn btn-danger exp-btn"
+        style="margin-left: 10px"
+        (click)="resetForm()"
+      >
+        Reset
+      </button>
     </mat-card-actions>
+    <div style="float: center; margin-top: -490px">
+      <app-incident-map
+        [incident]="model"
+        [loadSubmitButton]="false"
+        (emitLocation)="setLocation($event)"
+      >
+      </app-incident-map>
+    </div>
   </form>
-  <button
-    class="btn btn-danger exp-btn btn-width"
-    style="margin-top: 10px"
-    (click)="resetForm()"
-  >
-    Reset
-  </button>
-  <div style="float: center; margin-top: -490px">
-    <app-incident-map
-      [incident]="model"
-      [loadSubmitButton]="false"
-      (emitLocation)="setLocation($event)"
-    >
-    </app-incident-map>
-  </div>
 </div>
 
 <app-incident-list [dataSource]="dataSource"> </app-incident-list>

@@ -7,8 +7,6 @@ import { UserLoginComponent } from './user-components/user-login/user-login.comp
 import { UserProfileComponent } from './user-components/user-profile/user-profile.component';
 import { AuthGuard } from './auth.guard.service';
 import { IncidentDetailsComponent } from './incident-details/incident-details.component';
-import { IncidentMapComponent } from './incident-map/incident-map.component';
-
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },

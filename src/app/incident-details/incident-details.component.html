@@ -1,4 +1,4 @@
-<script src="https://cdn.tiny.cloud/1/xzmeuzojpn81uz66dyexlm02jfmh3h3mn02a03cxk5ew37lm/tinymce/5/tinymce.min.js"></script> <div class="wrap">
+<script src="https://cdn.tiny.cloud/1/xzmeuzojpn81uz66dyexlm02jfmh3h3mn02a03cxk5ew37lm/tinymce/5/tinymce.min.js"></script>
   <div class="left">
     <div class="card">
         <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Incident Details</h3>
@@ -11,13 +11,21 @@
               </tr>
               <tr *ngFor="let item of incident | keyvalue: sortNull">
                 <td *ngIf="displayItem(item.key)">
-                  <span contenteditable="false">{{item.key}}</span>
+                  <span contenteditable="false">{{cleanKey(item.key)}}</span>
                 </td>
-                <td *ngIf="displayItem(item.key)">
-                  <span contenteditable="true"
+                <td *ngIf="displayItem(item.key) && isEditable(item.key)"
+                  class="example-element-row" contenteditable="true"
                   (keyup)="changeValue(item.key, item.value, $event)"
                   (keydown.enter)="$event.preventDefault()"
-                  (blur)="updateList(item.key, item.value, $event)">{{item.value}}</span>
+                  (blur)="updateList(item.key, item.value, $event)">
+                  <span>{{item.value}}</span>
+                </td>
+                <td *ngIf="displayItem(item.key) && !isEditable(item.key)"
+                  contenteditable="false"
+                  (keyup)="changeValue(item.key, item.value, $event)"
+                  (keydown.enter)="$event.preventDefault()"
+                  (blur)="updateList(item.key, item.value, $event)">
+                  <span>{{item.value}}</span>
                 </td>
               </tr>
             </table>
@@ -45,7 +53,8 @@
           <div style="float: center">
             <button type="button" (click)="onEdit()" class="btn btn-warning exp-btn">Edit Summary</button>
             <button type="button" *ngIf="!summaryExists || summaryEdit" (click)="onSubmitSummary()" class="btn btn-success exp-btn">Submit Summary</button>
-            <button type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Archive Incident</button>
+            <button *ngIf="archive" type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Re-Open Incident</button>
+            <button *ngIf="!archive" type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Archive Incident</button>
           </div>
         </div>
     </div>
