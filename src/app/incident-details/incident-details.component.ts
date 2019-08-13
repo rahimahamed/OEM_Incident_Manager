@@ -16,7 +16,6 @@ import { Supply } from '../supplies';
   ],
 })
 export class IncidentDetailsComponent implements OnInit {
-
   @Input() incident: Incident;
   @Input() archive: boolean;
   @Output() archiveIncident = new EventEmitter();
@@ -30,8 +29,7 @@ export class IncidentDetailsComponent implements OnInit {
   summary: string;
   columnsToDisplay = ['title', 'location', 'status'];
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit() {
     if (this.incident.SUMMARY) {

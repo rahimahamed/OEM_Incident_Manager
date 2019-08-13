@@ -1,5 +1,11 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger
+} from '@angular/animations';
 import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
 import { IncidentsDataSource } from '../incident.data.source';
@@ -9,21 +15,30 @@ import { IncidentsDataSource } from '../incident.data.source';
   styleUrls: ['./archived-incidents.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      )
+    ])
+  ]
 })
 export class ArchivedIncidentsComponent implements OnInit {
 
   @Output() unArchiveIncident = new EventEmitter();
 
   dataSource: IncidentsDataSource;
-  columnsToDisplay = ['title', 'location', 'status', 'date_created', 'date_modified'];
+  columnsToDisplay = [
+    'title',
+    'location',
+    'status',
+    'date_created',
+    'date_modified'
+  ];
   expandedElement: Incident | null;
 
-  constructor(private incidentService: IncidentService) { }
+  constructor(private incidentService: IncidentService) {}
 
   ngOnInit() {
     this.dataSource = new IncidentsDataSource(this.incidentService, false);
@@ -39,28 +54,27 @@ export class ArchivedIncidentsComponent implements OnInit {
     return;
   }
 
-  sortName(){
+  sortName() {
     this.dataSource.sortName();
   }
 
-  sortLocation(){
+  sortLocation() {
     this.dataSource.sortLocation();
   }
 
-  sortStatus(){
+  sortStatus() {
     this.dataSource.sortStatus();
   }
 
-  sortDate(){
+  sortDate() {
     this.dataSource.sortDate();
   }
 
-  sortDateModified(){
+  sortDateModified() {
     this.dataSource.sortDateModified();
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter(filterValue.trim().toLowerCase());
   }
-
 }

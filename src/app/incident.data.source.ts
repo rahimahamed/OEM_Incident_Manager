@@ -36,78 +36,73 @@ export class IncidentsDataSource implements DataSource<Incident> {
     this.incidentList.length = 0;
     this.loadingSubject.next(true);
     this.incidentService
-        .getIncidents()
-        .pipe(
-          catchError(() => of([])),
-          finalize(() => this.loadingSubject.next(false))
-        )
-        .subscribe((resIncidentData: Incident[]) => {
-          if (this.loadOpen) {
-            for (const incident of resIncidentData) {
-              if (!(incident.STATUS === 'Closed')) {
-                this.incidentList.push(incident);
-              }
-            }
-          } else {
-            for (const incident of resIncidentData) {
-              if (incident.STATUS === 'Closed') {
-                this.incidentList.push(incident);
-              }
+      .getIncidents()
+      .pipe(
+        catchError(() => of([])),
+        finalize(() => this.loadingSubject.next(false))
+      )
+      .subscribe((resIncidentData: Incident[]) => {
+        if (this.loadOpen) {
+          for (const incident of resIncidentData) {
+            if (!(incident.STATUS === 'Closed')) {
+              this.incidentList.push(incident);
             }
           }
-          this.incidentList.sort((a, b) => {
-            if (a.MODIFICATION_DATE < b.MODIFICATION_DATE) {
-              return 1;
-            } else if (
-              a.MODIFICATION_DATE > b.MODIFICATION_DATE
-            ) {
-              return -1;
-            } else {
-              return 0;
+        } else {
+          for (const incident of resIncidentData) {
+            if (incident.STATUS === 'Closed') {
+              this.incidentList.push(incident);
             }
-          });
-          this.lessonsSubject.next(this.incidentList);
+          }
+        }
+        this.incidentList.sort((a, b) => {
+          if (a.MODIFICATION_DATE < b.MODIFICATION_DATE) {
+            return 1;
+          } else if (a.MODIFICATION_DATE > b.MODIFICATION_DATE) {
+            return -1;
+          } else {
+            return 0;
+          }
         });
+        this.lessonsSubject.next(this.incidentList);
+      });
   }
 
   updateLessons(incident: Incident) {
     const date = new Date();
-    incident.MODIFICATION_DATE = incident.MODIFICATION_DATE = ''
-      + date.toISOString().substr(0, 10) + ', '
-      + date.toLocaleTimeString();
-    this.incidentService.updateIncident(incident).subscribe(
-      newIncident => {
-        // this.loadLessons();
-      }
-    );
+    incident.MODIFICATION_DATE = incident.MODIFICATION_DATE =
+      '' + date.toISOString().substr(0, 10) + ', ' + date.toLocaleTimeString();
+    this.incidentService.updateIncident(incident).subscribe(newIncident => {
+      // this.loadLessons();
+    });
   }
 
   sortName() {
     if (this.titleBoolean) {
       this.incidentList.sort((a, b) => {
-          if (a.INCIDENT_NAME.toLowerCase() > b.INCIDENT_NAME.toLowerCase()) {
-            return 1;
-          } else if (
-            a.INCIDENT_NAME.toLowerCase() < b.INCIDENT_NAME.toLowerCase()
-          ) {
-            return -1;
-          } else {
-            return 0;
-          }
+        if (a.INCIDENT_NAME.toLowerCase() > b.INCIDENT_NAME.toLowerCase()) {
+          return 1;
+        } else if (
+          a.INCIDENT_NAME.toLowerCase() < b.INCIDENT_NAME.toLowerCase()
+        ) {
+          return -1;
+        } else {
+          return 0;
+        }
       });
       this.lessonsSubject.next(this.incidentList);
       this.titleBoolean = false;
     } else {
       this.incidentList.sort((a, b) => {
-          if (a.INCIDENT_NAME.toLowerCase() < b.INCIDENT_NAME.toLowerCase()) {
-            return 1;
-          } else if (
-            a.INCIDENT_NAME.toLowerCase() > b.INCIDENT_NAME.toLowerCase()
-          ) {
-            return -1;
-          } else {
-            return 0;
-          }
+        if (a.INCIDENT_NAME.toLowerCase() < b.INCIDENT_NAME.toLowerCase()) {
+          return 1;
+        } else if (
+          a.INCIDENT_NAME.toLowerCase() > b.INCIDENT_NAME.toLowerCase()
+        ) {
+          return -1;
+        } else {
+          return 0;
+        }
       });
       this.lessonsSubject.next(this.incidentList);
       this.titleBoolean = true;
@@ -117,29 +112,29 @@ export class IncidentsDataSource implements DataSource<Incident> {
   sortLocation() {
     if (this.locationBoolean) {
       this.incidentList.sort((a, b) => {
-          if (a.LOCATION_NAME.toLowerCase() > b.LOCATION_NAME.toLowerCase()) {
-            return 1;
-          } else if (
-            a.LOCATION_NAME.toLowerCase() < b.LOCATION_NAME.toLowerCase()
-          ) {
-            return -1;
-          } else {
-            return 0;
-          }
+        if (a.LOCATION_NAME.toLowerCase() > b.LOCATION_NAME.toLowerCase()) {
+          return 1;
+        } else if (
+          a.LOCATION_NAME.toLowerCase() < b.LOCATION_NAME.toLowerCase()
+        ) {
+          return -1;
+        } else {
+          return 0;
+        }
       });
       this.lessonsSubject.next(this.incidentList);
       this.locationBoolean = false;
     } else {
       this.incidentList.sort((a, b) => {
-          if (a.LOCATION_NAME.toLowerCase() < b.LOCATION_NAME.toLowerCase()) {
-            return 1;
-          } else if (
-            a.LOCATION_NAME.toLowerCase() > b.LOCATION_NAME.toLowerCase()
-          ) {
-            return -1;
-          } else {
-            return 0;
-          }
+        if (a.LOCATION_NAME.toLowerCase() < b.LOCATION_NAME.toLowerCase()) {
+          return 1;
+        } else if (
+          a.LOCATION_NAME.toLowerCase() > b.LOCATION_NAME.toLowerCase()
+        ) {
+          return -1;
+        } else {
+          return 0;
+        }
       });
       this.lessonsSubject.next(this.incidentList);
       this.locationBoolean = true;
@@ -149,29 +144,25 @@ export class IncidentsDataSource implements DataSource<Incident> {
   sortStatus() {
     if (this.statusBoolean) {
       this.incidentList.sort((a, b) => {
-          if (a.STATUS.toLowerCase() > b.STATUS.toLowerCase()) {
-            return 1;
-          } else if (
-            a.STATUS.toLowerCase() < b.STATUS.toLowerCase()
-          ) {
-            return -1;
-          } else {
-            return 0;
-          }
+        if (a.STATUS.toLowerCase() > b.STATUS.toLowerCase()) {
+          return 1;
+        } else if (a.STATUS.toLowerCase() < b.STATUS.toLowerCase()) {
+          return -1;
+        } else {
+          return 0;
+        }
       });
       this.lessonsSubject.next(this.incidentList);
       this.statusBoolean = false;
     } else {
       this.incidentList.sort((a, b) => {
-          if (a.STATUS.toLowerCase() < b.STATUS.toLowerCase()) {
-            return 1;
-          } else if (
-            a.STATUS.toLowerCase() > b.STATUS.toLowerCase()
-          ) {
-            return -1;
-          } else {
-            return 0;
-          }
+        if (a.STATUS.toLowerCase() < b.STATUS.toLowerCase()) {
+          return 1;
+        } else if (a.STATUS.toLowerCase() > b.STATUS.toLowerCase()) {
+          return -1;
+        } else {
+          return 0;
+        }
       });
       this.lessonsSubject.next(this.incidentList);
       this.statusBoolean = true;
@@ -182,29 +173,25 @@ export class IncidentsDataSource implements DataSource<Incident> {
     console.log(this.dateBoolean);
     if (this.dateBoolean) {
       this.incidentList.sort((a, b) => {
-          if (a.CREATION_DATE > b.CREATION_DATE) {
-            return 1;
-          } else if (
-            a.CREATION_DATE < b.CREATION_DATE
-          ) {
-            return -1;
-          } else {
-            return 0;
-          }
+        if (a.CREATION_DATE > b.CREATION_DATE) {
+          return 1;
+        } else if (a.CREATION_DATE < b.CREATION_DATE) {
+          return -1;
+        } else {
+          return 0;
+        }
       });
       this.lessonsSubject.next(this.incidentList);
       this.dateBoolean = false;
     } else {
       this.incidentList.sort((a, b) => {
-          if (a.CREATION_DATE < b.CREATION_DATE) {
-            return 1;
-          } else if (
-            a.CREATION_DATE > b.CREATION_DATE
-          ) {
-            return -1;
-          } else {
-            return 0;
-          }
+        if (a.CREATION_DATE < b.CREATION_DATE) {
+          return 1;
+        } else if (a.CREATION_DATE > b.CREATION_DATE) {
+          return -1;
+        } else {
+          return 0;
+        }
       });
       this.lessonsSubject.next(this.incidentList);
       this.dateBoolean = true;
@@ -214,35 +201,30 @@ export class IncidentsDataSource implements DataSource<Incident> {
   sortDateModified() {
     if (this.dateModifiedBoolean) {
       this.incidentList.sort((a, b) => {
-          if (a.CREATION_DATE > b.CREATION_DATE) {
-            return 1;
-          } else if (
-            a.CREATION_DATE < b.CREATION_DATE
-          ) {
-            return -1;
-          } else {
-            return 0;
-          }
+        if (a.CREATION_DATE > b.CREATION_DATE) {
+          return 1;
+        } else if (a.CREATION_DATE < b.CREATION_DATE) {
+          return -1;
+        } else {
+          return 0;
+        }
       });
       this.lessonsSubject.next(this.incidentList);
       this.dateModifiedBoolean = false;
     } else {
       this.incidentList.sort((a, b) => {
-          if (a.CREATION_DATE < b.CREATION_DATE) {
-            return 1;
-          } else if (
-            a.CREATION_DATE > b.CREATION_DATE
-          ) {
-            return -1;
-          } else {
-            return 0;
-          }
+        if (a.CREATION_DATE < b.CREATION_DATE) {
+          return 1;
+        } else if (a.CREATION_DATE > b.CREATION_DATE) {
+          return -1;
+        } else {
+          return 0;
+        }
       });
       this.lessonsSubject.next(this.incidentList);
       this.dateModifiedBoolean = true;
     }
   }
-
 
   filter(str: string) {
     this.incidentList2.length = 0;
