@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { User } from '../../server/models/user';
+import { User } from './user';
 import { UserService } from './user.service';
 
 @Component({
@@ -17,12 +17,12 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService,
+    private auth: AuthenticationService,
     private userService: UserService
   ) {
-    this.authenticationService.currentUser.subscribe(
-      x => (this.currentUser = x)
-    );
+    // this.auth.currentUser.subscribe(
+    //   x => (this.currentUser = x)
+    // );
 
     // this.userService.getUser(User).subscribe(
     //   res => {
@@ -37,11 +37,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // this.authenticationService.currentUser.subscribe(
     //   user => this.currentUser = user);
-  }
-
-  logout() {
-    this.authenticationService.logout();
-    this.router.navigate(['/login']);
   }
 
   day() {

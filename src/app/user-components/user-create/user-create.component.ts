@@ -26,9 +26,8 @@ export class UserCreateComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private userService: UserService,
-    private alertService: AlertService,
-    private route: ActivatedRoute
-  ) {
+    private alertService: AlertService  
+    ) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
