@@ -287,7 +287,11 @@ export class HomeComponent implements OnInit {
       this.model.SUPPLIES += control.controls.supplyName.value + '*' +
       control.controls.supplyQuantity.value + '*' + control.controls.supplyUnit.value + ',';
     }
-    this.model.SUPPLIES = this.model.SUPPLIES.substring(0, this.model.SUPPLIES.length - 1);
+    if (!(this.model.SUPPLIES.substring(0, this.model.SUPPLIES.length - 1) === ' **')) {
+      this.model.SUPPLIES = this.model.SUPPLIES.substring(0, this.model.SUPPLIES.length - 1);
+    } else {
+      this.model.SUPPLIES = '';
+    }
     this.incidentService.addIncidents(this.model).subscribe(
       newIncident => {
         this.ngOnInit();
