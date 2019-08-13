@@ -11,7 +11,7 @@ export class UserService {
   users: Array<User>;
 
   private _getUrl = '/api/user';
-  private _postUrl = '/api/register';
+  private _postUrl = '/api/user/register';
 
   constructor(private _http: HttpClient) {}
 
@@ -40,7 +40,7 @@ export class UserService {
 
   login(authCredentials) {
     return this._http.post(
-      this._postUrl + '/authenticate',
+      'api/user/authenticate',
       authCredentials,
       this.noAuthHeader
     );

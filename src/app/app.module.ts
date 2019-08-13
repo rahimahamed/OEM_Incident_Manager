@@ -20,6 +20,7 @@ import { AgmCoreModule } from '@agm/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ErrorInterceptor } from '../../server/helpers/error.interceptor';
 import { JwtInterceptor } from '../../server/helpers/jwt.interceptor';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { JwtInterceptor } from '../../server/helpers/jwt.interceptor';
     IncidentMapComponent,
     UserCreateComponent,
     UserLoginComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ export class User {
   password: String;
   email: String;
   token: String;
+  createdDate: Date;
 
   constructor() {}
 }

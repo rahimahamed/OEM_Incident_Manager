@@ -6,10 +6,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Incident = require('../models/incident');
-const User = require('../models/user');
-const UserDAO = require('../DAO/userDAO');
-const MD5 = require('md5');
-const authService = require('../services/auth');
+const auth = require('../helpers/auth');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }, function(
@@ -119,53 +116,64 @@ router.delete('/active/:id', function(req, res) {
   });
 });
 
-router.get('/user', function(req, res) {
-  console.log('GET request for all ACTIVE users!');
-  User.find({}).exec(function(err, users) {
-    if (err) {
-      console.log('Error retrieving ACTIVE users!');
-    } else {
-      res.json(users);
-    }
-  });
-});
+router.post('/user/authenticate', auth.authenticate);
+router.post('/user/register', auth.register);
+router.get('/user/', auth.getAll);
+router.get('/user/current', auth.getCurrent);
+router.get('/user/:id', auth.getById);
+router.put('/user/:id', auth.update);
+router.delete('/user/:id', auth.delete);
 
-router.get('/user/current', function(req, res) {
-  console.log('Get request for current user!');
-  User.findById(req.user.sub).exec(function(err, user) {
-    if (err) {
-      console.log('Error retrieving user!');
-    } else {
-      res.json(user);
-    }
-  });
-});
+// router.get('/user', function(req, res) {
+//   console.log('GET request for all ACTIVE users!');
+//   User.find({}).exec(function(err, users) {
+//     if (err) {
+//       console.log('Error retrieving ACTIVE users!');
+//     } else {
+//       res.json(users);
+//     }
+//   });
+// });
 
-router.get('/user/:id', function(req, res) {
-  console.log('Get request for a single user!');
-  User.findById(req.params.id).exec(function(err, user) {
-    if (err) {
-      console.log('Error retrieving user!');
-    } else {
-      res.json(user);
-    }
-  });
-});
+// router.get('/user/current', function(req, res) {
+//   console.log('Get request for current user!');
+//   User.findById(req.user.sub).exec(function(err, user) {
+//     if (err) {
+//       console.log('Error retrieving user!');
+//     } else {
+//       res.json(user);
+//     }
+//   });
+// });
 
-router.delete('/user/:id', function(req, res) {
-  console.log('DELETING a user!');
-  User.findByIdAndRemove(req.params.id, function(err, deletedUser) {
-    if (err) {
-      res.send('Error deleting user!');
-    } else {
-      res.json(deletedUser);
-    }
-  });
-});
+// router.get('/user/:id', function(req, res) {
+//   console.log('Get request for a single user!');
+//   User.findById(req.params.id).exec(function(err, user) {
+//     if (err) {
+//       console.log('Error retrieving user!');
+//     } else {
+//       res.json(user);
+//     }
+//   });
+// });
 
-// http://localhost:3000/api/register
-router.post('/register', authService.register);
+// router.delete('/user/:id', function(req, res) {
+//   console.log('DELETING a user!');
+//   User.findByIdAndRemove(req.params.id, function(err, deletedUser) {
+//     if (err) {
+//       res.send('Error deleting user!');
+//     } else {
+//       res.json(deletedUser);
+//     }
+//   });
+// });
 
-router.post('/login', authService.login);
+// router.post('/register', auth.register);
+
+// router.post('/login', auth.login);
+
+// router.post('/authenticate', auth.authenticate);
+
+// router.get('/user', auth.getAll);
 
 module.exports = router;

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
 import { User } from './user';
-import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -15,14 +13,8 @@ export class AppComponent implements OnInit {
   currentUser: User;
   currentUserSubscription: Subscription;
 
-  constructor(
-    private router: Router,
-    private auth: AuthenticationService,
-    private userService: UserService
-  ) {
-    // this.auth.currentUser.subscribe(
-    //   x => (this.currentUser = x)
-    // );
+  constructor(private auth: AuthenticationService) {
+    this.auth.currentUser.subscribe(x => (this.currentUser = x));
 
     // this.userService.getUser(User).subscribe(
     //   res => {

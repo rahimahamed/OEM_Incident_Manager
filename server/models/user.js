@@ -3,12 +3,13 @@ var Schema = mongoose.Schema;
 // var bcrypt = require('bcrypt-nodejs');
 
 var UserSchema = new Schema({
-  firstName: String,
-  lastName: String,
-  department: String,
-  username: String,
-  password: String,
-  email: String
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  department: { type: String, required: true },
+  username: { type: String, unique: true, required: true },
+  hash: { type: String, required: true },
+  email: { type: String, required: true },
+  createdDate: { type: Date, default: Date.now }
 });
 
 // Custom validation for email
@@ -37,5 +38,7 @@ UserSchema.path('email').validate(val => {
 //     expiresIn: process.env.JWT_EXP
 //   });
 // };
+
+UserSchema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model('User', UserSchema);

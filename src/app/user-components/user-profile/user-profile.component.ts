@@ -26,22 +26,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getCurrentUser();
     this.loadAllUsers();
   }
 
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     this.currentUserSubscription.unsubscribe();
-  }
-
-  private getCurrentUser() {
-    this.userService
-      .getCurrent()
-      .pipe(first())
-      .subscribe(user => {
-        this.currentUser = user;
-      });
   }
 
   deleteUser(id: number) {
@@ -61,4 +51,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.users = users;
       });
   }
+
+  displayItem(key) {
+    if (
+      !(key === '_id' || key === '__v' || key === 'password' || key === 'token')
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  sortNull() {}
 }
