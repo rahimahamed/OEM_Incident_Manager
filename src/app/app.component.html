@@ -53,6 +53,15 @@
         <a
           *ngIf="currentUser"
           class="nav-link"
+          routerLink="/logistics"
+          routerLinkActive="active"
+          >Logistics Data</a
+        >
+      </li>
+      <li class="nav-item active">
+        <a
+          *ngIf="currentUser"
+          class="nav-link"
           routerLink="/profile"
           routerLinkActive="active"
           >{{ currentUser.username }}</a
@@ -67,9 +76,6 @@
           routerLinkActive="active"
           >Logout</a
         >
-      </li>
-      <li class="nav-item active">
-          <a class="nav-link" routerLink="/logistics" routerLinkActive="active">Logistics Data</a>
       </li>
     </ul>
     <span class="navbar-text ml-auto">

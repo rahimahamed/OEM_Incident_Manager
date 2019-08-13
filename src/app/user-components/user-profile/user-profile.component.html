@@ -22,14 +22,17 @@
   </div>
 </div>
 
-<br />
-
-<h3>All registered users:</h3>
-<ul>
-  <li *ngFor="let user of users">
-    {{ user.username }} ({{ user.firstName }} {{ user.lastName }}) -
-    <a (click)="deleteUser(user._id)" class="text-danger" style="cursor:pointer"
-      >Delete</a
-    >
-  </li>
-</ul>
+<div style="text-align: center">
+  <h3>All registered users:</h3>
+  <ul>
+    <li *ngFor="let user of users">
+      {{ user.username }} ({{ user.firstName }} {{ user.lastName }}) -
+      <a
+        (click)="deleteUser(user._id)"
+        class="text-danger"
+        style="cursor:pointer"
+        >Delete</a
+      >
+    </li>
+  </ul>
+</div>

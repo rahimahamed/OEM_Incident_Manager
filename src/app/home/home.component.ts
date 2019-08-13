@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { IncidentService } from '../incident.service';
 import { Incident } from './../incident';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IncidentsDataSource } from '../incident.data.source';
 import { User } from '../user';
-import { UserService } from '../user.service';
 import { AuthenticationService } from '../authentication.service';
 import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { Validators } from '@angular/forms';
@@ -17,17 +17,26 @@ import { Validators } from '@angular/forms';
 })
 export class HomeComponent implements OnInit {
   currentUser: User;
+  currentUserSubscription: Subscription;
   title = 'NYC Emergency Incident Tracker';
   private hideForm = true;
   private dataSource: IncidentsDataSource;
   private submitForm: FormGroup;
-
-  @ViewChild('search', { static: false }) public searchElementRef: ElementRef;
   private incidentTypeOther = false;
   private incidentDescriptionOther = false;
   private agencyOther = false;
 
   private model = new Incident();
+
+  constructor(
+    private incidentService: IncidentService,
+    private auth: AuthenticationService,
+    private _fb: FormBuilder
+  ) {
+    this.currentUserSubscription = this.auth.currentUser.subscribe(user => {
+      this.currentUser = user;
+    });
+  }
 
   statusList: any = [
     {
@@ -41,17 +50,6 @@ export class HomeComponent implements OnInit {
   ];
 
   prognosisList: any = [];
-
-  constructor(
-    private incidentService: IncidentService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private _fb: FormBuilder
-  ) {
-    this.currentUser = localStorage.getItem('currentUser')
-      ? JSON.parse(localStorage.getItem('currentUser'))
-      : '';
-  }
 
   incidentTypeList: any = [
     {
@@ -311,7 +309,8 @@ export class HomeComponent implements OnInit {
       '' + date.toISOString().substr(0, 10) + ', ' + date.toLocaleTimeString();
     this.model.MODIFICATION_DATE =
       '' + date.toISOString().substr(0, 10) + ', ' + date.toLocaleTimeString();
-
+    this.model.CREATED_BY = this.currentUser.username;
+    this.model.MODIFIED_BY = this.currentUser.username;
     this.model.INCIDENT_NAME = this.submitForm.controls.incidentName.value;
     this.model.LOCATION_NAME = this.submitForm.controls.location.value;
     this.model.STATUS =

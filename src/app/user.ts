@@ -1,12 +1,12 @@
 export class User {
-  _id: String;
-  firstName: String;
-  lastName: String;
-  department: String;
-  username: String;
-  password: String;
-  email: String;
-  token: String;
+  _id: string;
+  firstName: string;
+  lastName: string;
+  department: string;
+  username: string;
+  password: string;
+  email: string;
+  token: string;
   createdDate: Date;
 
   constructor() {}
