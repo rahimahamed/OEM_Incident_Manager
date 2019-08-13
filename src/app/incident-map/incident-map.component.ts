@@ -20,16 +20,17 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
   @Output() emitLocation = new EventEmitter();
   @Output() emitUpdate = new EventEmitter();
 
-  @ViewChild('search', { static: false }) public searchElementRef: ElementRef;
+
+  @ViewChild('search', {static: false}) public searchElementRef: ElementRef;
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngAfterViewInit() {
-    if (this.incident.ADDRESS) {
+    if ((this.incident.ADDRESS)) {
       this.latitude = Number(this.incident.LATITUDE);
       this.longitude = Number(this.incident.LONGITUDE);
       this.address = this.incident.ADDRESS;
@@ -43,12 +44,9 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
     // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
       // tslint:disable: prefer-const
-      let autocomplete = new google.maps.places.Autocomplete(
-        this.searchElementRef.nativeElement,
-        {
-          types: ['address']
-        }
-      );
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ['address']
+      });
       autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {
           // get the place result
@@ -70,13 +68,16 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
     this.cdr.detectChanges();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   // Get Current Location Coordinates
   private setCurrentLocation() {
     this.zoom = 18;
     this.getAddress(this.latitude, this.longitude);
   }
+
 
   markerDragEnd($event: MouseEvent) {
     console.log($event);
@@ -96,6 +97,8 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
         } else {
           window.alert('No results found');
         }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
       }
       this.incident.LATITUDE = this.latitude.toString();
       this.incident.LONGITUDE = this.longitude.toString();

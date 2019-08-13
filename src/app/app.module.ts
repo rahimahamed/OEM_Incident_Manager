@@ -1,28 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IncidentListComponent } from './incident-list/incident-list.component';
+import { IncidentDetailsComponent } from './incident-details/incident-details.component';
 import { ArchivedIncidentsComponent } from './archived-incidents/archived-incidents.component';
 import { MaterialModule } from '../material-module';
-import { IncidentDetailsComponent } from './incident-details/incident-details.component';
+import { IncidentCommentsComponent } from './incident-comments/incident-comments.component';
 import { IncidentMapComponent } from './incident-map/incident-map.component';
-import { UserCreateComponent } from './user-components/user-create/user-create.component';
-import { UserLoginComponent } from './user-components/user-login/user-login.component';
-import { UserProfileComponent } from './user-components/user-profile/user-profile.component';
-
 import { EditorModule } from '@tinymce/tinymce-angular';
 
 import { AgmCoreModule } from '@agm/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { IncidentLogisticsComponent } from './incident-logistics/incident-logistics.component';
 import { LogisticsDataComponent } from './logistics-data/logistics-data.component';
-import { ErrorInterceptor } from '../../server/helpers/error.interceptor';
-import { JwtInterceptor } from '../../server/helpers/jwt.interceptor';
-import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -30,19 +26,15 @@ import { AlertComponent } from './alert/alert.component';
     routingComponents,
     IncidentListComponent,
     ArchivedIncidentsComponent,
+    IncidentCommentsComponent,
     IncidentDetailsComponent,
     IncidentMapComponent,
     IncidentLogisticsComponent,
     LogisticsDataComponent,
-    UserCreateComponent,
-    UserLoginComponent,
-    UserProfileComponent,
-    AlertComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -56,10 +48,7 @@ import { AlertComponent } from './alert/alert.component';
     }),
     MDBBootstrapModule.forRoot()
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

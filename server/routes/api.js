@@ -1,49 +1,47 @@
-if (process.env.NODE_ENV !== 'production') {
+if(process.env.NODE_ENV !== 'production'){
   require('dotenv').config(); //not load
 }
-
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Incident = require('../models/incident');
 const Logistics = require('../models/logistics-data');
-const auth = require('../helpers/auth');
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }, function(
-  err
-) {
-  if (err) {
-    console.error('Error! ' + err);
-  } else {
-    console.log('Connected with database');
-  }
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }, function(err){
+    if(err){
+      console.error("Error! " + err);
+    }else{
+      console.log('Connected with database');
+    }
 });
 mongoose.set('useFindAndModify', false);
 
-router.get('/active', function(req, res) {
-  console.log('GET request for all ACTIVE incidents!');
-  Incident.find({}).exec(function(err, incident) {
-    if (err) {
-      console.log('Error retrieving ACTIVE incidents!');
-    } else {
-      res.json(incident);
-    }
-  });
+router.get('/active', function(req, res){
+    console.log('GET request for all ACTIVE incidents!');
+    Incident.find({})
+    .exec(function(err, incident){
+        if (err){
+            console.log("Error retrieving ACTIVE incidents!");
+        }else {
+            res.json(incident);
+        }
+    });
 });
 
-router.get('/active/:id', function(req, res) {
-  console.log('Get request for a single incident!');
-  Incident.findById(req.params.id).exec(function(err, incident) {
-    if (err) {
-      console.log('Error retrieving incident!');
-    } else {
-      res.json(incident);
-    }
-  });
+router.get('/active/:id', function(req, res){
+    console.log('Get request for a single incident!');
+    Incident.findById(req.params.id)
+    .exec(function(err, incident){
+        if (err){
+            console.log("Error retrieving incident!");
+        }else {
+            res.json(incident);
+        }
+    });
 });
 
-router.post('/active', function(req, res) {
+router.post('/active', function(req, res){
   console.log('POST a new incident!');
   var newIncident = new Incident();
   newIncident.INCIDENT_NAME = req.body.INCIDENT_NAME;
@@ -71,7 +69,7 @@ router.post('/active', function(req, res) {
   });
 });
 
-router.put('/active/:id', function(req, res) {
+router.put('/active/:id', function(req, res){
   console.log('Update an incident!');
   Incident.findByIdAndUpdate(req.params.id,
   {
@@ -84,28 +82,28 @@ router.put('/active/:id', function(req, res) {
   },
   {
       new: true
-    },
-    function(err, updatedVideo) {
-      if (err) {
-        res.send('Error updating incident!');
-      } else {
-        res.json(updatedVideo);
+  },
+  function(err, updatedVideo){
+      if(err){
+          res.send("Error updating incident!");
+      }else{
+          res.json(updatedVideo);
       }
-    }
+  }
+
   );
 });
 
-router.delete('/active/:id', function(req, res) {
-  console.log('DELETING an incident!');
-  Incident.findByIdAndRemove(req.params.id, function(err, deletedIncident) {
-    if (err) {
-      res.send('Error deleting incident!');
-    } else {
-      res.json(deletedIncident);
-    }
-  });
+router.delete('/active/:id', function(req, res){
+    console.log('DELETING an incident!');
+    Incident.findByIdAndRemove(req.params.id, function(err, deletedIncident){
+        if(err){
+            res.send("Error deleting incident!");
+        }else{
+            res.json(deletedIncident);
+        }
+    });
 });
-
 
 
 router.get('/logisticsdata', function(req, res){
@@ -177,13 +175,5 @@ router.delete('/logisticsdata/:id', function(req, res){
         }
     });
 });
-
-router.post('/user/authenticate', auth.authenticate);
-router.post('/user/register', auth.register);
-router.get('/user/', auth.getAll);
-router.get('/user/current', auth.getCurrent);
-router.get('/user/:id', auth.getById);
-router.put('/user/:id', auth.update);
-router.delete('/user/:id', auth.delete);
 
 module.exports = router;

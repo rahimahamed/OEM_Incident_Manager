@@ -1,82 +1,24 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand" href="home">NYC OEM (Development Site)</a>
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarNavDropdown"
-    aria-controls="navbarNavDropdown"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a
-          *ngIf="currentUser"
-          class="nav-link"
-          routerLink="/home"
-          routerLinkActive="active"
-          >Home<span class="sr-only">(current)</span></a
-        >
+        <a class="nav-link" routerLink="/home" routerLinkActive="active">Home<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
-        <a
-          *ngIf="currentUser"
-          class="nav-link"
-          routerLink="/archive"
-          routerLinkActive="active"
-          >Past Incidents</a
-        >
-      </li>
-      <li class="nav-item active">
-        <a
-          *ngIf="!currentUser"
-          class="nav-link"
-          routerLink="/register"
-          routerLinkActive="active"
-          >Sign Up</a
-        >
-      </li>
-      <li class="nav-item active">
-        <a
-          *ngIf="!currentUser"
-          class="nav-link"
-          routerLink="/login"
-          routerLinkActive="active"
-          >Login</a
-        >
-      </li>
-      <li class="nav-item active">
-        <a
-          *ngIf="currentUser"
-          class="nav-link"
-          routerLink="/profile"
-          routerLinkActive="active"
-          >{{ currentUser.username }}</a
-        >
-      </li>
-      <li class="nav-item active">
-        <a
-          *ngIf="currentUser"
-          class="nav-link"
-          (click)="auth.logout()"
-          style="cursor:pointer"
-          routerLinkActive="active"
-          >Logout</a
-        >
+        <a class="nav-link" routerLink="/archive" routerLinkActive="active">Past Incidents</a>
       </li>
       <li class="nav-item active">
           <a class="nav-link" routerLink="/logistics" routerLinkActive="active">Logistics Data</a>
       </li>
     </ul>
     <span class="navbar-text ml-auto">
-      {{ day() + ', ' + monthDateYear() + ' at ' + showTime() }}
+<!--       {{date | date:'full'}} -->
+      <!-- {{ day() + ', ' + monthDateYear() + ' at ' + showTime()}} -->
     </span>
   </div>
 </nav>
-
-<alert></alert>
 <router-outlet></router-outlet>
