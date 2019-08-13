@@ -48,7 +48,6 @@
                   <app-incident-details style="float: left; margin-right: 10px;"
                     [(incident)]="element"
                     [archive]="false"
-                    [supplyList]="[supplyList]"
                     (archiveIncident)="onArchive($event)"
                     (editIncident)="updateIncident($event)"
                     (updateSummary)="updateIncident($event)">

@@ -14,7 +14,7 @@
         <td contenteditable="false">
           <span>{{supply.SUPPLY_NAME}}</span>
         </td>
-        <td  contenteditable="true"
+        <td  contenteditable="false"
         class="example-element-row"
         (keyup)="changeValue($event)"
         (keydown.enter)="$event.preventDefault()"
@@ -22,7 +22,7 @@
             <span>{{supply.SUPPLY_QUANTITY}}</span>
         </td>
         <td contenteditable="false" class="example-element-row">
-            <!-- {{remaining(supply)}} -->
+            {{remaining(supply.SUPPLY_NAME)}}
         </td>
         <td
           contenteditable="false"
@@ -46,14 +46,14 @@
           </form>
         </td>
         <td
-          contenteditable="true"
+          contenteditable="false"
           class="example-element-row"
           (keyup)="changeValue($event)"
           (keydown.enter)="$event.preventDefault()">
             <span id="newSupply">0</span>
         </td>
         <td class="example-element-row">
-          <!-- {{remaining('selected')}} -->
+          {{remaining('selected')}}
         </td>
         <td class="example-element-row">
             <span id="newSupplyUnit">{{returnUnit()}}</span>

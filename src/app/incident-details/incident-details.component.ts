@@ -19,7 +19,6 @@ export class IncidentDetailsComponent implements OnInit {
 
   @Input() incident: Incident;
   @Input() archive: boolean;
-  @Input() supplyList: Supply[] = [];
   @Output() archiveIncident = new EventEmitter();
   @Output() editIncident = new EventEmitter();
   @Output() updateSummary = new EventEmitter();
@@ -69,7 +68,7 @@ export class IncidentDetailsComponent implements OnInit {
 
   displayItem(key: string) {
     if (!(key === 'SUMMARY' || key === '__v' || key === '_id'
-        || key === 'COMMENTS')) {
+        || key === 'COMMENTS' || key === 'SUPPLIES')) {
       return true;
     } else {
       return false;

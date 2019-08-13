@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Incident } from '../incident';
 import { Supply } from '../supplies';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { LogisticsDataService } from '../logistics-data/logistics-data.service';
-import { catchError, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-incident-logistics',
@@ -12,6 +11,7 @@ import { catchError, finalize } from 'rxjs/operators';
 })
 export class IncidentLogisticsComponent implements OnInit {
   @Input() incident: Incident;
+  supplyList: Supply[];
   @Output() updateIncident = new EventEmitter();
   supplies: Supply[] = [];
   newSup = false;
@@ -21,28 +21,17 @@ export class IncidentLogisticsComponent implements OnInit {
     incidentSupply: new FormControl(''),
   });
 
-  @Input() supplyList: Supply[];
 
   constructor(
     private logisticsService: LogisticsDataService
-  ) {
-    // logisticsService.getSupplies().subscribe(
-    //   resSup => {
-    //     for (const supply of resSup as Supply[]) {
-    //       this.supplyList.push(supply);
-    //     }
-    //   }
-    // );
-  }
+  ) {}
 
   ngOnInit() {
-    // this.logisticsService.getSupplies().subscribe(
-    //   resSup => {
-    //     for (const supply of resSup as Supply[]) {
-    //       this.supplyList.push(supply);
-    //     }
-    //   }
-    // );
+    this.logisticsService.getSupplies().subscribe(
+      (resSup: Supply[]) => {
+        this.supplyList = resSup;
+      }
+    );
     if (this.incident.SUPPLIES) {
       this.stringToSupply(this.incident.SUPPLIES);
     }
@@ -50,16 +39,19 @@ export class IncidentLogisticsComponent implements OnInit {
 
   remaining(name: string) {
     if (name === 'selected') {
-      return this.supplyList.find((supply: Supply) =>
-        supply.SUPPLY_NAME === this.selected).SUPPLY_QUANTITY;
+      let supply = this.supplyList.find((s: Supply) => 
+      s.SUPPLY_NAME === this.selected);
+      if(supply) return supply.SUPPLY_QUANTITY;
+      return '0';    
     } else {
-      return this.supplyList.find((supply: Supply) =>
-        supply.SUPPLY_NAME === name).SUPPLY_QUANTITY;
+      let supply = this.supplyList.find((s: Supply) => 
+      s.SUPPLY_NAME === name);
+      if(supply) return supply.SUPPLY_QUANTITY;
+      return '0';
     }
   }
 
   stringToSupply(supplyString: string) {
-    console.log(supplyString);
     const initSplit: string[] = supplyString.split('%');
     for (const supply of initSplit) {
       const split = supply.split('*');
@@ -67,7 +59,6 @@ export class IncidentLogisticsComponent implements OnInit {
       supplyToPush.SUPPLY_NAME = split[0];
       supplyToPush.SUPPLY_UNIT = split[1];
       supplyToPush.SUPPLY_QUANTITY = split[2];
-      console.log(supplyToPush);
       this.supplies.push(supplyToPush);
     }
   }
@@ -85,8 +76,10 @@ export class IncidentLogisticsComponent implements OnInit {
   }
 
   returnUnit() {
-    return this.supplyList.find((supply: Supply) =>
-            supply.SUPPLY_NAME === this.selected).SUPPLY_UNIT;
+    let supply = this.supplyList.find((supply: Supply) => 
+      supply.SUPPLY_NAME === this.selected);
+    if(supply) return supply.SUPPLY_UNIT;
+    return '0';
   }
 
   containsSupply(supply: Supply) {
@@ -103,9 +96,8 @@ export class IncidentLogisticsComponent implements OnInit {
   }
 
   clickAdd(supply: Supply, index) {
-    console.log(this.selected);
-    const count = Number(supply.SUPPLY_QUANTITY) + 1;
-    this.supplies[index].SUPPLY_QUANTITY = count.toString();
+    this.updateLogistics(false, this.supplies[index], index);
+    this.updateSupply();
   }
 
   clickAddd() {
@@ -124,6 +116,39 @@ export class IncidentLogisticsComponent implements OnInit {
     if (this.validCount(Number(supply.SUPPLY_QUANTITY))) {
       const count = Number(supply.SUPPLY_QUANTITY) - 1;
       this.supplies[index].SUPPLY_QUANTITY = count.toString();
+      this.updateLogistics(true, this.supplies[index], index);
+      this.updateSupply();
+    }
+  }
+
+  updateLogistics(plus: boolean, sup: Supply, index) {
+    if (plus) {
+      const supply = this.supplyList.find((s: Supply) => 
+        s.SUPPLY_NAME === sup.SUPPLY_NAME);
+      if (supply) {
+        supply.SUPPLY_QUANTITY = (Number(supply.SUPPLY_QUANTITY) + 1).toString();
+        this.logisticsService.updateSupplies(supply).subscribe(
+          newSupply => {
+            
+          }
+        );
+      }
+    } else {
+      const supply = this.supplyList.find((s: Supply) => 
+        s.SUPPLY_NAME === sup.SUPPLY_NAME);
+      if (supply) {
+        const count = (Number(supply.SUPPLY_QUANTITY) - 1);
+        if(count >= 0) {
+          const ogCount = Number(sup.SUPPLY_QUANTITY) + 1;
+          this.supplies[index].SUPPLY_QUANTITY = ogCount.toString();
+          supply.SUPPLY_QUANTITY = count.toString();
+          this.logisticsService.updateSupplies(supply).subscribe(
+            newSupply => {
+              
+            }
+          );
+        }
+      }
     }
   }
 
@@ -164,7 +189,19 @@ export class IncidentLogisticsComponent implements OnInit {
       supply.SUPPLY_NAME = this.submitForm.controls.incidentSupply.value;
       supply.SUPPLY_UNIT = document.getElementById('newSupplyUnit').textContent;
       supply.SUPPLY_QUANTITY = document.getElementById('newSupply').textContent;
+      if(supply.SUPPLY_QUANTITY === '0') {
+        return;
+      }
       this.supplies.push(supply);
+      let sup = this.supplyList.find((s: Supply) => 
+        s.SUPPLY_NAME === supply.SUPPLY_NAME);
+      if (sup) {
+        sup.SUPPLY_QUANTITY = (Number(sup.SUPPLY_QUANTITY) - Number(supply.SUPPLY_QUANTITY)).toString();
+        this.logisticsService.updateSupplies(sup).subscribe(
+          newSupply => {
+          }
+        );
+      }
     }
     this.newSup = false;
     this.updateSupply();
@@ -172,14 +209,24 @@ export class IncidentLogisticsComponent implements OnInit {
 
   updateSupply() {
     this.incident.SUPPLIES = this.supplyToString();
-    console.log(this.incident.SUPPLIES);
     this.updateIncident.emit(this.incident);
   }
 
   deleteRow(d) {
     const index = this.supplies.indexOf(d);
+    const temp = this.supplies[index];
     this.supplies.splice(index, 1);
     this.updateSupply();
+    let sup = this.supplyList.find((s: Supply) => 
+      s.SUPPLY_NAME === temp.SUPPLY_NAME);
+    if (sup) {
+      sup.SUPPLY_QUANTITY = (Number(sup.SUPPLY_QUANTITY) + Number(temp.SUPPLY_QUANTITY)).toString();
+      this.logisticsService.updateSupplies(sup).subscribe(
+        newSupply => {
+          
+        }
+      );
+    }
   }
 
 }
