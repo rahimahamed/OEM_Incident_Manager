@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef, } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IncidentService } from './../incident.service';
 import { Incident } from './../incident';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IncidentsDataSource } from '../incident.data.source';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { Validators } from '@angular/forms';
 
 @Component({
@@ -16,24 +16,13 @@ import { Validators } from '@angular/forms';
 export class HomeComponent implements OnInit {
   private hideForm = true;
   private dataSource: IncidentsDataSource;
+  private submitForm: FormGroup;
 
   private incidentTypeOther = false;
   private incidentDescriptionOther = false;
   private agencyOther = false;
 
   private model = new Incident();
-
-  private submitForm = new FormGroup({
-    incidentName: new FormControl('', Validators.required),
-    location: new FormControl('', Validators.required),
-    status: new FormControl('', Validators.required),
-    prognosis: new FormControl('', Validators.required),
-    incidentType: new FormControl('', Validators.required),
-    otherType: new FormControl('', Validators.required),
-    incidentDescription: new FormControl('', Validators.required),
-    leadingAgency: new FormControl('', Validators.required),
-    supportingAgency: new FormControl(),
-  });
 
   statusList: any = [
     {
@@ -153,10 +142,44 @@ export class HomeComponent implements OnInit {
   constructor(private incidentService: IncidentService,
               private router: Router,
               private route: ActivatedRoute,
+              private _fb: FormBuilder
               ) { }
 
   ngOnInit() {
     this.dataSource = new IncidentsDataSource(this.incidentService, true);
+    this.submitForm = this._fb.group({
+      incidentName: ['', Validators.required],
+      location: ['', Validators.required],
+      status: ['', Validators.required],
+      prognosis: ['', Validators.required],
+      incidentType: ['', Validators.required],
+      otherType: ['', Validators.required],
+      incidentDescription: ['', Validators.required],
+      otherDescription: [''],
+      leadingAgency: ['', Validators.required],
+      supportingAgency: [''],
+      supplies: this._fb.array([this.addSuppliesGroup()])
+    });
+  }
+
+  addSuppliesGroup(){
+    return this._fb.group({
+      supplyName: [''],
+      supplyUnit: [''],
+      supplyQuantity: ['']
+    });
+  }
+
+  addSupply() {
+    this.suppliesArray.push(this.addSuppliesGroup());
+  }
+
+  removeSupply(index) {
+    this.suppliesArray.removeAt(index);
+  }
+
+  get suppliesArray() {
+    return this.submitForm.get('supplies') as FormArray;
   }
 
   statusChangeAction() {
@@ -225,16 +248,18 @@ export class HomeComponent implements OnInit {
   }
 
   resetForm() {
-    this.submitForm = new FormGroup({
-      incidentName: new FormControl('', Validators.required),
-      location: new FormControl('', Validators.required),
-      status: new FormControl('', Validators.required),
-      prognosis: new FormControl('', Validators.required),
-      incidentType: new FormControl('', Validators.required),
-      otherType: new FormControl('', Validators.required),
-      incidentDescription: new FormControl('', Validators.required),
-      leadingAgency: new FormControl('', Validators.required),
-      supportingAgency: new FormControl(),
+    this.submitForm = this._fb.group({
+      incidentName: ['', Validators.required],
+      location: ['', Validators.required],
+      status: ['', Validators.required],
+      prognosis: ['', Validators.required],
+      incidentType: ['', Validators.required],
+      otherType: ['', Validators.required],
+      incidentDescription: ['', Validators.required],
+      otherDescription: [''],
+      leadingAgency: ['', Validators.required],
+      supportingAgency: [''],
+      supplies: this._fb.array([this.addSuppliesGroup()])
     });
     window.setTimeout( () => {
       document.getElementById('incidentName').focus();
@@ -250,20 +275,27 @@ export class HomeComponent implements OnInit {
     this.model.INCIDENT_NAME = this.submitForm.controls.incidentName.value;
     this.model.LOCATION_NAME = this.submitForm.controls.location.value;
     this.model.STATUS = this.submitForm.controls.status.value + '-' + this.submitForm.controls.prognosis.value;
-    if (this.submitForm.controls.incidentType.value === 'Other') {
+    if(this.submitForm.controls.incidentType.value === 'Other'){
       this.model.INCIDENT_TYPE =  this.submitForm.controls.otherType.value + '-' + this.submitForm.controls.incidentDescription.value;
     } else {
       this.model.INCIDENT_TYPE =  this.submitForm.controls.incidentType.value + '-' + this.submitForm.controls.incidentDescription.value;
     }
     this.model.LEAD_AGENCY = this.submitForm.controls.leadingAgency.value;
     this.model.SUPPORTING_AGENCY = this.submitForm.controls.supportingAgency.value;
+    this.model.SUPPLIES = ' ';
+    for(const control of this.submitForm.controls.supplies['controls']) {
+      this.model.SUPPLIES += control.controls.supplyName.value + '*' +
+      control.controls.supplyQuantity.value + '*' + control.controls.supplyUnit.value + ',';
+    }
+    this.model.SUPPLIES = this.model.SUPPLIES.substring(0, this.model.SUPPLIES.length - 1);
     this.incidentService.addIncidents(this.model).subscribe(
       newIncident => {
+        this.ngOnInit();
         this.onClick();
         this.model = new Incident();
         this.dataSource.loadLessons();
       }
-    );
+);
   }
 
   setLocation(incident: Incident) {
