@@ -17,10 +17,7 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
-  constructor(
-    private http: HttpClient,
-    private router: Router
-    ) {
+  constructor(private http: HttpClient, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem('currentUser'))
     );
@@ -30,11 +27,6 @@ export class AuthenticationService {
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
-
-  loadToken() {
-    this.authToken = localStorage.getItem('token'); // Get token and assign to variable to be used elsewhere
-  }
-
   login(username: string, password: string) {
     return this.http.post<any>(`api/login`, { username, password }).pipe(
       map(user => {
