@@ -18,6 +18,8 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 
 import { AgmCoreModule } from '@agm/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { IncidentLogisticsComponent } from './incident-logistics/incident-logistics.component';
+import { LogisticsDataComponent } from './logistics-data/logistics-data.component';
 import { ErrorInterceptor } from '../../server/helpers/error.interceptor';
 import { JwtInterceptor } from '../../server/helpers/jwt.interceptor';
 import { AlertComponent } from './alert/alert.component';
@@ -30,6 +32,8 @@ import { AlertComponent } from './alert/alert.component';
     ArchivedIncidentsComponent,
     IncidentDetailsComponent,
     IncidentMapComponent,
+    IncidentLogisticsComponent,
+    LogisticsDataComponent,
     UserCreateComponent,
     UserLoginComponent,
     UserProfileComponent,

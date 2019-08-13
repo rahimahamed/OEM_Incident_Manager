@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ArchivedIncidentsComponent } from './archived-incidents/archived-incidents.component';
+import { IncidentMapComponent } from './incident-map/incident-map.component';
+import { LogisticsDataComponent } from './logistics-data/logistics-data.component';
 import { UserCreateComponent } from './user-components/user-create/user-create.component';
 import { UserLoginComponent } from './user-components/user-login/user-login.component';
 import { UserProfileComponent } from './user-components/user-profile/user-profile.component';
@@ -13,7 +15,8 @@ const routes: Routes = [
   { path: 'archive', component: ArchivedIncidentsComponent },
   { path: 'register', component: UserCreateComponent },
   { path: 'login', component: UserLoginComponent },
-  { path: 'profile', component: UserProfileComponent }
+  { path: 'profile', component: UserProfileComponent },
+    {path: 'logistics', component: LogisticsDataComponent}
 ];
 
 @NgModule({

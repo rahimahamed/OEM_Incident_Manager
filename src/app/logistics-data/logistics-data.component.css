@@ -46,13 +46,10 @@ tr.example-element-row:not(.example-expanded-row):active {
   opacity: 0.5;
 }
 
-.dot {
-  height: 12px;
-  width: 12px;
-  border-radius: 50%;
-  display: inline-block;
+mat-form-field {
+  width: 15%;
 }
 
-.dot-red {
-  background-color: rgb(241, 63, 63);
-}
+.btn-width {
+  width: 4%;
+ }

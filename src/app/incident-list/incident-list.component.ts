@@ -9,6 +9,7 @@ import {
 import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
 import { IncidentsDataSource } from '../incident.data.source';
+import { Supply } from '../supplies';
 
 @Component({
   selector: 'app-incident-list',
@@ -34,17 +35,19 @@ export class IncidentListComponent implements OnInit {
       STATUS: 'Closed',
       LOCATION_NAME: 'Brooklyn',
       SUMMARY: null,
-      INCIDENT_TYPE: 'CRAZY',
-      CREATION_DATE: '2019-07-31, 3:52:57 PM',
-      ADDRESS: null,
-      LATITUDE: null,
-      LONGITUDE: null,
-      LEAD_AGENCY: null,
-      SUPPORTING_AGENCY: null,
-      CREATED_BY: null,
-      MODIFICATION_DATE: null,
-      MODIFIED_BY: null,
-      COMMENTS: null
+      INCIDENT_TYPE:  'CRAZY',
+      CREATION_DATE:  '2019-07-31, 3:52:57 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+      SUPPLIES: 'Water Bottle-Cases-10,Hand Warmers-Individual-50',
+
     },
     {
       _id: '5d3919a26ed54400177e1f1f',
@@ -52,17 +55,19 @@ export class IncidentListComponent implements OnInit {
       STATUS: 'Responding',
       LOCATION_NAME: 'Queens',
       SUMMARY: 'Failure',
-      INCIDENT_TYPE: 'LITT',
-      CREATION_DATE: '2019-07-31, 4:00:34 PM',
-      ADDRESS: null,
-      LATITUDE: null,
-      LONGITUDE: null,
-      LEAD_AGENCY: null,
-      SUPPORTING_AGENCY: null,
-      CREATED_BY: null,
-      MODIFICATION_DATE: null,
-      MODIFIED_BY: null,
-      COMMENTS: null
+      INCIDENT_TYPE:  'LITT',
+      CREATION_DATE:  '2019-07-31, 4:00:34 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+      SUPPLIES: null,
+
     },
     {
       _id: '5d3919a26ed54400177e1f1f',
@@ -70,17 +75,19 @@ export class IncidentListComponent implements OnInit {
       STATUS: 'Responding',
       LOCATION_NAME: 'Queens',
       SUMMARY: 'Failure',
-      INCIDENT_TYPE: 'LITT',
-      CREATION_DATE: '2019-07-25, 4:00:34 PM',
-      ADDRESS: null,
-      LATITUDE: null,
-      LONGITUDE: null,
-      LEAD_AGENCY: null,
-      SUPPORTING_AGENCY: null,
-      CREATED_BY: null,
-      MODIFICATION_DATE: null,
-      MODIFIED_BY: null,
-      COMMENTS: null
+      INCIDENT_TYPE:  'LITT',
+      CREATION_DATE:  '2019-07-25, 4:00:34 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+      SUPPLIES: null,
+
     },
     {
       _id: '5d3919a26ed54400177e1f1f',
@@ -88,17 +95,19 @@ export class IncidentListComponent implements OnInit {
       STATUS: 'Open,Response',
       LOCATION_NAME: 'Queens',
       SUMMARY: 'Failure',
-      INCIDENT_TYPE: 'LITT',
-      CREATION_DATE: '2019-02-31, 4:00:34 PM',
-      ADDRESS: null,
-      LATITUDE: null,
-      LONGITUDE: null,
-      LEAD_AGENCY: null,
-      SUPPORTING_AGENCY: null,
-      CREATED_BY: null,
-      MODIFICATION_DATE: null,
-      MODIFIED_BY: null,
-      COMMENTS: null
+      INCIDENT_TYPE:  'LITT',
+      CREATION_DATE:  '2019-02-31, 4:00:34 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+      SUPPLIES: null,
+
     },
     {
       _id: '5d3919a26ed54400177e1f1f',
@@ -106,18 +115,20 @@ export class IncidentListComponent implements OnInit {
       STATUS: 'Open,Monitoring',
       LOCATION_NAME: 'Queens',
       SUMMARY: 'Failure',
-      INCIDENT_TYPE: 'LITT',
-      CREATION_DATE: '2019-04-11, 4:00:34 PM',
-      ADDRESS: null,
-      LATITUDE: null,
-      LONGITUDE: null,
-      LEAD_AGENCY: null,
-      SUPPORTING_AGENCY: null,
-      CREATED_BY: null,
-      MODIFICATION_DATE: null,
-      MODIFIED_BY: null,
-      COMMENTS: null
-    }
+      INCIDENT_TYPE:  'LITT',
+      CREATION_DATE:  '2019-04-11, 4:00:34 PM',
+      ADDRESS:  null,
+      LATITUDE:  null,
+      LONGITUDE:  null,
+      LEAD_AGENCY:  null,
+      SUPPORTING_AGENCY:  null,
+      CREATED_BY:  null,
+      MODIFICATION_DATE:  null,
+      MODIFIED_BY:  null,
+      COMMENTS:  null,
+      SUPPLIES: null,
+    },
+
   ];
 
   columnsToDisplay = [
@@ -131,8 +142,8 @@ export class IncidentListComponent implements OnInit {
 
   constructor(
     private incidentService: IncidentService,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {}
+    private changeDetectorRef: ChangeDetectorRef) { }
+
 
   ngOnInit() {
     this.dataSource.loadLessons();

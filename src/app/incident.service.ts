@@ -12,6 +12,7 @@ export class IncidentService {
   private _putUrl = '/api/active/';
   private _deleteUrl = '/api/active/';
 
+
   options;
   domain = this.authService.domain;
 
