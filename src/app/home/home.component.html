@@ -91,13 +91,30 @@
               <input matInput placeholder="Input Supporting Agency" formControlName="supportingAgency">
           </mat-form-field>
         </div>
+        <div formArrayName="supplies">
+          <div *ngFor="let supply of submitForm.controls.supplies.controls; let i = index;">
+            <div [formGroupName] = "i">
+                <mat-form-field appearance="legacy" style="margin-right: 5px">
+                    <input type="text" matInput matInput placeholder="Input Supply Name" formControlName="supplyName">
+                </mat-form-field>
+                <mat-form-field appearance="legacy" style="margin-right: 5px">
+                    <input type="text" matInput matInput placeholder="Input Supply Quantity" formControlName="supplyQuantity">
+                </mat-form-field>
+                <mat-form-field appearance="legacy" style="margin-right: 5px">
+                    <input type="text" matInput matInput placeholder="Input Supply Units" formControlName="supplyUnit">
+                </mat-form-field>
+                <button type="button" style="margin-right: 10px" class="btn btn-outline-success btn-height" (click)="addSupply()">Add Supply</button>
+                <span *ngIf="submitForm.controls.supplies.controls.length > 1"><button type="button" style="margin-right: 10px" class="btn btn-outline-danger btn-height" (click)="removeSupply()">Remove Supply</button></span>
+            </div>
+          </div>
+        </div>
       </mat-card-content>
       <mat-card-actions>
         <button class="btn btn-success exp-btn btn-width" [disabled]="!submitForm.valid">Submit</button>
       </mat-card-actions>
       </form>
       <button class="btn btn-danger exp-btn btn-width" style="margin-top: 10px" (click)="resetForm()">Reset</button>
-      <div style="float: center; margin-top: -490px">
+      <div style="float: right; display: flex; margin-top: -600px;">
           <app-incident-map
             [incident] = "model"
             [loadSubmitButton]="false"
