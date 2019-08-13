@@ -22,11 +22,7 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.css",
-<<<<<<< HEAD
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
-=======
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
->>>>>>> development
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
@@ -88,11 +84,7 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.css",
-<<<<<<< HEAD
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
-=======
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
->>>>>>> development
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js",

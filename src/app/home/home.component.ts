@@ -1,4 +1,3 @@
-
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { IncidentService } from '../incident.service';
 import { Incident } from './../incident';
@@ -7,7 +6,7 @@ import { IncidentsDataSource } from '../incident.data.source';
 import { User } from '../user';
 import { UserService } from '../user.service';
 import { AuthenticationService } from '../authentication.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { Validators } from '@angular/forms';
 
 @Component({
@@ -47,7 +46,7 @@ export class HomeComponent implements OnInit {
     private incidentService: IncidentService,
     private router: Router,
     private route: ActivatedRoute,
-     private _fb: FormBuilder
+    private _fb: FormBuilder
   ) {
     this.currentUser = localStorage.getItem('currentUser')
       ? JSON.parse(localStorage.getItem('currentUser'))
@@ -198,7 +197,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  addSuppliesGroup(){
+  addSuppliesGroup() {
     return this._fb.group({
       supplyName: [''],
       supplyUnit: [''],
@@ -287,7 +286,6 @@ export class HomeComponent implements OnInit {
   }
 
   resetForm() {
-
     this.submitForm = this._fb.group({
       incidentName: ['', Validators.required],
       location: ['', Validators.required],
@@ -300,7 +298,6 @@ export class HomeComponent implements OnInit {
       leadingAgency: ['', Validators.required],
       supportingAgency: [''],
       supplies: this._fb.array([this.addSuppliesGroup()])
-
     });
     window.setTimeout(() => {
       document.getElementById('incidentName').focus();
@@ -317,10 +314,15 @@ export class HomeComponent implements OnInit {
 
     this.model.INCIDENT_NAME = this.submitForm.controls.incidentName.value;
     this.model.LOCATION_NAME = this.submitForm.controls.location.value;
-    this.model.STATUS = this.submitForm.controls.status.value + '-' + this.submitForm.controls.prognosis.value;
-    if(this.submitForm.controls.incidentType.value === 'Other'){
-      this.model.INCIDENT_TYPE =  this.submitForm.controls.otherType.value + '-' + this.submitForm.controls.incidentDescription.value;
-
+    this.model.STATUS =
+      this.submitForm.controls.status.value +
+      '-' +
+      this.submitForm.controls.prognosis.value;
+    if (this.submitForm.controls.incidentType.value === 'Other') {
+      this.model.INCIDENT_TYPE =
+        this.submitForm.controls.otherType.value +
+        '-' +
+        this.submitForm.controls.incidentDescription.value;
     } else {
       this.model.INCIDENT_TYPE =
         this.submitForm.controls.incidentType.value +
@@ -330,24 +332,34 @@ export class HomeComponent implements OnInit {
     this.model.LEAD_AGENCY = this.submitForm.controls.leadingAgency.value;
     this.model.SUPPORTING_AGENCY = this.submitForm.controls.supportingAgency.value;
     this.model.SUPPLIES = ' ';
-    for(const control of this.submitForm.controls.supplies['controls']) {
-      this.model.SUPPLIES += control.controls.supplyName.value + '*' +
-      control.controls.supplyQuantity.value + '*' + control.controls.supplyUnit.value + ',';
+    for (const control of this.submitForm.controls.supplies['controls']) {
+      this.model.SUPPLIES +=
+        control.controls.supplyName.value +
+        '*' +
+        control.controls.supplyQuantity.value +
+        '*' +
+        control.controls.supplyUnit.value +
+        ',';
     }
-    if (!(this.model.SUPPLIES.substring(0, this.model.SUPPLIES.length - 1) === ' **')) {
-      this.model.SUPPLIES = this.model.SUPPLIES.substring(0, this.model.SUPPLIES.length - 1);
+    if (
+      !(
+        this.model.SUPPLIES.substring(0, this.model.SUPPLIES.length - 1) ===
+        ' **'
+      )
+    ) {
+      this.model.SUPPLIES = this.model.SUPPLIES.substring(
+        0,
+        this.model.SUPPLIES.length - 1
+      );
     } else {
       this.model.SUPPLIES = '';
     }
-    this.incidentService.addIncidents(this.model).subscribe(
-      newIncident => {
-        this.ngOnInit();
-        this.onClick();
-        this.model = new Incident();
-        this.dataSource.loadLessons();
-      }
-);
-
+    this.incidentService.addIncidents(this.model).subscribe(newIncident => {
+      this.ngOnInit();
+      this.onClick();
+      this.model = new Incident();
+      this.dataSource.loadLessons();
+    });
   }
 
   setLocation(incident: Incident) {
