@@ -9,27 +9,15 @@ import { User } from './user';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  //   date: number = Date.now();
+  date: number = Date.now();
   currentUser: User;
   currentUserSubscription: Subscription;
 
   constructor(private auth: AuthenticationService) {
     this.auth.currentUser.subscribe(x => (this.currentUser = x));
-
-    // this.userService.getUser(User).subscribe(
-    //   res => {
-    //     this.currentUser = res['user'];
-    //   },
-    //   err => {
-    //     console.log(err);
-    //   }
-    // );
   }
 
-  ngOnInit() {
-    // this.authenticationService.currentUser.subscribe(
-    //   user => this.currentUser = user);
-  }
+  ngOnInit() {}
 
   day() {
     let v = new Date();

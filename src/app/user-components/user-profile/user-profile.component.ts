@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 import { User } from '../../user';
-import { UserService } from '../../user.service';
 import { AuthenticationService } from '../../authentication.service';
 
 @Component({
@@ -16,10 +15,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   currentUserSubscription: Subscription;
   users: User[] = [];
 
-  constructor(
-    private auth: AuthenticationService,
-    private userService: UserService
-  ) {
+  constructor(private auth: AuthenticationService) {
     this.currentUserSubscription = this.auth.currentUser.subscribe(user => {
       this.currentUser = user;
     });
@@ -35,7 +31,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   deleteUser(id: number) {
-    this.userService
+    this.auth
       .delete(id)
       .pipe(first())
       .subscribe(() => {
@@ -44,7 +40,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private loadAllUsers() {
-    this.userService
+    this.auth
       .getAll()
       .pipe(first())
       .subscribe(users => {

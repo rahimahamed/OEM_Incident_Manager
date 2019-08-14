@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../user.service';
 import { AuthenticationService } from '../../authentication.service';
 import { AlertService } from '../../alert.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-create',
   templateUrl: './user-create.component.html',
   styleUrls: ['./user-create.component.css'],
-  providers: [UserService]
+  providers: [AuthenticationService]
 })
 export class UserCreateComponent implements OnInit {
   registerForm: FormGroup;
@@ -24,12 +23,11 @@ export class UserCreateComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authenticationService: AuthenticationService,
-    private userService: UserService,
-    private alertService: AlertService  
-    ) {
+    private auth: AuthenticationService,
+    private alertService: AlertService
+  ) {
     // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue) {
+    if (this.auth.currentUserValue) {
       this.router.navigate(['/']);
     }
   }
@@ -59,7 +57,7 @@ export class UserCreateComponent implements OnInit {
     }
 
     this.loading = true;
-    this.userService.register(this.registerForm.value).subscribe(
+    this.auth.register(this.registerForm.value).subscribe(
       data => {
         this.alertService.success('Registration successful', true);
         this.router.navigate(['/login']);

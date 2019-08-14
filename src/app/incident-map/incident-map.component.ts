@@ -1,5 +1,15 @@
-import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit,
-         Output, Input, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  NgZone,
+  AfterViewInit,
+  Output,
+  Input,
+  EventEmitter,
+  ChangeDetectorRef
+} from '@angular/core';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
 import {} from '@agm/core/services/google-maps-types';
 import { Incident } from '../incident';
@@ -86,23 +96,28 @@ export class IncidentMapComponent implements OnInit, AfterViewInit {
   }
 
   getAddress(latitude, longitude) {
-    this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
-      console.log(results);
-      console.log(status);
-      if (status === 'OK') {
-        if (results[0]) {
-          this.zoom = 18;
-          this.address = results[0].formatted_address;
+    this.geoCoder.geocode(
+      { location: { lat: latitude, lng: longitude } },
+      (results, status) => {
+        console.log(results);
+        console.log(status);
+        if (status === 'OK') {
+          if (results[0]) {
+            this.zoom = 18;
+            this.address = results[0].formatted_address;
+          } else {
+            window.alert('No results found');
+          }
         } else {
-          window.alert('No results found');
+          window.alert('Geocoder failed due to: ' + status);
         }
+        this.incident.LATITUDE = this.latitude.toString();
+        this.incident.LONGITUDE = this.longitude.toString();
+        this.incident.ADDRESS = this.address;
+        // This emits address to the form! The incident dropdown page does not look for this!
+        this.emitLocation.emit(this.incident);
       }
-      this.incident.LATITUDE = this.latitude.toString();
-      this.incident.LONGITUDE = this.longitude.toString();
-      this.incident.ADDRESS = this.address;
-      // This emits address to the form! The incident dropdown page does not look for this!
-      this.emitLocation.emit(this.incident);
-    });
+    );
   }
 
   // This emits to incident dropdown map, when 'Submit Updated Address' is pressed

@@ -126,55 +126,6 @@
           </button>
         </div>
       </form>
-
-      <!-- Confirm Password Input -->
-      <!-- <div class="form-group">
-    <label for="confirm">Confirm Password</label>
-    <div
-      [ngClass]="{
-        'has-error':
-          (form.controls.confirm.errors && form.controls.confirm.dirty) ||
-          (form.errors?.matchingPasswords && form.controls.confirm.dirty),
-        'has-success':
-          !form.controls.confirm.errors && !form.errors?.matchingPasswords
-      }"
-    >
-      <input
-        type="password"
-        name="confirm"
-        class="form-control"
-        autocomplete="off"
-        placeholder="*Confirm Password"
-        formControlName="confirm"
-      />
-
-      <ul class="help-block">
-        <li
-          *ngIf="
-            form.controls.confirm.errors?.required &&
-            form.controls.confirm.dirty
-          "
-        >
-          This field is required
-        </li>
-        <li
-          *ngIf="form.errors?.matchingPasswords && form.controls.confirm.dirty"
-        >
-          Passwords do not match
-        </li>
-      </ul>
-    </div>
-  </div> -->
-
-      <!-- <div class="success" *ngIf="showSuccessMessage">
-  Saved successfully
-</div>
-
-<br />
-
-<div class="alert" *ngIf="serverErrorMessages">
-  {{ serverErrorMessages }}
-</div> -->
     </div>
   </div>
 </div>

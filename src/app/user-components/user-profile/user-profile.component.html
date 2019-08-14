@@ -3,13 +3,11 @@
 
 <div class="left">
   <div id="table" class="table-bordered">
-    <table
-      class="table table-bordered table-responsive-md table-striped text-center"
-    >
-      <tr>
+    <table class="table table-bordered table-striped text-center">
+      <!-- <tr>
         <th class="text-center">Category</th>
         <th class="text-center">Your Info</th>
-      </tr>
+      </tr> -->
       <tr *ngFor="let item of currentUser | keyvalue: sortNull">
         <td *ngIf="displayItem(item.key)">
           <span>{{ item.key }}</span>

@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
-// import { AuthService } from 'ngx-auth';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { User } from './user';
-import { environment } from './../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  domain = environment.apiBaseUrl;
-  authToken;
+  users: Array<User>;
 
   private currentUserSubject: BehaviorSubject<User>;
+
   public currentUser: Observable<User>;
 
   constructor(private http: HttpClient, private router: Router) {
@@ -27,6 +25,19 @@ export class AuthenticationService {
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
+
+  getAll() {
+    return this.http.get<User[]>('/api/user');
+  }
+
+  register(user: User) {
+    return this.http.post('/api/user/register', user);
+  }
+
+  delete(id: number) {
+    return this.http.delete('/api/user' + `/${id}`);
+  }
+
   login(username: string, password: string) {
     return this.http
       .post<any>(`api/user/authenticate`, { username, password })

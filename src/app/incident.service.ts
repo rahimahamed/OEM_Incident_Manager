@@ -1,7 +1,6 @@
 import { Incident } from './incident';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,16 +11,9 @@ export class IncidentService {
   private _putUrl = '/api/active/';
   private _deleteUrl = '/api/active/';
 
-
-  options;
-  domain = this.authService.domain;
-
   incidents: Array<Incident>;
 
-  constructor(
-    private _http: HttpClient,
-    private authService: AuthenticationService
-  ) {}
+  constructor(private _http: HttpClient) {}
 
   getIncidents() {
     return this._http.get(this._getUrl);
