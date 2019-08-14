@@ -11,36 +11,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class LogisticsDataComponent implements OnInit {
 
+  // FOLLOWS THE FORMAT OF THE HOME PAGE
+
   private dataSource: LogisticsDataSource;
   private hideForm = true;
   private model = new Supply();
-
-  supplyList: Supply[] = [
-    {
-      _id: '5d3919a26ed54400177e1f1f',
-      SUPPLY_NAME: 'Water Bottles',
-      SUPPLY_UNIT: 'Cases',
-      SUPPLY_QUANTITY: '0'
-    },
-    {
-      _id: '5d3919a26ed54400177e1f1f',
-      SUPPLY_NAME: 'Blankets',
-      SUPPLY_UNIT: 'Individual',
-      SUPPLY_QUANTITY: '0'
-    },
-    {
-      _id: '5d3919a26ed54400177e1f1f',
-      SUPPLY_NAME: 'Hand-Warmers',
-      SUPPLY_UNIT: 'Cases',
-      SUPPLY_QUANTITY: '0'
-    },
-    {
-      _id: '5d3919a26ed54400177e1f1f',
-      SUPPLY_NAME: 'Jackets',
-      SUPPLY_UNIT: 'Individual',
-      SUPPLY_QUANTITY: '0'
-    }
-  ];
 
   columnsToDisplay = ['erase', 'supply_name', 'quantity', 'unit', 'add', 'remove'];
 
