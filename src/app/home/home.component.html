@@ -1,6 +1,6 @@
 <div style="text-align:center">
     <button type="button" style="margin-top:20px; margin-bottom: 30px"
-          (click)="onClick()" class="btn btn-primary btn-lg">CREATE A NEW EMERGENCY!</button>
+          (click)="showForm()" class="btn btn-primary btn-lg">CREATE A NEW EMERGENCY!</button>
   </div>
     <div style="margin-left: 20px" *ngIf="!hideForm">
       <h2>New Emergency</h2>
@@ -91,6 +91,7 @@
               <input matInput placeholder="Input Supporting Agency" formControlName="supportingAgency">
           </mat-form-field>
         </div>
+        <!-- SUPPLIES IS NOT CONNECTED WITH THE LOGISTICS DATABASE -- JUST FOR SHOW. -->
         <div formArrayName="supplies">
           <div *ngFor="let supply of submitForm.controls.supplies.controls; let i = index;">
             <div [formGroupName] = "i">

@@ -31,36 +31,31 @@ export class ArchivedIncidentsComponent implements OnInit {
   }
 
   unArchive(incident: Incident) {
-    incident.STATUS = 'Special Attention, Monitoring';
-    this.unArchiveIncident.emit(incident);
-  }
-
-  onOpen(incident) {
-    return;
-  }
-
-  sortName(){
-    this.dataSource.sortName();
-  }
-
-  sortLocation(){
-    this.dataSource.sortLocation();
-  }
-
-  sortStatus(){
-    this.dataSource.sortStatus();
-  }
-
-  sortDate(){
-    this.dataSource.sortDate();
-  }
-
-  sortDateModified(){
-    this.dataSource.sortDateModified();
+    //COMPLETE LATER: UNARCHIVE AN INCIDENT
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter(filterValue.trim().toLowerCase());
+  }
+
+  sortName() {
+    this.dataSource.sortName();
+  }
+
+  sortLocation() {
+    this.dataSource.sortLocation();
+  }
+
+  sortStatus() {
+    this.dataSource.sortStatus();
+  }
+
+  sortDate() {
+    this.dataSource.sortDate();
+  }
+
+  sortDateModified() {
+    this.dataSource.sortDateModified();
   }
 
 }

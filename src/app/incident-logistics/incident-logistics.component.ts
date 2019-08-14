@@ -1,3 +1,7 @@
+/*
+ * Honestly, this is very messy and something I tried to push out on the last few days of my internship.
+ * I definitely recommend to remake the logistics piece depending on how OEM wants it.
+ */
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { Incident } from '../incident';
 import { Supply } from '../supplies';

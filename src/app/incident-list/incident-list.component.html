@@ -1,96 +1,153 @@
 <mat-form-field style="left:20px">
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search Incidents" #input>
-  </mat-form-field>
+  <input
+    matInput
+    (keyup)="applyFilter($event.target.value)"
+    placeholder="Search Incidents"
+    #input
+  />
+</mat-form-field>
 
-  <table mat-table
-          [dataSource]="dataSource" multiTemplateDataRows
-          matSort
-          class="mat-elevation-z8">
+<table
+  mat-table
+  [dataSource]="dataSource"
+  multiTemplateDataRows
+  matSort
+  class="mat-elevation-z8"
+>
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortName()">
+      Title
+    </th>
+    <td mat-cell *matCellDef="let element">{{ element.INCIDENT_NAME }}</td>
+  </ng-container>
 
-          <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header (click)=sortName()> Title </th>
-            <td mat-cell *matCellDef="let element"> {{element.INCIDENT_NAME}} </td>
-          </ng-container>
+  <ng-container matColumnDef="location">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      (click)="sortLocation()"
+    >
+      Location
+    </th>
+    <td mat-cell *matCellDef="let element">{{ element.LOCATION_NAME }}</td>
+  </ng-container>
 
-          <ng-container matColumnDef="location">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header (click)=sortLocation()> Location </th>
-            <td mat-cell *matCellDef="let element"> {{element.LOCATION_NAME}} </td>
-          </ng-container>
+  <ng-container matColumnDef="status">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      (click)="sortStatus()"
+    >
+      Status
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <span
+        class="dot"
+        [ngClass]="{
+          'dot-green':
+            element.STATUS === 'Open-Monitoring' ||
+            element.STATUS === 'Open-Response' ||
+            element.STATUS === 'Open-Extended Operation',
+          'dot-yellow': element.STATUS === 'Special Attention-Monitoring'
+        }"
+      ></span>
+      {{ element.STATUS }}
+    </td>
+  </ng-container>
 
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header (click)=sortStatus()> Status </th>
-            <td mat-cell *matCellDef="let element">
-                <span class ="dot" [ngClass]="{
-                  'dot-green' :
-                  element.STATUS === 'Open-Monitoring' ||
-                  element.STATUS === 'Open-Response' ||
-                  element.STATUS === 'Open-Extended Operation',
-                  'dot-yellow' : element.STATUS === 'Special Attention-Monitoring'}"></span>
-              {{element.STATUS}} </td>
-          </ng-container>
+  <ng-container matColumnDef="date_created">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortDate()">
+      Date Created
+    </th>
+    <td mat-cell *matCellDef="let element">{{ element.CREATION_DATE }}</td>
+  </ng-container>
 
-          <ng-container matColumnDef="date_created">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header (click)=sortDate()> Date Created </th>
-            <td mat-cell *matCellDef="let element"> {{element.CREATION_DATE}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="date_modified">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header (click)=sortDateModified()> Date Modified </th>
-            <td mat-cell *matCellDef="let element"> {{element.MODIFICATION_DATE}} </td>
-          </ng-container>
+  <ng-container matColumnDef="date_modified">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      (click)="sortDateModified()"
+    >
+      Date Modified
+    </th>
+    <td mat-cell *matCellDef="let element">{{ element.MODIFICATION_DATE }}</td>
+  </ng-container>
 
   <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
   <ng-container matColumnDef="expandedDetail">
-    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-      <div class="example-element-detail"
-           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-              <div class="example-element-description">
-                  <app-incident-details style="float: left; margin-right: 10px;"
-                    [(incident)]="element"
-                    [archive]="false"
-                    (archiveIncident)="onArchive($event)"
-                    (editIncident)="updateIncident($event)"
-                    (updateSummary)="updateIncident($event)">
-                  </app-incident-details>
-                <div class="card" cdkDrag>
-                    <div class="left example-handle" cdkDragHandle>
-                        <svg width="16px" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
-                          <path d="M0 0h24v24H0z" fill="none"></path>
-                        </svg>
-                      </div>
-                    <mat-expansion-panel [expanded]="true">
-                        <mat-expansion-panel-header
-                        class="text-center font-weight-bold text-uppercase py-4">
-                          <h3>Incident Map</h3>
-                      </mat-expansion-panel-header>
-                      <div class="card">
-                  <div class="card-body">
-                    <app-incident-map
-                      [incident]="element"
-                      [loadSubmitButton]="true"
-                      (emitUpdate)="updateIncident($event)">
-                    </app-incident-map>
-                  </div>
+    <td
+      mat-cell
+      *matCellDef="let element"
+      [attr.colspan]="columnsToDisplay.length"
+    >
+      <div
+        class="example-element-detail"
+        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
+      >
+        <div class="example-element-description">
+          <app-incident-details
+            style="float: left; margin-right: 10px;"
+            [(incident)]="element"
+            [archive]="false"
+            (archiveIncident)="archive($event)"
+            (editIncident)="updateIncident($event)"
+            (updateSummary)="updateIncident($event)"
+          >
+          </app-incident-details>
+          <div class="card" cdkDrag>
+            <div class="left example-handle" cdkDragHandle>
+              <svg width="16px" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
+                ></path>
+                <path d="M0 0h24v24H0z" fill="none"></path>
+              </svg>
+            </div>
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header
+                class="text-center font-weight-bold text-uppercase py-4"
+              >
+                <h3>Incident Map</h3>
+              </mat-expansion-panel-header>
+              <div class="card">
+                <div class="card-body">
+                  <app-incident-map
+                    [incident]="element"
+                    [loadSubmitButton]="true"
+                    (emitUpdate)="updateIncident($event)"
+                  >
+                  </app-incident-map>
                 </div>
-                </mat-expansion-panel>
-                <div class="left example-handle" cdkDragHandle>
-                    <svg width="16px" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
-                        <path d="M0 0h24v24H0z" fill="none"></path>
-                    </svg>
-                </div>
-                </div>
+              </div>
+            </mat-expansion-panel>
+            <div class="left example-handle" cdkDragHandle>
+              <svg width="16px" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
+                ></path>
+                <path d="M0 0h24v24H0z" fill="none"></path>
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
     </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
-      class="example-element-row"
-      [class.example-expanded-row]="expandedElement === element"
-      (click)="expandedElement = expandedElement === element ? null : element">
-  </tr>
-  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  <tr
+    mat-row
+    *matRowDef="let element; columns: columnsToDisplay"
+    class="example-element-row"
+    [class.example-expanded-row]="expandedElement === element"
+    (click)="expandedElement = expandedElement === element ? null : element"
+  ></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: ['expandedDetail']"
+    class="example-detail-row"
+  ></tr>
 </table>

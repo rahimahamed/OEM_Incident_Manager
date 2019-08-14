@@ -3,7 +3,7 @@ import { IncidentService } from './../incident.service';
 import { Incident } from './../incident';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IncidentsDataSource } from '../incident.data.source';
-import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { Validators } from '@angular/forms';
 
 @Component({
@@ -140,14 +140,12 @@ export class HomeComponent implements OnInit {
   ];
 
   constructor(private incidentService: IncidentService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private _fb: FormBuilder
+              private fb: FormBuilder
               ) { }
 
   ngOnInit() {
     this.dataSource = new IncidentsDataSource(this.incidentService, true);
-    this.submitForm = this._fb.group({
+    this.submitForm = this.fb.group({
       incidentName: ['', Validators.required],
       location: ['', Validators.required],
       status: ['', Validators.required],
@@ -158,12 +156,12 @@ export class HomeComponent implements OnInit {
       otherDescription: [''],
       leadingAgency: ['', Validators.required],
       supportingAgency: [''],
-      supplies: this._fb.array([this.addSuppliesGroup()])
+      supplies: this.fb.array([this.addSuppliesGroup()])
     });
   }
 
-  addSuppliesGroup(){
-    return this._fb.group({
+  addSuppliesGroup() {
+    return this.fb.group({
       supplyName: [''],
       supplyUnit: [''],
       supplyQuantity: ['']
@@ -242,13 +240,13 @@ export class HomeComponent implements OnInit {
     return this.submitForm.controls[controlName].hasError(errorName);
   }
 
-  onClick() {
+  showForm() {
     this.hideForm = !this.hideForm;
     this.resetForm();
   }
 
   resetForm() {
-    this.submitForm = this._fb.group({
+    this.submitForm = this.fb.group({
       incidentName: ['', Validators.required],
       location: ['', Validators.required],
       status: ['', Validators.required],
@@ -259,7 +257,7 @@ export class HomeComponent implements OnInit {
       otherDescription: [''],
       leadingAgency: ['', Validators.required],
       supportingAgency: [''],
-      supplies: this._fb.array([this.addSuppliesGroup()])
+      supplies: this.fb.array([this.addSuppliesGroup()])
     });
     window.setTimeout( () => {
       document.getElementById('incidentName').focus();
@@ -268,6 +266,7 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmitIncident() {
+    // SETTING FIELDS FROM THE FORM
     const date = new Date();
     this.model.CREATION_DATE = '' + date.toISOString().substr(0, 10) + ', ' + date.toLocaleTimeString();
     this.model.MODIFICATION_DATE = '' + date.toISOString().substr(0, 10) + ', ' + date.toLocaleTimeString();
@@ -275,7 +274,7 @@ export class HomeComponent implements OnInit {
     this.model.INCIDENT_NAME = this.submitForm.controls.incidentName.value;
     this.model.LOCATION_NAME = this.submitForm.controls.location.value;
     this.model.STATUS = this.submitForm.controls.status.value + '-' + this.submitForm.controls.prognosis.value;
-    if(this.submitForm.controls.incidentType.value === 'Other'){
+    if(this.submitForm.controls.incidentType.value === 'Other') {
       this.model.INCIDENT_TYPE =  this.submitForm.controls.otherType.value + '-' + this.submitForm.controls.incidentDescription.value;
     } else {
       this.model.INCIDENT_TYPE =  this.submitForm.controls.incidentType.value + '-' + this.submitForm.controls.incidentDescription.value;
@@ -295,15 +294,14 @@ export class HomeComponent implements OnInit {
     this.incidentService.addIncidents(this.model).subscribe(
       newIncident => {
         this.ngOnInit();
-        this.onClick();
+        this.showForm();
         this.model = new Incident();
         this.dataSource.loadLessons();
       }
-);
+    );
   }
 
   setLocation(incident: Incident) {
-    console.log('Setting Location in the Home Component');
     this.model.ADDRESS = incident.ADDRESS;
     this.model.LATITUDE = incident.LATITUDE;
     this.model.LONGITUDE = incident.LONGITUDE;
