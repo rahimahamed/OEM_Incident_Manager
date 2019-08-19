@@ -3,7 +3,6 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
 import { IncidentsDataSource } from '../incident.data.source';
-import { Supply } from '../supplies';
 
 @Component({
   selector: 'app-incident-list',
