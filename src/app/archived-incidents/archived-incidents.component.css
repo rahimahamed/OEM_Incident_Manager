@@ -52,14 +52,7 @@ tr.example-element-row:not(.example-expanded-row):active {
   border-radius: 50%;
   display: inline-block;
 }
+
 .dot-red {
   background-color: rgb(241, 63, 63);
 }
-.dot-green {
-  margin-top: -20px;
-  background-color: rgb(124, 211, 124);
-}
-.dot-yellow {
-  background-color: yellow;
-}
-

@@ -1,0 +1,126 @@
+<script src="https://cdn.tiny.cloud/1/xzmeuzojpn81uz66dyexlm02jfmh3h3mn02a03cxk5ew37lm/tinymce/5/tinymce.min.js"></script>
+<div class="left" cdkDrag>
+  <div class="left example-handle" cdkDragHandle>
+    <svg width="16px" fill="currentColor" viewBox="0 0 24 24">
+      <path
+        d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
+      ></path>
+      <path d="M0 0h24v24H0z" fill="none"></path>
+    </svg>
+  </div>
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header
+      class="text-center font-weight-bold text-uppercase py-4"
+    >
+      <h3>Incident Details</h3>
+    </mat-expansion-panel-header>
+    <div class="card">
+      <div class="card-body">
+        <div id="table" class="table-editable">
+          <table
+            class="table table-bordered table-responsive-md table-striped text-center"
+          >
+            <tr>
+              <th class="text-center">Title</th>
+              <th class="text-center">Details</th>
+            </tr>
+            <tr *ngFor="let item of incident | keyvalue: sortNull">
+              <td *ngIf="displayItem(item.key)">
+                <span contenteditable="false">{{ cleanKey(item.key) }}</span>
+              </td>
+              <td
+                *ngIf="displayItem(item.key) && isEditable(item.key)"
+                class="example-element-row"
+                contenteditable="true"
+                (keyup)="changeValue(item.key, item.value, $event)"
+                (keydown.enter)="$event.preventDefault()"
+                (blur)="updateList(item.key, item.value, $event)"
+              >
+                <span>{{ item.value }}</span>
+              </td>
+              <td
+                *ngIf="displayItem(item.key) && !isEditable(item.key)"
+                contenteditable="false"
+                (keyup)="changeValue(item.key, item.value, $event)"
+                (keydown.enter)="$event.preventDefault()"
+                (blur)="updateList(item.key, item.value, $event)"
+              >
+                <span>{{ item.value }}</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+  <div class="left example-handle" cdkDragHandle>
+    <svg width="16px" fill="currentColor" viewBox="0 0 24 24">
+      <path
+        d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
+      ></path>
+      <path d="M0 0h24v24H0z" fill="none"></path>
+    </svg>
+  </div>
+</div>
+
+<div class="right" cdkDrag>
+  <div class="left example-handle" cdkDragHandle>
+    <svg width="16px" fill="currentColor" viewBox="0 0 24 24">
+      <path
+        d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
+      ></path>
+      <path d="M0 0h24v24H0z" fill="none"></path>
+    </svg>
+  </div>
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header
+      class="text-center font-weight-bold text-uppercase py-4"
+    >
+      <h3>Summary / Logistics</h3>
+    </mat-expansion-panel-header>
+    <div class="card">
+      <div class="card-body">
+        <div>
+          <app-incident-logistics
+            [incident]="incident"
+            (updateIncident)="emitEdit($event)"
+          >
+          </app-incident-logistics>
+        </div>
+        <div class="form-group">
+            <p
+              *ngIf="summaryExists && !summaryEdit"
+              style="width: 600px; align-content: left;"
+              [innerHTML]="incident.SUMMARY"
+            ></p>
+            <editor
+              *ngIf="!summaryExists || summaryEdit"
+              id="textBox"
+              apiKey="xzmeuzojpn81uz66dyexlm02jfmh3h3mn02a03cxk5ew37lm"
+              [init]="{
+                height: 600,
+                paste_retain_style_properties: 'all'
+              }"
+              [initialValue]="incident.SUMMARY"
+              [(ngModel)]="summary"
+            >
+            </editor>
+          </div>
+          <div style="float: center">
+            <button type="button" (click)="onEdit()" class="btn btn-warning exp-btn">Edit Summary</button>
+            <button type="button" *ngIf="!summaryExists || summaryEdit" (click)="onSubmitSummary()" class="btn btn-success exp-btn">Submit Summary</button>
+            <!-- <button *ngIf="archive" type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Re-Open Incident</button> -->
+            <button *ngIf="!archive" type="button" (click)="onArchive()" class="btn btn-danger exp-btn">Archive Incident</button>
+    </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+  <div class="left example-handle" cdkDragHandle>
+    <svg width="16px" fill="currentColor" viewBox="0 0 24 24">
+      <path
+        d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
+      ></path>
+      <path d="M0 0h24v24H0z" fill="none"></path>
+    </svg>
+  </div>
+</div>
