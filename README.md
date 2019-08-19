@@ -1,5 +1,7 @@
 # NYC OEM Incident Manager
 
+This was a project completed by Sayef Iqbal, Josh Li, Riya Saha, Rahim Ahamed during an internship at the NYC Office of Emergency Management.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.1.
 
 ## Development server
